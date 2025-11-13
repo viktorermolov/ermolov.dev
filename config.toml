@@ -31,7 +31,7 @@ title = "Viktor Ermolov · Landing Page"
   error404 = "There is no such page."
 
   [params.contact]
-    github = "https://github.com/vedmac"
+    github = "https://github.com/viktorermolov"
     # instagram = "https://instagram.com/jdoe"
     twitter = "https://twitter.com/victor_ermolov"
     linkedin = "https://www.linkedin.com/in/vermolov/"

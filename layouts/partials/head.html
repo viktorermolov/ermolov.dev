@@ -1,0 +1,10 @@
+<meta charset="utf-8">
+<title>{{ if .IsHome }}Viktor Ermolov · Freelance Software Developer{{ else }}{{ .Title }} · Viktor Ermolov{{ end }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{{ with or .Params.description .Site.Params.description }}{{ . }}{{ else }}Portfolio of Viktor Ermolov, freelance software developer.{{ end }}">
+<link rel="icon" href="/{{ or .Site.Params.favicon "img/favicon.ico" }}" type="image/x-icon">
+{{ hugo.Generator }}
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/fonts.css">
+<link rel="stylesheet" href="/css/all.min.css">
+<link rel="stylesheet" href="/css/main.css">

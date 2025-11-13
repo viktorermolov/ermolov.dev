@@ -4,7 +4,8 @@
     <title>Tags on Viktor Ermolov · Landing Page</title>
     <link>https://ermolov.dev/tags/</link>
     <description>Recent content in Tags on Viktor Ermolov · Landing Page</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language><atom:link href="https://ermolov.dev/tags/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://ermolov.dev/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
