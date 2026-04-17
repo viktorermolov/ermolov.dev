@@ -53,8 +53,9 @@
     "Liberation Mono", monospace;
 
   /* Rhythm */
-  --measure: 44rem;        /* ~704px — comfortable reading */
-  --measure-wide: 56rem;   /* ~896px — wider sections */
+  --measure: 64rem;        /* ~1024px — generous desktop */
+  --measure-wide: 76rem;   /* ~1216px — hero / full sections */
+  --measure-prose: 48rem;  /* ~768px — comfortable reading block */
   --gap: clamp(1rem, 2vw, 1.5rem);
   --section-y: clamp(4rem, 9vw, 7rem);
 
@@ -142,34 +143,51 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
   width: 100%;
   max-width: var(--measure);
   margin-inline: auto;
-  padding-inline: clamp(1.25rem, 4vw, 2rem);
+  padding-inline: clamp(1.25rem, 3vw, 2.25rem);
 }
 
 .container--wide { max-width: var(--measure-wide); }
+.container--prose { max-width: var(--measure-prose); }
 
 .site-main { padding-bottom: var(--section-y); }
 
 .section {
   padding-block: var(--section-y);
-  border-top: 1px solid var(--rule);
+  position: relative;
 }
-.section:first-of-type { border-top: 0; }
+.section + .section { border-top: 1px solid var(--rule); }
+
+/* Alternating surface for odd non-hero sections */
+.section--alt {
+  background: var(--bg-elev);
+}
 
 .section__eyebrow {
+  display: inline-block;
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--fg-subtle);
-  margin: 0 0 0.75rem;
-  font-weight: 500;
+  color: var(--accent);
+  margin: 0 0 0.9rem;
+  font-weight: 600;
+  position: relative;
+  padding-left: 2rem;
+}
+.section__eyebrow::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 50%;
+  width: 1.5rem; height: 1px;
+  background: var(--accent);
+  transform: translateY(-50%);
 }
 
 .section__title {
-  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-size: clamp(1.85rem, 3.4vw, 2.5rem);
   font-weight: 600;
-  letter-spacing: -0.015em;
-  margin: 0 0 2rem;
-  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 2.25rem;
+  line-height: 1.1;
 }
 
 .section__lede {
@@ -249,46 +267,86 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
 
 /* --- Hero ----------------------------------------------------- */
 .hero {
-  padding-block: clamp(4rem, 10vw, 7rem) var(--section-y);
+  padding-block: clamp(5rem, 12vw, 9rem) var(--section-y);
   border-top: 0;
+  position: relative;
+  overflow: hidden;
 }
 
-.hero__mono-avatar {
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  background: var(--fg);
-  color: var(--bg);
-  display: inline-grid; place-items: center;
-  font-weight: 600; font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  margin-bottom: 1.5rem;
-  user-select: none;
+/* Soft accent glow behind hero */
+.hero::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  top: -20%;
+  right: -10%;
+  width: 55rem; height: 55rem;
+  background:
+    radial-gradient(closest-side,
+      color-mix(in oklab, var(--accent) 22%, transparent) 0%,
+      transparent 70%);
+  filter: blur(40px);
+  opacity: 0.9;
 }
+:root[data-theme="dark"] .hero::before { opacity: 0.55; }
+
+.hero > .container { position: relative; z-index: 1; }
 
 .hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-size: 0.82rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--fg-subtle);
-  margin: 0 0 1rem;
+  color: var(--fg-muted);
+  margin: 0 0 1.5rem;
   font-weight: 500;
+  padding: 0.35rem 0.85rem 0.35rem 0.6rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--bg) 70%, transparent);
+  backdrop-filter: blur(6px);
+}
+.hero__status {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px color-mix(in oklab, #22c55e 25%, transparent);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px color-mix(in oklab, #22c55e 25%, transparent); }
+  50%      { box-shadow: 0 0 0 6px color-mix(in oklab, #22c55e 12%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__status { animation: none; }
 }
 
 .hero__title {
-  font-size: clamp(2rem, 5.2vw, 3.25rem);
-  line-height: 1.08;
-  letter-spacing: -0.022em;
+  font-size: clamp(2.25rem, 6.5vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
   font-weight: 600;
-  margin: 0 0 1.25rem;
-  max-width: 22ch;
+  margin: 0 0 1.5rem;
+  max-width: 20ch;
 }
-.hero__title .accent { color: var(--accent); }
+.hero__title .accent {
+  color: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, color-mix(in oklab, var(--accent) 55%, #ec4899) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
 
 .hero__lede {
-  font-size: 1.1rem;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
   color: var(--fg-muted);
-  max-width: 40rem;
-  margin: 0 0 2rem;
+  max-width: 44rem;
+  margin: 0 0 2.5rem;
+  line-height: 1.55;
 }
 
 .hero__cta-row {
@@ -344,57 +402,116 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 2.25rem;
+  gap: 1.25rem;
 }
 
 .service {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1rem 1.25rem;
-  align-items: baseline;
+  gap: 0.75rem 1.5rem;
+  align-items: start;
+  padding: 1.75rem;
+  border: 1px solid var(--rule);
+  border-radius: calc(var(--radius) * 2);
+  background: var(--bg);
+  transition: border-color var(--dur) var(--ease),
+              transform var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+  position: relative;
+  overflow: hidden;
 }
+.service::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    600px circle at var(--mx, 50%) var(--my, 0%),
+    color-mix(in oklab, var(--accent) 8%, transparent),
+    transparent 45%);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.service:hover {
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--rule));
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -18px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+.service:hover::after { opacity: 1; }
+
 .service__num {
   font-variant-numeric: tabular-nums;
-  font-size: 0.82rem;
-  color: var(--fg-subtle);
-  letter-spacing: 0.04em;
-  padding-top: 0.35rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, var(--rule));
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  min-width: 2.75rem;
+  text-align: center;
+  line-height: 1;
 }
 .service__body h3 {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  margin: 0 0 0.4rem;
+  letter-spacing: -0.012em;
+  margin: 0.1rem 0 0.45rem;
 }
 .service__body p {
   margin: 0;
   color: var(--fg-muted);
-  max-width: 46rem;
+  font-size: 0.98rem;
 }
 
 @media (min-width: 720px) {
-  .services-list { gap: 2.5rem; }
-  .service { grid-template-columns: 3rem 1fr; }
+  .services-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
 }
 
 /* --- Case notes ----------------------------------------------- */
 .notes {
   display: grid;
-  gap: 3rem;
+  gap: 1.5rem;
 }
 
 .note {
-  border-top: 1px solid var(--rule);
-  padding-top: 2rem;
+  padding: 2rem;
+  border: 1px solid var(--rule);
+  border-radius: calc(var(--radius) * 2);
+  background: var(--bg);
+  position: relative;
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
-.note:first-child { border-top: 0; padding-top: 0; }
+.note::before {
+  content: "";
+  position: absolute;
+  left: -1px; top: 2rem; bottom: 2rem;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent),
+    color-mix(in oklab, var(--accent) 30%, transparent));
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.note:hover {
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--rule));
+  transform: translateY(-2px);
+}
+.note:hover::before { opacity: 1; }
 
 .note__title {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  letter-spacing: -0.012em;
-  margin: 0 0 1.25rem;
-  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: 0 0 1.5rem;
+  line-height: 1.2;
+  color: var(--fg);
 }
 
 .note dl {
