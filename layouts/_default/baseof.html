@@ -1,84 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ or .Site.Language.Lang "en" }}">
   <head>
     {{ partial "head.html" . }}
   </head>
-  <body class="site-body" data-theme="{{ or .Site.Params.defaultTheme "light" }}">
+  <body>
     <a class="skip-link" href="#main">Skip to main content</a>
     {{ partial "header.html" . }}
     <main id="main" class="site-main">
       {{ block "main" . }}{{ end }}
     </main>
     {{ partial "footer.html" . }}
-    <script>
-      (function () {
-        const storageKey = 'theme';
-
-        const readStoredTheme = () => {
-          try {
-            return localStorage.getItem(storageKey);
-          } catch (e) {
-            return null;
-          }
-        };
-
-        const writeStoredTheme = value => {
-          try {
-            localStorage.setItem(storageKey, value);
-          } catch (e) {
-            /* ignore */
-          }
-        };
-
-        const applyTheme = (theme, body, toggle) => {
-          if (!body) return;
-          body.setAttribute('data-theme', theme);
-          if (toggle) {
-            toggle.setAttribute('aria-pressed', theme === 'dark');
-            toggle.dataset.theme = theme;
-          }
-        };
-
-        const init = () => {
-          const body = document.body;
-          if (!body) return;
-          const toggle = document.querySelector('.theme-toggle');
-          const mediaQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-          let storedPreference = readStoredTheme();
-          const initialTheme =
-            storedPreference ||
-            (mediaQuery && mediaQuery.matches ? 'dark' : body.getAttribute('data-theme') || 'light');
-
-          applyTheme(initialTheme, body, toggle);
-
-          if (toggle) {
-            toggle.addEventListener('click', () => {
-              const next = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-              storedPreference = next;
-              applyTheme(next, body, toggle);
-              writeStoredTheme(next);
-            });
-          }
-
-          if (mediaQuery) {
-            const mqListener = event => {
-              if (storedPreference) return;
-              applyTheme(event.matches ? 'dark' : 'light', body, toggle);
-            };
-            if (typeof mediaQuery.addEventListener === 'function') {
-              mediaQuery.addEventListener('change', mqListener);
-            } else if (typeof mediaQuery.addListener === 'function') {
-              mediaQuery.addListener(mqListener);
-            }
-          }
-        };
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', init);
-        } else {
-          init();
-        }
-      })();
-    </script>
+    {{- $js := resources.Get "js/app.js" -}}
+    {{- if hugo.IsProduction -}}
+      {{- $js = $js | minify | fingerprint -}}
+    {{- end -}}
+    <script src="{{ $js.RelPermalink }}"{{ with $js.Data.Integrity }} integrity="{{ . }}"{{ end }} defer></script>
   </body>
 </html>

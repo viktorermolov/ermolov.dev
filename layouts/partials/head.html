@@ -1,10 +1,63 @@
+{{- $title := cond .IsHome .Site.Title (printf "%s · %s" .Title .Site.Title) -}}
+{{- $desc := or .Params.description .Site.Params.description -}}
+{{- $ogImage := absURL (or .Site.Params.ogImage "img/avatar.jpg") -}}
+{{- $themeLight := or .Site.Params.themeColorLight "#ffffff" -}}
+{{- $themeDark := or .Site.Params.themeColorDark "#0b0b0c" -}}
+{{- $defaultTheme := or .Site.Params.defaultTheme "light" -}}
 <meta charset="utf-8">
-<title>{{ if .IsHome }}Viktor Ermolov · Freelance Software Developer{{ else }}{{ .Title }} · Viktor Ermolov{{ end }}</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="{{ with or .Params.description .Site.Params.description }}{{ . }}{{ else }}Portfolio of Viktor Ermolov, freelance software developer.{{ end }}">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $desc }}">
+<meta name="author" content="{{ .Site.Params.author }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<meta name="theme-color" content="{{ cond (eq $defaultTheme "dark") $themeDark $themeLight }}" data-light="{{ $themeLight }}" data-dark="{{ $themeDark }}">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ $ogImage }}">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+<meta name="twitter:image" content="{{ $ogImage }}">
+
+<!-- Favicon -->
 <link rel="icon" href="/{{ or .Site.Params.favicon "img/favicon.ico" }}" type="image/x-icon">
-{{ hugo.Generator }}
-<link rel="stylesheet" href="/css/normalize.css">
-<link rel="stylesheet" href="/css/fonts.css">
-<link rel="stylesheet" href="/css/all.min.css">
-<link rel="stylesheet" href="/css/main.css">
+
+<!-- Fonts: preload self-hosted Inter Variable -->
+<link rel="preload" href="/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ .Site.Params.author }}",
+  "url": "{{ .Site.BaseURL }}",
+  "description": "{{ $desc }}",
+  "jobTitle": "Independent Software Engineer",
+  "sameAs": [
+    "{{ .Site.Params.contact.github }}",
+    "{{ .Site.Params.contact.linkedin }}",
+    "{{ .Site.Params.contact.x }}"
+  ]
+}
+</script>
+
+{{- /* CSS via Hugo Pipes: fingerprint + minify in production */ -}}
+{{- $css := resources.Get "css/main.css" -}}
+{{- if hugo.IsProduction -}}
+  {{- $css = $css | minify | fingerprint -}}
+{{- end -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}"{{ end }}>
+
+{{- /* Theme init (inline, pre-paint) to avoid FOUC */ -}}
+<script>
+(function(){try{var t=localStorage.getItem("theme");if(!t){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+</script>

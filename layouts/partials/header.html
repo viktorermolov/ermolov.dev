@@ -1,17 +1,23 @@
 <header class="site-header" role="banner">
   <div class="container header-inner">
-    <a class="brand" href="/">ermolov.dev</a>
+    <a class="brand" href="/" aria-label="Viktor Ermolov — home">
+      Viktor Ermolov
+    </a>
     <div class="header-actions">
       <nav class="site-nav" aria-label="Primary">
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#case-notes">Case Notes</a>
+        <a href="#approach">Approach</a>
         <a href="#contact">Contact</a>
       </nav>
-      <button class="theme-toggle" type="button" aria-pressed="false">
-        <span class="sr-only">Toggle color theme</span>
-        <span aria-hidden="true" class="theme-toggle-icon theme-toggle-icon--sun"><i class="fas fa-sun"></i></span>
-        <span aria-hidden="true" class="theme-toggle-icon theme-toggle-icon--moon"><i class="fas fa-moon"></i></span>
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
       </button>
     </div>
   </div>
