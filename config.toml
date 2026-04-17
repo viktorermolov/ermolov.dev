@@ -1,50 +1,28 @@
 baseURL = "https://ermolov.dev/"
-# include content marked as draft
 buildDrafts = false
-# include content with publishdate in the future
 buildFuture = false
-# include content already expired
 buildExpired = false
-# enable this to make all relative URLs relative to content root. Note that this does not affect absolute URLs.
 relativeURLs = true
 disableRSS = true
 enableRobotsTXT = true
-editor = "micro"
 languageCode = "en"
 language = "en"
-theme = "vncnt-hugo"
-title = "Viktor Ermolov · Landing Page"
-
-[permalinks]
-  fixed = ":title/"
-  posts = "posts/:slug/"
+title = "Viktor Ermolov · Full-Cycle Product Delivery"
+disableKinds = ["taxonomy", "term"]
 
 [params]
   author = "Viktor Ermolov"
-  # email does still work but is deprecated.
-  # use [params.contact.email] instead.
-  #email = "john.doe@example.com"
-  description = "Freelance Software Developer"
-  bio = "**Freelance Software Developer**\n  \nPython | Django | Flask | FastAPI | JavaScript | SQL | NoSQL | HTML | CSS | RESTful API | Docker | CI/CD | GIT"
-  avatar = "img/avatar.jpg"
+  description = "Independent engineer shipping full-cycle products. AI integration where it earns its keep. Based in the US, working remote-first with teams worldwide."
+  shortDescription = "Full-cycle product delivery. AI where it earns its keep."
   favicon = "img/favicon.ico"
-  error404 = "There is no such page."
+  ogImage = "img/avatar.jpg"
+  defaultTheme = "light"
+  accentColor = "#4f46e5"
+  themeColorLight = "#ffffff"
+  themeColorDark = "#0b0b0c"
 
   [params.contact]
+    email = "viktor@ermolov.dev"
     github = "https://github.com/viktorermolov"
-    # instagram = "https://instagram.com/jdoe"
-    twitter = "https://twitter.com/victor_ermolov"
     linkedin = "https://www.linkedin.com/in/vermolov/"
-    # You may use (inline) tables for more versatility
-    # This allows sorting and even more icons.
-    # Just make sure not to mix key-value pairs, inline tables and tables,
-    # although keeping keeping this order is ok.
-    # See https://toml.io/en/v1.0.0 for details
-    # 0 = { name = "ello", icon = "ello", style = "fab", link = "" } # empty links are relative to site root
-  
-    [params.contact.email]
-      name = "email" # may be omitted. defaults to key name
-      icon = "envelope" # may be omitted. defaults to key name
-      style = "fas" # may be omitted. default = "fas"
-      link = "mailto:viktor@ermolov.dev"
-      
+    x = "https://x.com/viktor__ermolov"
