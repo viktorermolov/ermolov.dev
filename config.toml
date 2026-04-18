@@ -3,12 +3,11 @@ buildDrafts = false
 buildFuture = false
 buildExpired = false
 relativeURLs = true
-disableRSS = true
 enableRobotsTXT = true
 languageCode = "en"
 language = "en"
 title = "Viktor Ermolov — Full-Cycle SaaS & AI Integration Engineer"
-disableKinds = ["taxonomy", "term"]
+disableKinds = ["taxonomy", "term", "RSS"]
 
 [params]
   author = "Viktor Ermolov"
