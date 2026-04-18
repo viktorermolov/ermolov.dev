@@ -33,19 +33,50 @@
 <!-- Fonts: preload self-hosted Inter Variable -->
 <link rel="preload" href="/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
 
+{{- $avatar := absURL (or .Site.Params.avatar "img/avatar.jpg") -}}
+{{- $jobTitle := or .Site.Params.jobTitle "Full-Cycle Software Engineer" -}}
 <!-- Structured data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "{{ .Site.Params.author }}",
-  "url": "{{ .Site.BaseURL }}",
-  "description": "{{ $desc }}",
-  "jobTitle": "Independent Software Engineer",
-  "sameAs": [
-    "{{ .Site.Params.contact.github }}",
-    "{{ .Site.Params.contact.linkedin }}",
-    "{{ .Site.Params.contact.x }}"
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "{{ .Site.BaseURL }}#person",
+      "name": "{{ .Site.Params.author }}",
+      "url": "{{ .Site.BaseURL }}",
+      "image": "{{ $avatar }}",
+      "jobTitle": "{{ $jobTitle }}",
+      "description": "{{ $desc }}",
+      "sameAs": [
+        "{{ .Site.Params.contact.github }}",
+        "{{ .Site.Params.contact.linkedin }}",
+        "{{ .Site.Params.contact.x }}"
+      ],
+      "knowsAbout": [
+        "Full-cycle product development",
+        "AI integration",
+        "LLM systems",
+        "SaaS engineering",
+        "Micro-SaaS",
+        "Automation",
+        "Backend architecture"
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "{{ .Site.BaseURL }}#service",
+      "name": "{{ .Site.Params.author }} — Full-Cycle Product Delivery",
+      "url": "{{ .Site.BaseURL }}",
+      "provider": { "@id": "{{ .Site.BaseURL }}#person" },
+      "areaServed": "Worldwide",
+      "serviceType": [
+        "Full-Cycle Delivery",
+        "AI Integration",
+        "SaaS & Micro-SaaS from Zero",
+        "Automation & Internal Tools"
+      ]
+    }
   ]
 }
 </script>
