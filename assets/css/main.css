@@ -580,15 +580,6 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
   color: var(--fg-muted);
   font-size: 0.98rem;
 }
-.engagements__footnote {
-  margin: 0;
-  color: var(--fg-muted);
-  font-size: 0.95rem;
-  padding-top: 0.5rem;
-  max-width: 44rem;
-}
-.engagements__footnote strong { color: var(--fg); font-weight: 600; }
-
 @media (min-width: 720px) {
   .engagements { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 }
