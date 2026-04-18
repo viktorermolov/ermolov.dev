@@ -7,19 +7,22 @@ disableRSS = true
 enableRobotsTXT = true
 languageCode = "en"
 language = "en"
-title = "Viktor Ermolov · Full-Cycle Product Delivery"
+title = "Viktor Ermolov — Full-Cycle SaaS & AI Integration Engineer"
 disableKinds = ["taxonomy", "term"]
 
 [params]
   author = "Viktor Ermolov"
-  description = "Independent engineer shipping full-cycle products. AI integration where it earns its keep. Based in the US, working remote-first with teams worldwide."
+  description = "Independent engineer building SaaS, micro-SaaS, and AI systems end-to-end. US-based, remote, working with teams worldwide. Straight answers on when AI actually pays off."
   shortDescription = "Full-cycle product delivery. AI where it earns its keep."
+  jobTitle = "Full-Cycle Software Engineer"
   favicon = "img/favicon.ico"
   ogImage = "img/avatar.jpg"
+  avatar = "img/avatar.jpg"
   defaultTheme = "light"
   accentColor = "#4f46e5"
   themeColorLight = "#ffffff"
   themeColorDark = "#0b0b0c"
+  twitterHandle = "@viktor__ermolov"
 
   [params.contact]
     email = "viktor@ermolov.dev"
