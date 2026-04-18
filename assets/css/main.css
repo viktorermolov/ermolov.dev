@@ -623,8 +623,14 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
   font-size: 1.15rem;
   color: var(--fg);
   max-width: 36rem;
-  margin: 0 0 2rem;
+  margin: 0 0 1rem;
   line-height: 1.5;
+}
+.contact__body {
+  color: var(--fg-muted);
+  max-width: 38rem;
+  margin: 0 0 2rem;
+  line-height: 1.6;
 }
 
 .contact-links {
