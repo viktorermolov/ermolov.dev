@@ -13,13 +13,6 @@
   }
   function apply(theme) {
     root.setAttribute("data-theme", theme);
-    var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        theme === "dark" ? meta.dataset.dark || "#0b0b0c" : meta.dataset.light || "#ffffff"
-      );
-    }
     var toggle = document.querySelector(".theme-toggle");
     if (toggle) {
       toggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
