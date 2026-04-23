@@ -48,6 +48,19 @@
       else if (typeof mql.addListener === "function") mql.addListener(onChange);
     }
 
+    // --- Service card hover light --------------------------------
+    var hasFinePointer = window.matchMedia &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (hasFinePointer) {
+      document.querySelectorAll(".service").forEach(function (card) {
+        card.addEventListener("pointermove", function (event) {
+          var rect = card.getBoundingClientRect();
+          card.style.setProperty("--mx", (event.clientX - rect.left) + "px");
+          card.style.setProperty("--my", (event.clientY - rect.top) + "px");
+        });
+      });
+    }
+
     // --- Reveal on scroll ---------------------------------------
     var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var targets = document.querySelectorAll(".reveal");

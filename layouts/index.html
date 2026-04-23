@@ -49,14 +49,14 @@
           <span class="service__num" aria-hidden="true">03</span>
           <div class="service__body">
             <h3>SaaS &amp; Micro-SaaS from Zero</h3>
-            <p>From empty repo to first paying customer. I get the foundations right &mdash; tenancy, auth, billing hooks, observability &mdash; and defer everything else behind clean seams so the product can pivot without a rewrite. Typical first production slice: 4&ndash;8 weeks.</p>
+            <p>From empty repo to first paying customer. I get the foundations right &mdash; tenancy, auth, billing hooks, observability &mdash; and defer everything else behind clear boundaries so the product can pivot without a rewrite. Typical first production slice: 4&ndash;8 weeks.</p>
           </div>
         </li>
         <li class="service">
           <span class="service__num" aria-hidden="true">04</span>
           <div class="service__body">
             <h3>Automation &amp; Internal Tools</h3>
-            <p>Agents and pipelines that remove recurring manual work: document processing, support triage, data extraction, operational workflows. Built to run unattended and fail loudly when they shouldn&rsquo;t.</p>
+            <p>Agents and pipelines that remove recurring manual work: document processing, support triage, data extraction, operational workflows. Built to run unattended and raise clear alerts when they cannot complete safely.</p>
           </div>
         </li>
       </ul>
@@ -64,38 +64,36 @@
   </section>
 
   {{/* ------------------------------------------------------------
-       CASE NOTES
+       DECISION NOTES
        ------------------------------------------------------------ */}}
   <section class="section reveal" id="case-notes" aria-labelledby="case-notes-title">
     <div class="container">
-      <p class="section__eyebrow">How I think about these trade-offs</p>
-      <h2 class="section__title" id="case-notes-title">Case Notes</h2>
-      <p class="section__lede">Four classes of problem I see repeatedly, and how I approach each.</p>
+      <p class="section__eyebrow">How I evaluate trade-offs</p>
+      <h2 class="section__title" id="case-notes-title">Decision Notes</h2>
+      <p class="section__lede">Four recurring engineering decisions, and the default reasoning I bring to each before writing code.</p>
 
       <div class="notes">
-        <!-- OWNER: tighten or replace with specifics from real engagements as they accumulate -->
         <article class="note">
-          <h3 class="note__title">When the algorithm beats the AI</h3>
+          <h3 class="note__title">When an algorithm beats AI</h3>
           <dl>
-            <dt>The problem</dt>
-            <dd class="muted">Inbound request routing in a B2B support or ops platform &mdash; thousands of items per minute at peak. Looks like an LLM job at first glance.</dd>
+            <dt>The decision</dt>
+            <dd class="muted">Inbound request routing in a B2B support or ops platform &mdash; high volume, repeated patterns, strict latency expectations. It can look like an LLM job at first glance.</dd>
 
             <dt>The options</dt>
             <dd class="muted">(a) An LLM classifier with a structured output schema, (b) a small fine-tuned encoder model, (c) deterministic rules plus a lookup table driven by measured traffic distribution.</dd>
 
             <dt>My default</dt>
-            <dd>I sample a week of production traffic before choosing. In most B2B ops pipelines, a dozen rules cover the large majority of volume and the remainder clusters into a handful of tenant-tier &times; product-line buckets. Rules plus lookup for the hot path; a cheap small-model classifier for the long tail; no LLM on the live path.</dd>
+            <dd>Start with a representative sample before choosing the model class. In many B2B ops pipelines, a small set of rules covers most volume and the remainder clusters into tenant-tier &times; product-line buckets. Rules plus lookup for the hot path; a cheap small-model classifier for the long tail; no LLM on the live path.</dd>
 
-            <dt>What it buys you</dt>
+            <dt>Why</dt>
             <dd class="muted">Millisecond-range latency, near-zero variable cost, a classifier an on-call engineer can debug at 3 a.m. without looking up an API key. The trade: harder to extend to categories that don&rsquo;t exist yet. For constrained inputs, that&rsquo;s a good trade. Reach for an LLM when the input space is genuinely unbounded &mdash; not by default.</dd>
           </dl>
         </article>
 
-        <!-- OWNER: tighten or replace with specifics from real engagements as they accumulate -->
         <article class="note">
-          <h3 class="note__title">When AI is the only path</h3>
+          <h3 class="note__title">When AI is justified</h3>
           <dl>
-            <dt>The problem</dt>
+            <dt>The decision</dt>
             <dd class="muted">Structured extraction from high-variance documents &mdash; statements, invoices, onboarding forms &mdash; arriving in dozens of layouts from different originators. Regex-and-template pipelines accrete for years in this setting; every new counterparty format breaks something upstream. Maintenance cost grows faster than the team can shrink it.</dd>
 
             <dt>The options</dt>
@@ -104,34 +102,32 @@
             <dt>My default</dt>
             <dd>The LLM path, with the engineering around the model doing most of the work. A Pydantic-typed output schema enforced via tool-use / function-calling. Deterministic post-validators for field-level invariants &mdash; date ranges, sum checks, currency-format matches. An evaluation set that grows with production &mdash; starts around 40 examples, stabilizes in the hundreds. A confidence-gated human-in-the-loop fallback for low-confidence outputs. A pre-flight OCR-quality check so garbage inputs never reach the model &mdash; most &ldquo;prompt failures&rdquo; in this domain are scan-quality failures.</dd>
 
-            <dt>What it buys you</dt>
+            <dt>Why</dt>
             <dd class="muted">The rule-patching treadmill ends. Engineering attention shifts from regex archaeology to eval curation, which is the better place to spend the day. You trade per-call cost and variable latency for maintenance cost that stays roughly flat as customers grow.</dd>
           </dl>
         </article>
 
-        <!-- OWNER: tighten or replace with specifics from real engagements as they accumulate -->
         <article class="note">
-          <h3 class="note__title">Building a SaaS from zero</h3>
+          <h3 class="note__title">Choosing SaaS foundations from zero</h3>
           <dl>
-            <dt>The problem</dt>
-            <dd class="muted">Founder with a clear wedge, a design partner with a hard deadline, a product spec that&rsquo;s still moving. The shape of the product will change; the shape of the foundation can&rsquo;t.</dd>
+            <dt>The decision</dt>
+            <dd class="muted">Founder with a clear wedge, an early customer conversation, and a product spec that&rsquo;s still moving. The product will change; the foundation should not force a rewrite when it does.</dd>
 
             <dt>The options</dt>
             <dd class="muted">A fast no-code MVP, a heavyweight enterprise stack chosen for an imagined future, or a narrow production-grade foundation limited to the decisions that are expensive to change later.</dd>
 
             <dt>My default</dt>
-            <dd>The narrow foundation. Permanent decisions right on day one, everything else deferred behind clean seams. Tenancy: shared-schema multi-tenancy in Postgres with row-level security enforcing boundaries at the database &mdash; an application-layer WHERE-clause bug cannot leak data. Tenant context: set once per request in middleware, propagated into queries, logs, metrics, and error tracking. Billing hooks, not billing: a tenant_id on every metered event from day one, so a real billing system dropped in later is a migration, not a rewrite. Observability: structured logs and traces tagged with tenant_id from the first commit. A tenant-level kill switch wired in before the first paying customer.</dd>
+            <dd>The narrow foundation. Make the permanent decisions on day one and defer everything else behind explicit boundaries. Tenancy: shared-schema multi-tenancy in Postgres with row-level security enforcing boundaries at the database &mdash; an application-layer WHERE-clause bug cannot leak data. Tenant context: set once per request in middleware, propagated into queries, logs, metrics, and error tracking. Billing hooks, not billing: a tenant_id on every metered event from day one, so a real billing system dropped in later is a migration, not a rewrite. Observability: structured logs and traces tagged with tenant_id from the first commit. A tenant-level kill switch wired in before the first paying customer.</dd>
 
-            <dt>What it buys you</dt>
-            <dd class="muted">The design partner launches on the original date, and the foundation absorbs product pivots without a rewrite. What gets skipped early is what you pay for later &mdash; usually at 3 a.m. Microservices, real-time analytics, and custom RBAC beyond role + tenant wait until they actually earn their complexity.</dd>
+            <dt>Why</dt>
+            <dd class="muted">You get a production slice that can absorb product pivots without pretending the future is already known. What gets skipped early is what you pay for later &mdash; usually at 3 a.m. Microservices, real-time analytics, and custom RBAC beyond role + tenant wait until they actually earn their complexity.</dd>
           </dl>
         </article>
 
-        <!-- OWNER: tighten or replace with specifics from real engagements as they accumulate -->
         <article class="note">
           <h3 class="note__title">Shipping a micro-SaaS solo</h3>
           <dl>
-            <dt>The problem</dt>
+            <dt>The decision</dt>
             <dd class="muted">One operator, narrow audience, no team, no runway. Binding constraint is operational, not architectural: cheap to run, boring to operate, survives weeks of inattention without waking anyone up.</dd>
 
             <dt>The options</dt>
@@ -140,8 +136,8 @@
             <dt>My default</dt>
             <dd>The boring monolith. A Django or FastAPI app on a single VPS, managed Postgres as the only stateful dependency, Stripe Checkout (hosted) so no PCI surface is owned, webhook handlers in the same monolith with idempotency keys on every incoming event, Sentry for errors, uptime monitoring configured to page only when the site is actually down &mdash; not when a metric wiggles. The job queue is a Postgres table. The next version is also a Postgres table. Redis is rarely necessary at this scale.</dd>
 
-            <dt>What it buys you</dt>
-            <dd class="muted">A three-figure monthly infrastructure bill, no on-call rotation, weeks of uninterrupted ignore-ability. You trade instant horizontal scaling and multi-region latency for operational silence. For a micro-SaaS, the right architecture is the one that lets you ignore it for weeks. Boring is a feature.</dd>
+            <dt>Why</dt>
+            <dd class="muted">A three-figure monthly infrastructure bill, no on-call rotation, and fewer moving parts to babysit. You trade instant horizontal scaling and multi-region latency for operational silence. For a micro-SaaS, the right architecture is the one that lets you leave it alone between focused maintenance windows. Boring is a feature.</dd>
           </dl>
         </article>
       </div>
@@ -155,7 +151,7 @@
     <div class="container">
       <p class="section__eyebrow">Engagement shapes</p>
       <h2 class="section__title" id="engagements-title">How we&rsquo;d work together</h2>
-      <p class="section__lede">Three common shapes of engagement. Most projects start as one and sometimes become another.</p>
+      <p class="section__lede">Three common shapes of engagement. Most work starts as one and sometimes becomes another.</p>
 
       <ul class="engagements">
         <li class="engagement">

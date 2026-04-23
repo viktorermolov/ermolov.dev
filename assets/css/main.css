@@ -154,6 +154,7 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
 .section {
   padding-block: var(--section-y);
   position: relative;
+  scroll-margin-top: 5rem;
 }
 .section + .section { border-top: 1px solid var(--rule); }
 
@@ -296,13 +297,16 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
 .hero__eyebrow {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.55rem;
   font-size: 0.82rem;
+  line-height: 1.35;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--fg-muted);
   margin: 0 0 1.5rem;
   font-weight: 500;
+  max-width: 100%;
   padding: 0.35rem 0.85rem 0.35rem 0.6rem;
   border: 1px solid var(--rule);
   border-radius: 999px;
@@ -322,6 +326,19 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero__status { animation: none; }
+}
+
+@media (max-width: 480px) {
+  .hero__eyebrow {
+    align-items: flex-start;
+    border-radius: 12px;
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+  }
+  .hero__status {
+    margin-top: 0.32em;
+    flex: 0 0 auto;
+  }
 }
 
 .hero__title {
@@ -424,6 +441,7 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
   background: radial-gradient(
     600px circle at var(--mx, 50%) var(--my, 0%),
@@ -431,6 +449,10 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
     transparent 45%);
   opacity: 0;
   transition: opacity var(--dur) var(--ease);
+}
+.service > * {
+  position: relative;
+  z-index: 1;
 }
 .service:hover {
   border-color: color-mix(in oklab, var(--accent) 45%, var(--rule));
