@@ -295,9 +295,9 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
 .hero > .container { position: relative; z-index: 1; }
 
 .hero__eyebrow {
-  display: inline-flex;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  flex-wrap: wrap;
   gap: 0.55rem;
   font-size: 0.82rem;
   line-height: 1.35;
@@ -312,6 +312,9 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
   border-radius: 999px;
   background: color-mix(in oklab, var(--bg) 70%, transparent);
   backdrop-filter: blur(6px);
+}
+.hero__eyebrow-text {
+  min-width: 0;
 }
 .hero__status {
   width: 8px; height: 8px;
@@ -337,7 +340,6 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
   }
   .hero__status {
     margin-top: 0.32em;
-    flex: 0 0 auto;
   }
 }
 
