@@ -648,38 +648,6 @@ a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
   line-height: 1.6;
 }
 
-.contact-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 0.5rem;
-  font-size: 1rem;
-}
-.contact-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.35rem 0;
-  color: var(--fg);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
-  width: fit-content;
-}
-.contact-links a:hover {
-  color: var(--accent);
-  border-bottom-color: currentColor;
-}
-.contact-links__label {
-  display: inline-block;
-  min-width: 5rem;
-  color: var(--fg-subtle);
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 /* --- Footer --------------------------------------------------- */
 .site-footer {
   border-top: 1px solid var(--rule);
