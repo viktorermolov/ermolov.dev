@@ -45,6 +45,7 @@
   var challengeLoader = null;
   var attempts = new Map();
   var lastSuccessfulContent = null;
+  var lockedFields = [];
   var source = { utmSource: "", utmMedium: "", utmCampaign: "", referrer: "", cta: "direct" };
 
   function limited(value, length) {
@@ -69,7 +70,7 @@
   function showStatus(text, state, focus) {
     status.textContent = text;
     status.dataset.state = state || "";
-    if (focus) status.focus({ preventScroll: true });
+    if (focus) status.focus();
   }
   function showFieldError(name, text) {
     var input = form.elements[name];
@@ -83,11 +84,33 @@
     form.querySelectorAll("[aria-invalid]").forEach(function (input) { input.removeAttribute("aria-invalid"); });
     form.querySelectorAll(".field-error").forEach(function (error) { error.textContent = ""; });
   }
+  function focusFirstError() {
+    var first = form.querySelector("[aria-invalid=true], :invalid");
+    if (!first) return false;
+    if (first.closest(".form-context")) context.open = true;
+    first.focus();
+    return true;
+  }
+  function lockFields() {
+    lockedFields = Array.from(form.querySelectorAll("input, textarea, select")).map(function (field) {
+      var previous = { field: field, disabled: field.disabled, readOnly: field.readOnly };
+      if (field.tagName === "SELECT") field.disabled = true;
+      else field.readOnly = true;
+      return previous;
+    });
+  }
+  function unlockFields() {
+    lockedFields.forEach(function (previous) {
+      previous.field.disabled = previous.disabled;
+      if (previous.field.tagName !== "SELECT") previous.field.readOnly = previous.readOnly;
+    });
+    lockedFields = [];
+  }
   function validate() {
     clearErrors();
     var valid = true;
     var email = form.elements.email;
-    if (!email.value.trim() || !email.validity.valid) {
+    if (!email.validity.valid || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
       showFieldError("email", "Enter an email address I can reply to.");
       valid = false;
     }
@@ -95,14 +118,27 @@
       showFieldError("message", "Please write between 1 and 2,500 characters about your project.");
       valid = false;
     }
+    ["email", "message", "name", "budget", "timeline"].forEach(function (name) {
+      var field = form.elements[name];
+      var value = field.value;
+      var limit = name === "email" ? 254 : name === "message" ? 2500 : 80;
+      var invalidUnicode = Array.from(value).some(function (character) {
+        var code = character.codePointAt(0);
+        return code >= 0xD800 && code <= 0xDFFF;
+      });
+      var controls = name === "message" ? /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/ : /[\x00-\x1F\x7F]/;
+      if (value.length > limit) {
+        showFieldError(name, "Please use at most " + limit.toLocaleString("en-US") + " characters.");
+        valid = false;
+      } else if (invalidUnicode || controls.test(value.trim())) {
+        showFieldError(name, "Please remove unsupported control characters from this field.");
+        valid = false;
+      }
+    });
     if (!form.checkValidity()) valid = false;
     if (!valid) {
       showStatus("Please check the highlighted fields. Your note is still here.", "error", false);
-      var first = form.querySelector("[aria-invalid=true], :invalid");
-      if (first) {
-        if (first.closest(".form-context")) context.open = true;
-        first.focus();
-      }
+      focusFirstError();
     }
     return valid;
   }
@@ -122,8 +158,7 @@
       service: form.elements.service.value,
       budget: form.elements.budget.value.trim(),
       timeline: form.elements.timeline.value.trim(),
-      website: form.elements.website.value.trim(),
-      source: Object.assign({}, source, { cta: limited(activeCta, 40) })
+      website: form.elements.website.value.trim()
     };
   }
   function resetChallenge() {
@@ -198,6 +233,7 @@
   }
   document.querySelectorAll("[data-cta]").forEach(function (link) {
     link.addEventListener("click", function () {
+      if (busy) return; // Keep the pending snapshot intact; normal anchor navigation still works.
       activeCta = limited(link.dataset.cta, 40);
       if (link.dataset.service) {
         form.elements.service.value = link.dataset.service;
@@ -235,15 +271,23 @@
     submit.disabled = true;
     submitLabel.textContent = "Preparing your inquiry…";
     form.setAttribute("aria-busy", "true");
+    lockFields();
     var timer;
     try {
+      // Attribution belongs to the first attempt, so navigating to another CTA
+      // cannot turn a retry of the same inquiry into a duplicate submission.
+      if (!attempts.has(content)) attempts.set(content, {
+        id: freshId(),
+        source: Object.assign({}, source, { cta: limited(activeCta, 40) })
+      });
+      var attempt = attempts.get(content);
       await loadChallenge();
       if (!challengeToken) {
         showStatus("Please complete the spam verification above, then send your inquiry. Your note is still here.", "error", true);
         return;
       }
-      if (!attempts.has(content)) attempts.set(content, freshId());
-      data.submissionId = attempts.get(content);
+      data.submissionId = attempt.id;
+      data.source = attempt.source;
       data.turnstileToken = challengeToken;
       var controller = new AbortController();
       timer = window.setTimeout(function () { controller.abort(); }, 20000);
@@ -272,7 +316,10 @@
         Object.keys(fields).forEach(function (name) {
           showFieldError(name, name === "email" ? "Check your email address." : name === "message" ? "Please write between 1 and 2,500 characters." : "Please check this field.");
         });
-        showStatus("Please check the highlighted fields and try again. Your note is still here.", "error", true);
+        showStatus("Please check the highlighted fields and try again. Your note is still here.", "error", false);
+        // Restore controls before focusing an invalid select in optional context.
+        unlockFields();
+        if (!focusFirstError()) status.focus();
       } else if (code === "challenge_required" || code === "challenge_failed") {
         showStatus("Please complete the refreshed spam verification, then try again. Your note is still here.", "error", true);
       } else if (code === "rate_limited" || response.status === 429) {
@@ -288,6 +335,7 @@
     } finally {
       if (timer) window.clearTimeout(timer);
       busy = false;
+      unlockFields();
       submit.disabled = false;
       form.removeAttribute("aria-busy");
       if (lastSuccessfulContent !== content) submitLabel.textContent = "Send project inquiry";

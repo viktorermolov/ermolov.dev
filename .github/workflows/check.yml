@@ -27,6 +27,7 @@ jobs:
       - run: hugo --environment production --destination "$RUNNER_TEMP/site"
       - run: python3 scripts/check_site.py "$RUNNER_TEMP/site"
       - run: node --check assets/js/app.js
+      - run: node --test tests/frontend.test.cjs
   worker:
     runs-on: ubuntu-latest
     defaults:

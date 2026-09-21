@@ -9,6 +9,7 @@
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $desc }}">
 <meta name="author" content="{{ .Site.Params.author }}">
+<meta name="robots" content="max-image-preview:large">
 <link rel="canonical" href="{{ .Permalink }}">
 <meta name="theme-color" content="{{ $themeLight }}" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="{{ $themeDark }}" media="(prefers-color-scheme: dark)">
@@ -16,7 +17,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="ermolov.dev">
+<meta property="og:site_name" content="{{ .Site.Params.author }}">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $desc }}">
 <meta property="og:url" content="{{ .Permalink }}">
@@ -75,7 +76,6 @@
   "url" .Site.BaseURL
   "jobTitle" $jobTitle
   "description" $desc
-  "email" .Site.Params.contact.email
   "sameAs" $sameAs
   "knowsAbout" $knowsAbout
   "mainEntityOfPage" (dict "@id" $profileID)
@@ -92,8 +92,10 @@
 {{- $website := dict
   "@type" "WebSite"
   "@id" $websiteID
-  "name" "ermolov.dev"
+  "name" .Site.Params.author
+  "alternateName" "ermolov.dev"
   "url" .Site.BaseURL
+  "inLanguage" "en-US"
   "publisher" (dict "@id" $personID)
 -}}
 {{- $profile := dict
@@ -102,6 +104,7 @@
   "url" .Site.BaseURL
   "name" $title
   "description" $desc
+  "inLanguage" "en-US"
   "about" (dict "@id" $personID)
   "mainEntity" (dict "@id" $serviceID)
   "isPartOf" (dict "@id" $websiteID)

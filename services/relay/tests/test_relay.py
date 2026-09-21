@@ -209,6 +209,53 @@ class RelayTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             Alerts(path)
 
+    def test_attention_alert_survives_crash_after_cloud_terminal_commit(self):
+        relay, client = self.relay(update_ok(), {"id": BOT_ID, "status": "failed"}, update_ok())
+        original_update = relay.update
+
+        def commit_then_crash(lease, action, **fields):
+            result = original_update(lease, action, **fields)
+            if action == "attention":
+                raise SystemExit("simulated process crash after successful terminal update")
+            return result
+
+        with patch.object(relay, "update", side_effect=commit_then_crash):
+            with self.assertRaises(SystemExit):
+                relay.process(lead(notificationId=BOT_ID), 100)
+        self.assertEqual(client.calls[-1]["payload"]["action"], "attention")
+        restarted = Alerts(self.settings.state_dir / "alerts.json", now=lambda: NOW)
+        self.assertEqual(len(restarted.state["pending"]), 1)
+        self.assertEqual(restarted.state["pending"][0]["key"], f"ermolov-attention:{LEAD_ID}:v1")
+        self.assertNotIn("a@example.test", (self.settings.state_dir / "alerts.json").read_text())
+
+    def test_attention_update_failure_reuses_durable_warning_on_retry(self):
+        relay, _ = self.relay(update_ok(), {"id": BOT_ID, "status": "failed"},
+                              APIError("cloudflare", "unavailable"))
+        with self.assertRaises(APIError):
+            relay.process(lead(notificationId=BOT_ID), 100)
+        restarted, _ = self.relay(update_ok(), {"id": BOT_ID, "status": "failed"}, update_ok())
+        restarted.process(lead(notificationId=BOT_ID), 100)
+        self.assertEqual(len(restarted.alerts.state["pending"]), 1)
+
+    def test_full_alert_queue_does_not_remove_lead_from_recovery_queue(self):
+        relay, client = self.relay(update_ok(), {"id": BOT_ID, "status": "failed"})
+        for index in range(100):
+            relay.alerts.enqueue(f"test alert {index}", "info")
+        relay.alerts.save()
+        with self.assertRaises(APIError) as caught:
+            relay.process(lead(notificationId=BOT_ID), 100)
+        self.assertEqual(caught.exception.code, "alert_queue_full")
+        self.assertFalse(any(call["payload"] and call["payload"].get("action") == "attention"
+                             for call in client.calls))
+
+    def test_attention_persistence_failure_prevents_terminal_cloud_update(self):
+        relay, client = self.relay(update_ok(), {"id": BOT_ID, "status": "failed"})
+        with patch.object(relay.alerts, "save", side_effect=OSError("simulated disk failure")):
+            with self.assertRaises(OSError):
+                relay.process(lead(notificationId=BOT_ID), 100)
+        self.assertFalse(any(call["payload"] and call["payload"].get("action") == "attention"
+                             for call in client.calls))
+
     def test_health_distinguishes_stale_or_stopped_from_external_outage(self):
         relay, _ = self.relay()
         relay.heartbeat("degraded")

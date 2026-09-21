@@ -206,12 +206,14 @@ class Alerts:
         seen = {key: created for key, created in self.state["attention"].items()
                 if created > self.now() - 30 * DAY}
         if lead_id in seen:
-            return
+            return True
         if self.enqueue(f"A project inquiry needs manual review. Lead: {lead_id}. Error: {code}.",
                         "warning", key=f"ermolov-attention:{lead_id}:v1"):
             seen[lead_id] = self.now()
             self.state["attention"] = dict(sorted(seen.items(), key=lambda item: item[1])[-1000:])
             self.save()
+            return True
+        return False
 
     def flush(self, send):
         # At most five per cycle; alert traffic cannot crowd out lead delivery.
@@ -283,8 +285,13 @@ class Relay:
         fields = {"errorCode": code}
         if notification_id:
             fields["notificationId"] = notification_id
+        # Persist the warning before removing this lead from the claim queue.
+        # A crash after Cloudflare commits attention must not lose its only
+        # operator alert. An expired lease can leave an early warning, but its
+        # terminal bot failure/ambiguous receipt already warrants attention.
+        if not self.alerts.attention(lease["id"], code):
+            raise APIError("relay", "alert_queue_full")
         self.update(lease, "attention", **fields)
-        self.alerts.attention(lease["id"], code)
         LOG.warning("lead_attention id=%s code=%s", lease["id"], code)
 
     def process(self, item, claim_started):

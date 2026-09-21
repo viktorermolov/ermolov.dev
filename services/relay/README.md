@@ -70,6 +70,13 @@ Attention alerts contain the lead ID and a fixed error code, never the lead's
 email or message. The alert queue is bounded to 100 records, attention dedup to
 1,000 IDs/30 days. Expired alert keys are dropped with a fixed log warning.
 
+The attention warning is persisted before marking a lead terminal in Cloudflare,
+so a crash after that update cannot discard the warning. A failed cloud update
+reuses the same warning key on retry. If the local alert queue is full or cannot
+be persisted, the lead stays reclaimable until local delivery/storage recovers.
+An expired lease can therefore produce an early warning for an already verified
+terminal bot failure, without losing or resending the original inquiry.
+
 ## Deployment and recovery
 
 After tests and a clean Git commit, run `./scripts/deploy_relay.sh` from the
