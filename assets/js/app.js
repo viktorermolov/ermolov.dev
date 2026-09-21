@@ -195,11 +195,6 @@
       }
     }, { rootMargin: "600px" });
     challengeObserver.observe(form);
-    var sticky = document.querySelector(".mobile-contact");
-    var stickyObserver = new IntersectionObserver(function (entries) {
-      if (sticky) sticky.classList.toggle("is-hidden", entries[0].isIntersecting);
-    }, { threshold: 0 });
-    stickyObserver.observe(document.getElementById("contact"));
   }
   document.querySelectorAll("[data-cta]").forEach(function (link) {
     link.addEventListener("click", function () {
