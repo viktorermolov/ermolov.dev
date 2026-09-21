@@ -187,6 +187,7 @@
         if (settled) return;
         window.clearTimeout(timeout);
         try {
+          verificationStatus.textContent = "Complete the spam verification to send your inquiry.";
           widget = window.turnstile.render(verification, {
             sitekey: sitekey,
             action: "contact",
