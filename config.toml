@@ -16,7 +16,6 @@ disableKinds = ["taxonomy", "term", "RSS"]
   jobTitle = "Full-Cycle Software Engineer"
   favicon = "img/favicon.ico"
   ogImage = "og/og-default.png"
-  avatar = "img/avatar.jpg"
   defaultTheme = "light"
   accentColor = "#176858"
   themeColorLight = "#f7f6f2"

@@ -39,4 +39,6 @@ Single-page Hugo service site at [ermolov.dev](https://ermolov.dev). No `content
 
 **Content model:** There is no projects/portfolio data source yet. Do not add placeholder projects. Until real projects exist, position the site as an expertise-led service page and keep case notes framed as engineering decision notes rather than client case studies.
 
+**Visual preference:** Do not use personal photographs, portrait illustrations, avatars, or Memoji. Use typography, spacing, rules and restrained abstract graphics for the About section and other page content.
+
 **Site metadata** (name, bio, social links) lives in `config.toml` under `[params]` and `[params.contact]`.

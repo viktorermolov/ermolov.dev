@@ -46,7 +46,6 @@
 <!-- Self-hosted Inter Variable, subset to Latin, punctuation, and interface symbols. -->
 <link rel="preload" href="/fonts/InterVariable-Latin.woff2" as="font" type="font/woff2" crossorigin>
 
-{{- $avatar := absURL (or .Site.Params.avatar "img/avatar.jpg") -}}
 {{- $jobTitle := or .Site.Params.jobTitle "Full-Cycle Software Engineer" -}}
 {{- $personID := printf "%s#person" .Site.BaseURL -}}
 {{- $serviceID := printf "%s#service" .Site.BaseURL -}}
@@ -74,7 +73,6 @@
   "@id" $personID
   "name" .Site.Params.author
   "url" .Site.BaseURL
-  "image" $avatar
   "jobTitle" $jobTitle
   "description" $desc
   "email" .Site.Params.contact.email
