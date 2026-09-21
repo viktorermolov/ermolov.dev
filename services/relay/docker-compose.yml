@@ -1,0 +1,44 @@
+services:
+  ermolov-lead-relay:
+    image: ${RELAY_IMAGE:-ermolov-lead-relay:local}
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 90s
+    env_file:
+      - ${RELAY_ENV_FILE:?Set RELAY_ENV_FILE to the private absolute env-file path}
+    environment:
+      RELAY_STATE_DIR: /app/state
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 32
+    mem_limit: 128m
+    cpus: 0.25
+    volumes:
+      - relay-data:/app/state
+    tmpfs:
+      - /tmp:size=8m,mode=1777
+    networks:
+      - default
+      - notifications
+    healthcheck:
+      test: ["CMD", "python", "healthcheck.py"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: "3"
+volumes:
+  relay-data:
+    name: ermolov-lead-relay-data
+networks:
+  default:
+  notifications:
+    external: true
+    name: notification-bot

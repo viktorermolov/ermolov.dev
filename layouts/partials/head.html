@@ -3,7 +3,6 @@
 {{- $ogImage := absURL (or .Site.Params.ogImage "og/og-default.png") -}}
 {{- $themeLight := or .Site.Params.themeColorLight "#ffffff" -}}
 {{- $themeDark := or .Site.Params.themeColorDark "#0b0b0c" -}}
-{{- $defaultTheme := or .Site.Params.defaultTheme "light" -}}
 {{- $twitterHandle := or .Site.Params.twitterHandle "" -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -25,7 +24,7 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Viktor Ermolov — Full-cycle product delivery. AI where it earns its keep.">
+<meta property="og:image:alt" content="Viktor Ermolov — Good ideas deserve working software. SaaS, AI and automation.">
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
@@ -36,7 +35,7 @@
 <meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $desc }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
-<meta name="twitter:image:alt" content="Viktor Ermolov — Full-cycle product delivery. AI where it earns its keep.">
+<meta name="twitter:image:alt" content="Viktor Ermolov — Good ideas deserve working software. SaaS, AI and automation.">
 
 <!-- Favicons + PWA -->
 <link rel="icon" href="/img/favicon.ico" sizes="any">
@@ -44,8 +43,8 @@
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 
-<!-- Fonts: preload self-hosted Inter Variable -->
-<link rel="preload" href="/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Self-hosted Inter Variable, subset to Latin, punctuation, and interface symbols. -->
+<link rel="preload" href="/fonts/InterVariable-Latin.woff2" as="font" type="font/woff2" crossorigin>
 
 {{- $avatar := absURL (or .Site.Params.avatar "img/avatar.jpg") -}}
 {{- $jobTitle := or .Site.Params.jobTitle "Full-Cycle Software Engineer" -}}
@@ -84,14 +83,13 @@
   "mainEntityOfPage" (dict "@id" $profileID)
 -}}
 {{- $service := dict
-  "@type" "ProfessionalService"
+  "@type" "Service"
   "@id" $serviceID
-  "name" (printf "%s — Full-Cycle Product Delivery" .Site.Params.author)
+  "name" (printf "%s — SaaS, AI and Automation Engineering" .Site.Params.author)
   "url" .Site.BaseURL
   "provider" (dict "@id" $personID)
   "areaServed" "Worldwide"
   "serviceType" $serviceTypes
-  "email" .Site.Params.contact.email
 -}}
 {{- $website := dict
   "@type" "WebSite"
@@ -101,12 +99,13 @@
   "publisher" (dict "@id" $personID)
 -}}
 {{- $profile := dict
-  "@type" "ProfilePage"
+  "@type" "WebPage"
   "@id" $profileID
   "url" .Site.BaseURL
   "name" $title
   "description" $desc
   "about" (dict "@id" $personID)
+  "mainEntity" (dict "@id" $serviceID)
   "isPartOf" (dict "@id" $websiteID)
 -}}
 {{- $schema := dict
@@ -127,5 +126,8 @@
 
 {{- /* Theme init (inline, pre-paint) to avoid FOUC */ -}}
 <script>
-(function(){try{var t=localStorage.getItem("theme");if(!t){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+(function(){var t;try{t=localStorage.getItem("theme");}catch(e){}if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.setAttribute("data-theme",t);})();
 </script>
+{{- with .Site.Params.analyticsToken }}
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{ dict "token" . | jsonify }}'></script>
+{{- end }}

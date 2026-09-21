@@ -4,27 +4,29 @@ buildFuture = false
 buildExpired = false
 relativeURLs = true
 enableRobotsTXT = true
-languageCode = "en"
+locale = "en-US"
 language = "en"
-title = "Viktor Ermolov — Full-Cycle SaaS & AI Integration Engineer"
+title = "Viktor Ermolov — SaaS, AI & Automation Engineer"
 disableKinds = ["taxonomy", "term", "RSS"]
 
 [params]
   author = "Viktor Ermolov"
-  description = "Independent engineer building SaaS, micro-SaaS, and AI systems end-to-end. US-based, remote, working with teams worldwide. Straight answers on when AI actually pays off."
-  shortDescription = "Full-cycle product delivery. AI where it earns its keep."
+  description = "SaaS development, practical AI integration, and workflow automation for founders. Work directly with Viktor Ermolov, an independent US-based engineer, from idea to production."
+  shortDescription = "Good ideas deserve working software."
   jobTitle = "Full-Cycle Software Engineer"
   favicon = "img/favicon.ico"
   ogImage = "og/og-default.png"
   avatar = "img/avatar.jpg"
   defaultTheme = "light"
-  accentColor = "#4f46e5"
-  themeColorLight = "#ffffff"
-  themeColorDark = "#0b0b0c"
+  accentColor = "#176858"
+  themeColorLight = "#f7f6f2"
+  themeColorDark = "#141b19"
+  analyticsToken = "99147b109be9494d85d44b60d9b075a4"
   twitterHandle = "@viktor__ermolov"
 
   [params.contact]
     email = "viktor@ermolov.dev"
+    turnstileSiteKey = "0x4AAAAAAE_S0Zi7A-HNhgIq"
     github = "https://github.com/viktorermolov"
     linkedin = "https://www.linkedin.com/in/vermolov/"
     x = "https://x.com/viktor__ermolov"

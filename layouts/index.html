@@ -1,228 +1,106 @@
 {{ define "main" }}
-  {{/* ------------------------------------------------------------
-       HERO
-       ------------------------------------------------------------ */}}
-  <section class="section hero" id="top" aria-labelledby="hero-title">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Independent engineer · Based in the US</p>
+        <h1 id="hero-title">Good ideas deserve <span>working software.</span></h1>
+        <p class="hero__lede">I help SaaS founders turn a product idea, an AI use case, or a manual workflow into a system people can actually use.</p>
+        <div class="button-row">
+          <a class="btn btn--primary" href="#contact" data-cta="hero">Discuss your project <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="#services">Find your starting point <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="hero__footnote">Architecture, implementation, and launch. One person accountable.</p>
+      </div>
+      <div class="blueprint" role="img" aria-label="A delivery path from the right problem, to a useful first release, to a system you can run">
+        <div class="blueprint__heading"><span>THE DELIVERY PATH</span><span aria-hidden="true">↗</span></div>
+        <div class="blueprint__path" aria-hidden="true">
+          <div class="blueprint__node"><span class="blueprint__index">01 / DEFINE</span><strong>The right<br>problem.</strong><span class="blueprint__note">A clear outcome. A sensible scope.</span></div>
+          <div class="blueprint__connector"><span>make the first useful thing</span></div>
+          <div class="blueprint__node blueprint__node--offset"><span class="blueprint__index">02 / BUILD</span><strong>A useful<br>first release.</strong><span class="blueprint__note">Real workflows. Real feedback.</span></div>
+          <div class="blueprint__connector blueprint__connector--offset"><span>make it dependable</span></div>
+          <div class="blueprint__end"><span class="blueprint__end-icon">✓</span><div><span class="blueprint__index">03 / OPERATE</span><strong>A system you can run.</strong></div></div>
+        </div>
+        <p class="blueprint__caption">Less distance between the idea and the outcome.</p>
+      </div>
+    </div>
+    <div class="container hero__principles" aria-label="Working principles"><span>Full-cycle ownership</span><span>AI when it earns its keep</span><span>Remote, async, worldwide</span></div>
+  </section>
+
+  <section class="section" id="services" aria-labelledby="services-title">
     <div class="container">
-      <p class="hero__eyebrow">
-        <span class="hero__status" aria-hidden="true"></span>
-        <span class="hero__eyebrow-text">Available for projects · Remote from the US · Working with teams worldwide</span>
-      </p>
-      <h1 class="hero__title" id="hero-title">
-        Full-cycle product delivery.<br>
-        <span class="accent">AI where it earns its keep.</span>
-      </h1>
-      <p class="hero__lede">
-        Independent engineer for founders and product teams building SaaS, internal AI systems, and automation. I own delivery end-to-end &mdash; from architecture to the pager &mdash; and give you a straight answer on when AI actually pays off and when it doesn&rsquo;t.
-      </p>
-      <div class="hero__cta-row">
-        <a class="btn btn--primary" href="mailto:{{ .Site.Params.contact.email }}?subject=Project%20inquiry">
-          Start a project
-          <span class="btn__arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="btn btn--ghost" href="#case-notes">How I work</a>
+      <div class="section-heading"><p class="eyebrow">01 / Your starting point</p><h2 id="services-title">What needs to<br><span class="serif">move forward?</span></h2><p>Start with the business problem. We’ll choose the smallest useful solution together.</p></div>
+      <div class="services">
+        <article class="service"><div class="service__title"><span class="service__number">01</span><h3>Get your SaaS<br>into production.</h3></div><div class="service__body"><p>You have a product idea or an early version. You need someone to turn it into a focused release, with the foundations to keep building.</p><ul class="check-list"><li>A scoped first release around your core workflow</li><li>Authentication, tenant boundaries, and billing foundations</li><li>Deployment, monitoring, and a clear handover</li></ul><a class="text-link" href="#contact" data-service="saas" data-cta="service-saas">Talk about your product <span aria-hidden="true">↗</span></a></div></article>
+        <article class="service"><div class="service__title"><span class="service__number">02</span><h3>Make AI useful<br>in your business.</h3></div><div class="service__body"><p>You see a possible use for AI, but need to know whether it will work reliably and justify its cost. Let’s test the idea before committing to it.</p><ul class="check-list"><li>A feasibility check against representative examples</li><li>Extraction, classification, or assistant workflows</li><li>Evaluations, cost limits, and human fallbacks</li></ul><a class="text-link" href="#contact" data-service="ai" data-cta="service-ai">Explore an AI use case <span aria-hidden="true">↗</span></a></div></article>
+        <article class="service"><div class="service__title"><span class="service__number">03</span><h3>Give the repetitive<br>work to software.</h3></div><div class="service__body"><p>Your team is moving data between tools, processing documents, or repeating the same operational steps. That’s a good place to look for automation.</p><ul class="check-list"><li>Connected tools and fewer manual handoffs</li><li>Internal interfaces built around how your team works</li><li>Retries, exception handling, and useful alerts</li></ul><a class="text-link" href="#contact" data-service="automation" data-cta="service-automation">Show me the workflow <span aria-hidden="true">↗</span></a></div></article>
       </div>
     </div>
   </section>
 
-  {{/* ------------------------------------------------------------
-       SERVICES
-       ------------------------------------------------------------ */}}
-  <section class="section section--alt reveal" id="services" aria-labelledby="services-title">
+  <section class="section section--tinted" id="engagements" aria-labelledby="engagements-title">
     <div class="container">
-      <p class="section__eyebrow">What I do</p>
-      <h2 class="section__title" id="services-title">Services</h2>
-
-      <ul class="services-list">
-        <li class="service">
-          <span class="service__num" aria-hidden="true">01</span>
-          <div class="service__body">
-            <h3>Full-Cycle Delivery</h3>
-            <p>Discovery, architecture, build, deploy, and operate &mdash; by one person. No handoffs, no &ldquo;that&rsquo;s the other vendor&rsquo;s problem.&rdquo; The engineer writing the code is the one carrying the pager after launch.</p>
-          </div>
-        </li>
-        <li class="service">
-          <span class="service__num" aria-hidden="true">02</span>
-          <div class="service__body">
-            <h3>AI Integration, Done Honestly</h3>
-            <p>Production LLM and agent systems where they move a metric: extraction, classification, workflow automation, customer-facing assistants. Eval-driven, with guardrails, fallbacks, and cost controls from day one. If a deterministic approach is cheaper and more reliable, I&rsquo;ll tell you and build it that way.</p>
-          </div>
-        </li>
-        <li class="service">
-          <span class="service__num" aria-hidden="true">03</span>
-          <div class="service__body">
-            <h3>SaaS &amp; Micro-SaaS from Zero</h3>
-            <p>From empty repo to first paying customer. I get the foundations right &mdash; tenancy, auth, billing hooks, observability &mdash; and defer everything else behind clear boundaries so the product can pivot without a rewrite. Typical first production slice: 4&ndash;8 weeks.</p>
-          </div>
-        </li>
-        <li class="service">
-          <span class="service__num" aria-hidden="true">04</span>
-          <div class="service__body">
-            <h3>Automation &amp; Internal Tools</h3>
-            <p>Agents and pipelines that remove recurring manual work: document processing, support triage, data extraction, operational workflows. Built to run unattended and raise clear alerts when they cannot complete safely.</p>
-          </div>
-        </li>
-      </ul>
+      <div class="section-heading section-heading--wide"><p class="eyebrow">02 / Ways to work together</p><h2 id="engagements-title">A clear first step.<br><span class="serif">Room to grow.</span></h2><p>You don’t need a finished specification to start a conversation. Bring the problem, the constraints, and what you already know.</p></div>
+      <div class="engagements">
+        <article class="engagement"><p class="small-label">GET CLARITY</p><h3>Technical advisory</h3><p>For a decision you want to get right before investing in a build.</p><p class="engagement__deliverable"><strong>You leave with</strong> a technical assessment, the important trade-offs, and an actionable next step.</p><a class="text-link" href="#contact" data-service="advisory" data-cta="engagement-advisory">Discuss the decision <span aria-hidden="true">↗</span></a></article>
+        <article class="engagement"><p class="small-label">SHIP SOMETHING USEFUL</p><h3>Product delivery</h3><p>For a defined product or workflow that needs an engineer to own delivery.</p><p class="engagement__deliverable"><strong>You get</strong> working software in agreed milestones, documented decisions, and visibility throughout.</p><a class="text-link" href="#contact" data-service="saas" data-cta="engagement-build">Discuss the build <span aria-hidden="true">↗</span></a></article>
+        <article class="engagement"><p class="small-label">GET UNSTUCK</p><h3>Rescue &amp; stabilize</h3><p>For a stalled project, production issue, or inherited system that needs attention.</p><p class="engagement__deliverable"><strong>We start with</strong> diagnosis and a prioritized stabilization plan, then tackle the highest-impact work.</p><a class="text-link" href="#contact" data-service="rescue" data-cta="engagement-rescue">Explain what’s stuck <span aria-hidden="true">↗</span></a></article>
+      </div>
+      <p class="fit-note"><strong>A good fit:</strong> a founder or small product team that wants direct engineering ownership, practical trade-offs, and a useful release before a bigger roadmap.</p>
     </div>
   </section>
 
-  {{/* ------------------------------------------------------------
-       DECISION NOTES
-       ------------------------------------------------------------ */}}
-  <section class="section reveal" id="case-notes" aria-labelledby="case-notes-title">
+  <section class="section" id="approach" aria-labelledby="approach-title">
     <div class="container">
-      <p class="section__eyebrow">How I evaluate trade-offs</p>
-      <h2 class="section__title" id="case-notes-title">Decision Notes</h2>
-      <p class="section__lede">Four recurring engineering decisions, and the default reasoning I bring to each before writing code.</p>
+      <div class="section-heading"><p class="eyebrow">03 / How the work happens</p><h2 id="approach-title">No mystery<br><span class="serif">between milestones.</span></h2><p>Short feedback loops and written decisions keep the work understandable, from the first conversation to production.</p></div>
+      <ol class="process"><li><span class="process__number" aria-hidden="true">01</span><h3>Understand</h3><p>We clarify the outcome, current workflow, constraints, and what success needs to look like.</p></li><li><span class="process__number" aria-hidden="true">02</span><h3>Define</h3><p>I propose a first milestone, technical approach, deliverables, and commercial terms before work begins.</p></li><li><span class="process__number" aria-hidden="true">03</span><h3>Build &amp; review</h3><p>You see working increments. We use feedback to resolve uncertainty and keep scope intentional.</p></li><li><span class="process__number" aria-hidden="true">04</span><h3>Launch &amp; operate</h3><p>Deployment, documentation, and monitoring are part of delivery. Ongoing support is agreed explicitly.</p></li></ol>
+    </div>
+  </section>
 
-      <div class="notes">
-        <article class="note">
-          <h3 class="note__title">When an algorithm beats AI</h3>
-          <dl>
-            <dt>The decision</dt>
-            <dd class="muted">Inbound request routing in a B2B support or ops platform &mdash; high volume, repeated patterns, strict latency expectations. It can look like an LLM job at first glance.</dd>
+  <section class="section about-section" id="about" aria-labelledby="about-title">
+    <div class="container about">
+      <div class="about__photo"><img src="{{ .Site.Params.avatar | relURL }}" alt="Viktor Ermolov" width="597" height="635" loading="lazy" decoding="async"><span class="about__photo-caption">Viktor Ermolov / Independent engineer</span></div>
+      <div class="about__copy"><p class="eyebrow">04 / The person doing the work</p><h2 id="about-title">You work with me.<br><span class="serif">Directly.</span></h2><p class="about__intro">I’m Viktor, an independent software engineer based in the United States, working remotely with founders and teams worldwide.</p><p>I connect product decisions with the engineering needed to ship them. That means asking what matters, explaining the trade-offs, and staying responsible for the result through deployment.</p><p>I work async-first: clear written updates, visible progress, and decisions you can return to later. If AI isn’t the right tool for the problem, I’ll tell you.</p><div class="about__links"><a class="text-link" href="{{ .Site.Params.contact.github }}" target="_blank" rel="me noopener noreferrer">GitHub <span class="sr-only">(opens in a new tab)</span><span aria-hidden="true">↗</span></a><a class="text-link" href="{{ .Site.Params.contact.linkedin }}" target="_blank" rel="me noopener noreferrer">LinkedIn <span class="sr-only">(opens in a new tab)</span><span aria-hidden="true">↗</span></a></div></div>
+    </div>
+  </section>
 
-            <dt>The options</dt>
-            <dd class="muted">(a) An LLM classifier with a structured output schema, (b) a small fine-tuned encoder model, (c) deterministic rules plus a lookup table driven by measured traffic distribution.</dd>
+  <section class="section" id="case-notes" aria-labelledby="notes-title">
+    <div class="container notes-layout"><div><p class="eyebrow">05 / Engineering judgment</p><h2 id="notes-title">The reasoning<br><span class="serif">behind the build.</span></h2><p class="section-intro">A few recurring decisions and how I approach them. These are engineering notes, rather than client case studies.</p></div><div class="notes">
+      <details class="disclosure"><summary>Does this actually need AI?<span class="disclosure__icon" aria-hidden="true">+</span></summary><div class="disclosure__body"><p>Start with representative inputs and a baseline. For predictable routing or fixed rules, a deterministic solution can be faster, cheaper, and easier to maintain.</p><p>For variable documents or open-ended language, test a model against real examples. Measure useful output, errors, and cost before expanding the system.</p></div></details>
+      <details class="disclosure"><summary>What belongs in a first SaaS release?<span class="disclosure__icon" aria-hidden="true">+</span></summary><div class="disclosure__body"><p>A narrow workflow that solves a real problem, plus the foundations that are expensive to retrofit: identity, tenant boundaries, deployment, and observability.</p><p>Keep the rest proportionate. A clear boundary and a documented decision are often more useful than another service or an elaborate architecture.</p></div></details>
+      <details class="disclosure"><summary>What makes automation dependable?<span class="disclosure__icon" aria-hidden="true">+</span></summary><div class="disclosure__body"><p>The happy path is only part of the job. Plan for duplicate events, unavailable providers, retries, and inputs that need a person’s judgment.</p><p>Make failures visible and recoverable. An automation should reduce the work of operating a business, including when something goes wrong.</p></div></details>
+    </div></div>
+  </section>
 
-            <dt>My default</dt>
-            <dd>Start with a representative sample before choosing the model class. In many B2B ops pipelines, a small set of rules covers most volume and the remainder clusters into tenant-tier &times; product-line buckets. Rules plus lookup for the hot path; a cheap small-model classifier for the long tail; no LLM on the live path.</dd>
+  <section class="section section--tinted" id="faq" aria-labelledby="faq-title">
+    <div class="container notes-layout"><div><p class="eyebrow">06 / Before we start</p><h2 id="faq-title">A few things<br><span class="serif">you might ask.</span></h2></div><div class="faq">
+      <details class="disclosure"><summary>Do I need a finished specification?<span class="disclosure__icon" aria-hidden="true">+</span></summary><div class="disclosure__body"><p>No. Describe the problem, who needs it solved, and any constraints you know. A short conversation or advisory engagement can turn that into a practical starting point.</p></div></details>
+      <details class="disclosure"><summary>How do pricing and timelines work?<span class="disclosure__icon" aria-hidden="true">+</span></summary><div class="disclosure__body"><p>They depend on scope, existing systems, and the amount of uncertainty. I propose clear deliverables, milestones, and terms after understanding the work. You approve the scope before implementation begins.</p></div></details>
+      <details class="disclosure"><summary>Can you work with an existing product?<span class="disclosure__icon" aria-hidden="true">+</span></summary><div class="disclosure__body"><p>Yes. An existing codebase, integration, or manual process can be the starting point. I first assess what is already there and what needs to change, then recommend a focused path forward.</p></div></details>
+      <details class="disclosure"><summary>What happens after launch?<span class="disclosure__icon" aria-hidden="true">+</span></summary><div class="disclosure__body"><p>Delivery includes the agreed documentation and operational handover. Ongoing maintenance, monitoring responsibilities, and further development are discussed explicitly so you know who owns what.</p></div></details>
+      <details class="disclosure"><summary>Can we work across time zones?<span class="disclosure__icon" aria-hidden="true">+</span></summary><div class="disclosure__body"><p>Yes. I’m based in the US and work remotely with teams worldwide. Written updates carry the day-to-day work; we agree on useful meeting times and response expectations at the start.</p></div></details>
+      <details class="disclosure"><summary>What happens when I send an inquiry?<span class="disclosure__icon" aria-hidden="true">+</span></summary><div class="disclosure__body"><p>I read it and aim to reply within two business days with questions or a concrete next step. There’s no automatic sales sequence. If the project isn’t a fit, I’ll be direct about it.</p></div></details>
+    </div></div>
+  </section>
 
-            <dt>Why</dt>
-            <dd class="muted">Millisecond-range latency, near-zero variable cost, a classifier an on-call engineer can debug at 3 a.m. without looking up an API key. The trade: harder to extend to categories that don&rsquo;t exist yet. For constrained inputs, that&rsquo;s a good trade. Reach for an LLM when the input space is genuinely unbounded &mdash; not by default.</dd>
-          </dl>
-        </article>
-
-        <article class="note">
-          <h3 class="note__title">When AI is justified</h3>
-          <dl>
-            <dt>The decision</dt>
-            <dd class="muted">Structured extraction from high-variance documents &mdash; statements, invoices, onboarding forms &mdash; arriving in dozens of layouts from different originators. Regex-and-template pipelines accrete for years in this setting; every new counterparty format breaks something upstream. Maintenance cost grows faster than the team can shrink it.</dd>
-
-            <dt>The options</dt>
-            <dd class="muted">Keep patching rules, build a classical NLP pipeline with hand-crafted features, or use an LLM with a typed output schema and engineered guardrails.</dd>
-
-            <dt>My default</dt>
-            <dd>The LLM path, with the engineering around the model doing most of the work. A Pydantic-typed output schema enforced via tool-use / function-calling. Deterministic post-validators for field-level invariants &mdash; date ranges, sum checks, currency-format matches. An evaluation set that grows with production &mdash; starts around 40 examples, stabilizes in the hundreds. A confidence-gated human-in-the-loop fallback for low-confidence outputs. A pre-flight OCR-quality check so garbage inputs never reach the model &mdash; most &ldquo;prompt failures&rdquo; in this domain are scan-quality failures.</dd>
-
-            <dt>Why</dt>
-            <dd class="muted">The rule-patching treadmill ends. Engineering attention shifts from regex archaeology to eval curation, which is the better place to spend the day. You trade per-call cost and variable latency for maintenance cost that stays roughly flat as customers grow.</dd>
-          </dl>
-        </article>
-
-        <article class="note">
-          <h3 class="note__title">Choosing SaaS foundations from zero</h3>
-          <dl>
-            <dt>The decision</dt>
-            <dd class="muted">Founder with a clear wedge, an early customer conversation, and a product spec that&rsquo;s still moving. The product will change; the foundation should not force a rewrite when it does.</dd>
-
-            <dt>The options</dt>
-            <dd class="muted">A fast no-code MVP, a heavyweight enterprise stack chosen for an imagined future, or a narrow production-grade foundation limited to the decisions that are expensive to change later.</dd>
-
-            <dt>My default</dt>
-            <dd>The narrow foundation. Make the permanent decisions on day one and defer everything else behind explicit boundaries. Tenancy: shared-schema multi-tenancy in Postgres with row-level security enforcing boundaries at the database &mdash; an application-layer WHERE-clause bug cannot leak data. Tenant context: set once per request in middleware, propagated into queries, logs, metrics, and error tracking. Billing hooks, not billing: a tenant_id on every metered event from day one, so a real billing system dropped in later is a migration, not a rewrite. Observability: structured logs and traces tagged with tenant_id from the first commit. A tenant-level kill switch wired in before the first paying customer.</dd>
-
-            <dt>Why</dt>
-            <dd class="muted">You get a production slice that can absorb product pivots without pretending the future is already known. What gets skipped early is what you pay for later &mdash; usually at 3 a.m. Microservices, real-time analytics, and custom RBAC beyond role + tenant wait until they actually earn their complexity.</dd>
-          </dl>
-        </article>
-
-        <article class="note">
-          <h3 class="note__title">Shipping a micro-SaaS solo</h3>
-          <dl>
-            <dt>The decision</dt>
-            <dd class="muted">One operator, narrow audience, no team, no runway. Binding constraint is operational, not architectural: cheap to run, boring to operate, survives weeks of inattention without waking anyone up.</dd>
-
-            <dt>The options</dt>
-            <dd class="muted">A fashionable distributed stack on a managed platform, serverless across a dozen managed services, or a deliberately unfashionable monolith on a single VPS with managed Postgres.</dd>
-
-            <dt>My default</dt>
-            <dd>The boring monolith. A Django or FastAPI app on a single VPS, managed Postgres as the only stateful dependency, Stripe Checkout (hosted) so no PCI surface is owned, webhook handlers in the same monolith with idempotency keys on every incoming event, Sentry for errors, uptime monitoring configured to page only when the site is actually down &mdash; not when a metric wiggles. The job queue is a Postgres table. The next version is also a Postgres table. Redis is rarely necessary at this scale.</dd>
-
-            <dt>Why</dt>
-            <dd class="muted">A three-figure monthly infrastructure bill, no on-call rotation, and fewer moving parts to babysit. You trade instant horizontal scaling and multi-region latency for operational silence. For a micro-SaaS, the right architecture is the one that lets you leave it alone between focused maintenance windows. Boring is a feature.</dd>
-          </dl>
-        </article>
+  <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+    <div class="container contact-layout">
+      <div class="contact-copy"><p class="eyebrow">07 / Let’s make it real</p><h2 id="contact-title">What are you<br><span class="serif">working on?</span></h2><p>A product idea, a workflow that takes too long, or a project that needs a fresh pair of eyes. Tell me where you are and where you want to go.</p><div class="contact-next"><span class="small-label">WHAT HAPPENS NEXT</span><p>I’ll review your note and aim to reply within two business days with a clear next step.</p></div><p class="contact-email">Prefer email?<br><a href="mailto:{{ .Site.Params.contact.email }}" data-cta="contact-email">{{ .Site.Params.contact.email }}</a></p></div>
+      <div class="contact-panel">
+        <form id="contact-form" method="post" action="/api/leads" data-endpoint="/api/leads" data-sitekey="{{ .Site.Params.contact.turnstileSiteKey }}" aria-labelledby="form-title">
+          <h3 id="form-title">Tell me a little about the project.</h3><p class="form-intro">Just your email and a short note to get started.</p>
+          <div class="form-row"><div class="field"><label for="contact-name">Name <span>(optional)</span></label><input id="contact-name" name="name" autocomplete="name" maxlength="80" placeholder="Your name"></div><div class="field"><label for="contact-email">Email <span>(required)</span></label><input id="contact-email" type="email" name="email" autocomplete="email" maxlength="254" required placeholder="you@company.com" aria-describedby="email-error"><span class="field-error" id="email-error"></span></div></div>
+          <div class="field"><label for="contact-message">What would you like help with? <span>(required)</span></label><textarea id="contact-message" name="message" rows="5" maxlength="2500" required placeholder="The problem, what you have so far, and what a good outcome would look like…" aria-describedby="message-hint message-error"></textarea><div class="field-hint" id="message-hint">A few sentences is enough. <span id="message-count">0 / 2,500</span></div><span class="field-error" id="message-error"></span></div>
+          <details class="form-context"><summary>Add project context <span>(optional)</span><span aria-hidden="true">+</span></summary><div class="context-fields"><div class="field"><label for="contact-service">What kind of project?</label><select id="contact-service" name="service"><option value="">Not sure yet</option><option value="saas">SaaS / product development</option><option value="ai">AI integration</option><option value="automation">Automation / internal tools</option><option value="advisory">Technical advisory</option><option value="rescue">Rescue / stabilization</option><option value="other">Something else</option></select></div><div class="form-row"><div class="field"><label for="contact-budget">Budget, if known</label><input id="contact-budget" name="budget" maxlength="80" placeholder="A range is fine"></div><div class="field"><label for="contact-timeline">Timeline, if known</label><input id="contact-timeline" name="timeline" maxlength="80" placeholder="When would you like to start?"></div></div></div></details>
+          <div class="form-trap" aria-hidden="true"><label for="contact-website">Leave this field empty</label><input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <div id="contact-verification" class="verification"></div><p id="verification-status" class="verification-status" aria-live="polite"></p>
+          <button class="btn btn--primary form-submit" type="submit" disabled><span>Send project inquiry</span><span aria-hidden="true">↗</span></button>
+          <p id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+          <noscript><p class="form-notice">This form needs JavaScript for spam protection. You can email <a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a> instead.</p></noscript>
+          <p class="privacy-summary">Your details are used to respond to this inquiry. No mailing list.</p>
+          <details class="privacy-details" id="privacy"><summary>How your inquiry is handled</summary><p>Your email and project details are securely stored in Cloudflare and retrieved by my private server for delivery through Telegram. Contact details and message content are deleted from Cloudflare within 30 days after delivery; non-content delivery records are kept for up to 90 days. Undelivered inquiries are retained until handled. Telegram’s copy remains in my private notification history until removed. Please don’t include passwords or sensitive customer data. To ask about or delete your inquiry, email <a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a>.</p></details>
+        </form>
       </div>
     </div>
   </section>
-
-  {{/* ------------------------------------------------------------
-       ENGAGEMENT SHAPES
-       ------------------------------------------------------------ */}}
-  <section class="section reveal" id="engagements" aria-labelledby="engagements-title">
-    <div class="container">
-      <p class="section__eyebrow">Engagement shapes</p>
-      <h2 class="section__title" id="engagements-title">How we&rsquo;d work together</h2>
-      <p class="section__lede">Three common shapes of engagement. Most work starts as one and sometimes becomes another.</p>
-
-      <ul class="engagements">
-        <li class="engagement">
-          <h3>Build</h3>
-          <p>End-to-end delivery of a product or system. Fixed scope or milestone-based. Typical range: 4&ndash;12 weeks for a production slice, longer for multi-phase builds. Best fit when you need someone to own the outcome, not just write code.</p>
-        </li>
-        <li class="engagement">
-          <h3>Advisory</h3>
-          <p>Architecture review, AI feasibility assessment, or a second opinion on a decision that&rsquo;s expensive to change. Usually 1&ndash;3 weeks, sometimes a single deep session. Best fit when the question is &ldquo;should we, and how?&rdquo; rather than &ldquo;build it.&rdquo;</p>
-        </li>
-        <li class="engagement">
-          <h3>Rescue</h3>
-          <p>Stalled project, production issues, or a codebase inherited from a team that&rsquo;s gone. I diagnose, stabilize, and get things moving again. Scoped week by week. Best fit when time matters more than a full rewrite.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  {{/* ------------------------------------------------------------
-       APPROACH
-       ------------------------------------------------------------ */}}
-  <section class="section section--alt reveal" id="approach" aria-labelledby="approach-title">
-    <div class="container">
-      <p class="section__eyebrow">How I work</p>
-      <h2 class="section__title" id="approach-title">Approach</h2>
-
-      <ul class="approach">
-        <li>
-          <div class="approach__body">
-            <h3><span class="approach__marker" aria-hidden="true"></span>Ship first, iterate with signal.</h3>
-            <p>Useful software in production beats perfect software in a branch. Real users generate better requirements than meeting rooms.</p>
-          </div>
-        </li>
-        <li>
-          <div class="approach__body">
-            <h3><span class="approach__marker" aria-hidden="true"></span>AI is a tool, not a strategy.</h3>
-            <p>I reach for it when the input space is open-ended or the maintenance cost of rules is growing faster than the team. When a deterministic approach is simpler, cheaper, and more reliable, I&rsquo;ll tell you and build it that way. Evals and cost ceilings from day one, not after the bill arrives.</p>
-          </div>
-        </li>
-        <li>
-          <div class="approach__body">
-            <h3><span class="approach__marker" aria-hidden="true"></span>Own the full stack of delivery.</h3>
-            <p>From design decisions to production incidents. The person writing the code is the person carrying the pager.</p>
-          </div>
-        </li>
-        <li>
-          <div class="approach__body">
-            <h3><span class="approach__marker" aria-hidden="true"></span>Async-first. Written. Transparent.</h3>
-            <p>Short written updates, visible progress, decisions documented where you can find them six months later.</p>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  {{/* ------------------------------------------------------------
-       CONTACT
-       ------------------------------------------------------------ */}}
-  <section class="section reveal" id="contact" aria-labelledby="contact-title">
-    <div class="container">
-      <p class="section__eyebrow">Get in touch</p>
-      <h2 class="section__title" id="contact-title">Tell me what you&rsquo;re building.</h2>
-      <p class="contact__lede">
-        A sharp email beats a form. Send what you have &mdash; problem, constraints, timeline &mdash; and I&rsquo;ll reply with specifics.
-      </p>
-      <p class="contact__body">
-        I reply within two business days with a direct answer: fit, rough timeline, and what a first step looks like. If it&rsquo;s not a fit, I&rsquo;ll say so and point you somewhere useful.
-      </p>
-    </div>
-  </section>
+  <a class="mobile-contact" href="#contact" data-cta="mobile">Discuss your project <span aria-hidden="true">↗</span></a>
 {{ end }}
