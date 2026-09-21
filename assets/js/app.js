@@ -145,7 +145,7 @@
         window.clearTimeout(timeout);
         if (script) script.remove();
         challengeLoader = null;
-        verificationStatus.textContent = "Spam protection couldn’t load. Try sending again, or use the email address alongside this form.";
+        verificationStatus.textContent = "Spam protection couldn’t load. Try sending again, or use the Email link in the footer.";
         reject(new Error("verification_unavailable"));
       }
       function render() {
@@ -227,7 +227,7 @@
     event.preventDefault();
     if (busy || !validate()) return;
     if (!sitekey || !endpoint || endpoint !== "/api/leads") {
-      showStatus("The form is temporarily unavailable. Please use the email address alongside it; your note is still here.", "error", true);
+      showStatus("The form is temporarily unavailable. Please use the Email link in the footer; your note is still here.", "error", true);
       return;
     }
     var data = canonicalData();

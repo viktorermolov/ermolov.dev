@@ -187,7 +187,7 @@ summary::-webkit-details-marker { display: none; }
 .disclosure[open] .disclosure__icon { transform: rotate(45deg); }
 .disclosure__body { padding-bottom: .5rem; color: var(--muted); font-size: .86rem; max-width: 38rem; }
 
-/* Contact is a calm, useful destination with a visible email escape hatch. */
+/* Contact keeps the project inquiry form as the main action. */
 .contact-section { background: #183f34; color: #f7f6ee; }
 .contact-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 5rem; align-items: start; }
 .contact-copy { position: sticky; top: 9rem; }
@@ -197,8 +197,6 @@ summary::-webkit-details-marker { display: none; }
 .contact-next { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #567366; max-width: 22rem; }
 .contact-next .small-label { color: #b7d9b8; font-size: .6rem; }
 .contact-next p { color: #d1ddd2; font-size: .85rem; margin-top: .6rem; }
-.contact-copy > .contact-email { font-size: .77rem; margin-top: 2rem; }
-.contact-email a { display: inline-block; color: #f5f4e9; font-size: 1.1rem; margin-top: .4rem; }
 .contact-panel { background: var(--paper); color: var(--fg); padding: clamp(1.4rem, 3vw, 2.4rem); border-radius: 7px; }
 .contact-panel h3 { font-size: 1.25rem; line-height: 1.3; margin-bottom: .5rem; }
 .form-intro { font-size: .78rem; color: var(--muted); margin-bottom: 1.7rem; }
@@ -391,7 +389,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible { outline-offs
   .about__copy { border-left: 0; padding-left: 0; }
   .contact-section { background: #fff; color: #111; }
   .contact-copy { position: static; }
-  .contact-copy .eyebrow, .contact-copy > p:not(.eyebrow), .contact-next p, .contact-next .small-label, .contact-email a { color: #111; }
+  .contact-copy .eyebrow, .contact-copy > p:not(.eyebrow), .contact-next p, .contact-next .small-label { color: #111; }
   details::details-content { display: contents; }
   .disclosure__body { display: block; }
 }
