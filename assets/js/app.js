@@ -192,7 +192,8 @@
             sitekey: sitekey,
             action: "contact",
             theme: root.dataset.theme || "auto",
-            size: "flexible",
+            // Turnstile's flexible widget needs 300px; narrow phones get the compact one.
+            size: verification.clientWidth < 300 ? "compact" : "flexible",
             callback: function (token) { challengeToken = token; verificationStatus.textContent = ""; },
             "expired-callback": function () { challengeToken = ""; },
             "error-callback": function () {

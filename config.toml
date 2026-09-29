@@ -11,7 +11,7 @@ disableKinds = ["taxonomy", "term", "RSS"]
 
 [params]
   author = "Viktor Ermolov"
-  description = "SaaS development, practical AI integration, and workflow automation for founders. Work directly with Viktor Ermolov, an independent US-based engineer, from idea to production."
+  description = "SaaS development, practical AI integration, and workflow automation for founders. Work directly with an independent engineer, from idea to production."
   shortDescription = "Good ideas deserve working software."
   jobTitle = "Full-Cycle Software Engineer"
   favicon = "img/favicon.ico"

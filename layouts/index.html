@@ -14,9 +14,9 @@
       <div class="blueprint" role="img" aria-label="A delivery path from the right problem, to a useful first release, to a system you can run">
         <div class="blueprint__heading"><span>THE DELIVERY PATH</span><span aria-hidden="true">↗</span></div>
         <div class="blueprint__path" aria-hidden="true">
-          <div class="blueprint__node"><span class="blueprint__index">01 / DEFINE</span><strong>The right<br>problem.</strong><span class="blueprint__note">A clear outcome. A sensible scope.</span></div>
+          <div class="blueprint__node"><span class="blueprint__index">01 / DEFINE</span><strong>The right <br>problem.</strong><span class="blueprint__note">A clear outcome. A sensible scope.</span></div>
           <div class="blueprint__connector"><span>make the first useful thing</span></div>
-          <div class="blueprint__node blueprint__node--offset"><span class="blueprint__index">02 / BUILD</span><strong>A useful<br>first release.</strong><span class="blueprint__note">Real workflows. Real feedback.</span></div>
+          <div class="blueprint__node blueprint__node--offset"><span class="blueprint__index">02 / BUILD</span><strong>A useful <br>first release.</strong><span class="blueprint__note">Real workflows. Real feedback.</span></div>
           <div class="blueprint__connector blueprint__connector--offset"><span>make it dependable</span></div>
           <div class="blueprint__end"><span class="blueprint__end-icon">✓</span><div><span class="blueprint__index">03 / OPERATE</span><strong>A system you can run.</strong></div></div>
         </div>
@@ -109,7 +109,7 @@
           <p id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1"></p>
           <noscript><p class="form-notice">This form needs JavaScript for spam protection. You can email <a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a> instead.</p></noscript>
           <p class="privacy-summary">Your details are used to respond to this inquiry. No mailing list.</p>
-          <details class="privacy-details" id="privacy"><summary>How your inquiry is handled</summary><p>Your email and project details are securely stored in Cloudflare and retrieved by my private server for delivery through Telegram. Contact details and message content are deleted from Cloudflare within 30 days after delivery; non-content delivery records are kept for up to 90 days. Undelivered inquiries are retained until handled. Telegram’s copy remains in my private notification history until removed. Please don’t include passwords or sensitive customer data. To ask about or delete your inquiry, email <a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a>.</p></details>
+          <details class="privacy-details" id="privacy"><summary>How your inquiry is handled</summary><p>Your email and project details are securely stored in Cloudflare and retrieved by my private server for delivery through Telegram. Contact details and message content are deleted from Cloudflare within 30 days after delivery; non-content delivery records are kept for up to 90 days. Undelivered inquiries are retained until handled. Telegram’s copy remains in my private notification history until removed. Please don’t include passwords or sensitive customer data. To ask about or delete your inquiry, email {{ "<!--email_off-->" | safeHTML }}<a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a>{{ "<!--/email_off-->" | safeHTML }}.</p></details>
         </form>
       </div>
     </div>
