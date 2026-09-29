@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(hugo server:*)",
+      "Bash(hugo --environment production --destination:*)",
+      "Bash(python3 scripts/check_site.py:*)",
+      "Bash(node --check assets/js/app.js)",
+      "Bash(node --test tests/frontend.test.cjs)",
+      "Bash(npm ci)",
+      "Bash(npm run check)",
+      "Bash(npm test)",
+      "Bash(python3 -m unittest discover -s tests -v)",
+      "Bash(bash -n scripts/deploy_relay.sh)"
+    ],
+    "deny": [
+      "Read(./**/.env)",
+      "Read(./**/.env.relay)",
+      "Read(./**/.dev.vars)"
+    ]
+  }
+}
