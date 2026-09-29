@@ -24,7 +24,7 @@ Deploy the Worker separately using `services/worker/wrangler.jsonc`; apply revie
 
 ## Architecture
 
-Single-page Hugo service site at [ermolov.dev](https://ermolov.dev). No content files — the entire page is a single template.
+Hugo service site at [ermolov.dev](https://ermolov.dev). The homepage is a single template (`layouts/index.html`); the only Markdown content is the engineering notes section in `content/notes/`.
 
 **Active layout layer:**
 - `layouts/` — active templates:
@@ -33,7 +33,10 @@ Single-page Hugo service site at [ermolov.dev](https://ermolov.dev). No content 
   - `partials/header.html` — brand, desktop anchor navigation, theme toggle
   - `partials/footer.html` — footer copy and social links
   - `index.html` — homepage: hero → services → engagements → approach → about → decision notes → FAQ → contact
+  - `notes/single.html`, `notes/list.html` — engineering note articles and their index (BlogPosting / CollectionPage schema from `head.html`)
   - `robots.txt` — generated robots file with sitemap
+
+Header and footer anchors use `/#section` off the homepage. `scripts/check_site.py` checks every generated page (self-canonical, one h1, schema, local links and cross-page anchors) and requires the sitemap to list exactly the generated pages.
 
 **Styling and JS:** `assets/css/main.css` is the sole custom stylesheet, processed by Hugo Pipes; breakpoints are 1100, 850, 640 and 360 px. `assets/js/app.js` handles theme, service selection, lazy Turnstile loading, accessible form states, and stable submission IDs. Content stays visible without JavaScript; email is always available. Light/dark theming uses CSS custom properties on `:root[data-theme]`.
 
@@ -41,7 +44,7 @@ Single-page Hugo service site at [ermolov.dev](https://ermolov.dev). No content 
 
 **Safety and cost:** use only the agreed Free-tier resources; no paid upgrades. Never log credentials, request bodies or personal information. Public keys in Hugo config are not secrets. Never expose the Pi or Bot API to the Internet. Keep tests offline with service doubles; only deliberate release smoke checks may create a clearly labelled test inquiry. Keep delivered-data retention and pending-data preservation intact.
 
-**Content model:** There is no projects/portfolio data source yet. Do not add placeholder projects. Until real projects exist, position the site as an expertise-led service page and keep case notes framed as engineering decision notes rather than client case studies.
+**Content model:** There is no projects/portfolio data source yet. Do not add placeholder projects. Until real projects exist, position the site as an expertise-led service page and keep case notes framed as engineering decision notes rather than client case studies. Notes articles are published under Viktor’s name: get his approval on new or rewritten text before merging to `master`.
 
 **Visual preference:** Do not use personal photographs, portrait illustrations, avatars, or Memoji. Use typography, spacing, rules and restrained abstract graphics for the About section and other page content. Do not add floating bottom call-to-action bars that cover page content.
 

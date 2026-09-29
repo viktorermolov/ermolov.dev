@@ -1,4 +1,4 @@
-{{- $title := cond .IsHome .Site.Title (printf "%s · %s" .Title .Site.Title) -}}
+{{- $title := cond .IsHome .Site.Title (printf "%s · %s" .Title .Site.Params.author) -}}
 {{- $desc := or .Params.description .Site.Params.description -}}
 {{- $ogImage := absURL (or .Site.Params.ogImage "og/og-default.png") -}}
 {{- $themeLight := or .Site.Params.themeColorLight "#ffffff" -}}
@@ -15,7 +15,7 @@
 <meta name="theme-color" content="{{ $themeDark }}" media="(prefers-color-scheme: dark)">
 
 <!-- Open Graph -->
-<meta property="og:type" content="website">
+<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="{{ .Site.Params.author }}">
 <meta property="og:title" content="{{ $title }}">
@@ -26,6 +26,10 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Viktor Ermolov — Good ideas deserve working software. SaaS, AI and automation.">
+{{- if .IsPage }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02" }}">
+<meta property="article:author" content="{{ .Site.Params.author }}">
+{{- end }}
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
@@ -77,10 +81,9 @@
   "name" .Site.Params.author
   "url" .Site.BaseURL
   "jobTitle" $jobTitle
-  "description" $desc
+  "description" .Site.Params.description
   "sameAs" $sameAs
   "knowsAbout" $knowsAbout
-  "mainEntityOfPage" (dict "@id" $profileID)
 -}}
 {{- $service := dict
   "@type" "Service"
@@ -111,9 +114,40 @@
   "mainEntity" (dict "@id" $serviceID)
   "isPartOf" (dict "@id" $websiteID)
 -}}
+{{- $graph := slice (merge $person (dict "mainEntityOfPage" (dict "@id" $profileID))) $service $website $profile -}}
+{{- if .IsPage -}}
+  {{- $article := dict
+    "@type" "BlogPosting"
+    "@id" (printf "%s#article" .Permalink)
+    "headline" .Title
+    "description" $desc
+    "url" .Permalink
+    "mainEntityOfPage" .Permalink
+    "datePublished" (.Date.Format "2006-01-02")
+    "dateModified" (.Lastmod.Format "2006-01-02")
+    "inLanguage" "en-US"
+    "image" $ogImage
+    "author" (dict "@id" $personID)
+    "publisher" (dict "@id" $personID)
+    "isPartOf" (dict "@id" $websiteID)
+  -}}
+  {{- $graph = slice $person $website $article -}}
+{{- else if not .IsHome -}}
+  {{- $collection := dict
+    "@type" "CollectionPage"
+    "@id" (printf "%s#page" .Permalink)
+    "url" .Permalink
+    "name" $title
+    "description" $desc
+    "inLanguage" "en-US"
+    "author" (dict "@id" $personID)
+    "isPartOf" (dict "@id" $websiteID)
+  -}}
+  {{- $graph = slice $person $website $collection -}}
+{{- end -}}
 {{- $schema := dict
   "@context" "https://schema.org"
-  "@graph" (slice $person $service $website $profile)
+  "@graph" $graph
 -}}
 <!-- Structured data -->
 <script type="application/ld+json">
