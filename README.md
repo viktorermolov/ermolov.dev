@@ -43,6 +43,6 @@ Raspberry Pi relay -> private Notification Bot -> Telegram
 
 Acceptance and delivery are different events. The form succeeds only after D1 commits. A Bot `202` means queued; the relay marks delivery only after `sent`. Both boundaries use idempotency. Telegram is at-least-once: a crash after Telegram accepts a message can rarely cause a duplicate.
 
-GitHub `master` triggers the existing DigitalOcean static-site deployment. Keep build command `hugo`, source root `/`, and output `public/`; set build environment `HUGO_VERSION=0.166.0` when available. Never commit `public/`. GitHub Actions checks all three components and holds no deployment secrets.
+GitHub `master` triggers the existing DigitalOcean static-site deployment. Keep build command `hugo`, source root `/`, and output `public/`; the component build variable `HUGO_VERSION` must match `.hugo-version`. Never commit `public/`. GitHub Actions checks all three components and holds no deployment secrets.
 
 See [operations](docs/OPERATIONS.md), [audit](docs/AUDIT.md), [Worker API](services/worker/README.md), and [relay](services/relay/README.md).

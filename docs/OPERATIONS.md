@@ -70,6 +70,19 @@ After an edge change, use an honest user agent such as `ermolov-release-check/1.
 
 The final audit edge checks confirmed query preservation, private API `401`/`no-store` on both hostnames, expected security headers and `404` for the checked sensitive-file paths. If robots/sitemap still show an older build, inspect the public body and cache response first. During this release `robots.txt` was a stale Cloudflare HIT; purging only `https://ermolov.dev/robots.txt` and `https://ermolov.dev/sitemap.xml` fixed it, and the subsequent public response contained `Disallow: /api/`. Prefer this targeted purge after confirming publication; do not purge the whole zone or alter API cache behavior for a static metadata update.
 
+### Cache rules and zone settings
+
+Two dashboard-managed Cache Rules (`http_request_cache_settings`) apply to the apex host only:
+
+| Rule | Match | Edge TTL | Browser TTL |
+| --- | --- | --- | --- |
+| Static CSS and JS (fingerprinted) | path starts with `/css/` or `/js/` | 1 year, ignore origin | 1 year |
+| Fonts | path starts with `/fonts/` | 1 month, ignore origin | 1 month |
+
+CSS and JS URLs carry a content fingerprint, so a year is safe; the font filename is fixed, so it stays shorter. HTML is intentionally not edge-cached: the Free plan's minimum Edge TTL is two hours and DigitalOcean deploys do not purge Cloudflare. A renamed font needs no purge; replacing the same font file needs a targeted purge of that URL.
+
+Email Address Obfuscation is off so `mailto:` links work without JavaScript. The DigitalOcean static-site component sets build variable `HUGO_VERSION=0.166.0`; keep it in step with `.hugo-version`.
+
 ## Edge rollback
 
 Rollback only the implicated scoped rule. In the Cloudflare zone's Rules interface, locate it by its description/ref above and disable it. The rule IDs are distinct from the ruleset IDs; do not use a ruleset ID as a rule ID. Do not delete either whole phase ruleset or overwrite it with the local JSON, because unrelated rules may have been added since this audit.
