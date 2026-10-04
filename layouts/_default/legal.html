@@ -1,0 +1,14 @@
+{{ define "main" }}
+  <article class="section note" aria-labelledby="legal-title">
+    <div class="container note__layout">
+      <header class="note__header">
+        <h1 id="legal-title" class="page-title">{{ .Title }}</h1>
+        <p class="note__lede">{{ .Description }}</p>
+        <p class="note__meta">Last updated <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "January 2, 2006" }}</time></p>
+      </header>
+      <div class="prose">
+        {{ .Content }}
+      </div>
+    </div>
+  </article>
+{{ end }}

@@ -127,6 +127,10 @@ def main():
             continue
         if url == canonical + 'notes/':
             assert set(page_nodes) == {'Person', 'WebSite', 'CollectionPage'}, f'{url}: collection structured data'
+        elif 'WebPage' in page_nodes:
+            assert set(page_nodes) == {'Person', 'WebSite', 'WebPage'}, f'{url}: standalone page structured data'
+            assert page_nodes['WebPage'].get('url') == url, f'{url}: standalone page URL'
+            assert page_metadata.get('og:type') == 'website', f'{url}: Open Graph website type'
         else:
             article = page_nodes.get('BlogPosting')
             assert article and article.get('url') == url and article.get('headline') and article.get('datePublished'), f'{url}: article structured data'
