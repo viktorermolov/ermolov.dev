@@ -3,7 +3,7 @@
     <div class="wrap hero__grid">
       <div class="hero__copy">
         <h1 id="hero-title" class="hero__title">Small products that keep working.</h1>
-        <p class="hero__lede">I’m Viktor, an independent developer. I make small software products, starting with Chrome extensions: simple, local-first where possible, and built and maintained by one developer.</p>
+        <p class="hero__lede">I’m Viktor, an independent developer. I make small software products, starting with Chrome extensions, built and maintained by one developer.</p>
         <div class="button-row">
           <a class="btn btn--primary" href="/clipstay/">See Clipstay</a>
           {{- if gt (len (where .Site.RegularPages "Type" "project")) 1 }}
@@ -22,24 +22,12 @@
 
   <section class="section" id="projects" aria-labelledby="projects-title">
     <div class="wrap">
-      <div class="section-head"><h2 id="projects-title">Projects</h2><p>Each product has its own page with what it does, how to get support, and its privacy policy.</p></div>
+      <div class="section-head"><h2 id="projects-title">Projects</h2></div>
       <div class="projects">
         {{- range sort (where .Site.RegularPages "Type" "project") "Weight" }}
         {{ partial "project-row.html" . }}
         {{- end }}
       </div>
-    </div>
-  </section>
-
-  <section class="section" id="approach" aria-labelledby="approach-title">
-    <div class="wrap">
-      <div class="section-head"><h2 id="approach-title">How I build</h2></div>
-      <dl class="principles">
-        <div><dt>One job per product</dt><dd>Each product does one thing and does it well.</dd></div>
-        <div><dt>Local-first</dt><dd>Your data stays on your device unless a product truly needs a server. When it does, the product page says so.</dd></div>
-        <div><dt>Clearly documented</dt><dd>Every product page explains what it does, how it works with your other apps, and how it handles your data.</dd></div>
-        <div><dt>One developer</dt><dd>Each product is built and maintained by one developer. Questions come straight to me.</dd></div>
-      </dl>
     </div>
   </section>
 
@@ -57,17 +45,6 @@
   </section>
 
 {{- end }}
-
-  <section class="section" id="about" aria-labelledby="about-title">
-    <div class="wrap about">
-      <h2 id="about-title">About</h2>
-      <div class="about__copy">
-        <p class="about__lead">I’m Viktor, an independent software developer.</p>
-        <p>I build small software products and maintain them myself. I don’t take on client work or consulting.</p>
-        <p class="about__links"><a class="text-link" href="{{ .Site.Params.contact.github }}" target="_blank" rel="me noopener noreferrer">GitHub<span class="sr-only"> (opens in a new tab)</span></a><a class="text-link" href="{{ .Site.Params.contact.linkedin }}" target="_blank" rel="me noopener noreferrer">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></p>
-      </div>
-    </div>
-  </section>
 
   <section class="contact" id="contact" aria-labelledby="contact-title">
     <div class="wrap contact__inner">

@@ -13,7 +13,7 @@ disableKinds = ["taxonomy", "term", "RSS"]
   # Visible brand. The full legal name stays in `author` (schema, copyright, meta author).
   brand = "Viktor E."
   author = "Viktor Ermolov"
-  description = "I make small software products, starting with Chrome extensions: simple, local-first where possible, and built and maintained by one developer."
+  description = "I make small software products, starting with Chrome extensions, built and maintained by one developer."
   shortDescription = "Small products that keep working."
   jobTitle = "Independent software developer"
   favicon = "img/favicon.ico"

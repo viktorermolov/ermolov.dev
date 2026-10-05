@@ -135,7 +135,7 @@ def main():
     assert nodes['WebSite'].get('alternateName') == 'ermolov.dev', 'Domain is an alternate site name'
     assert 'email' not in nodes['Person'], 'Do not duplicate contact email in structured data'
     assert nodes['WebPage'].get('inLanguage') == nodes['WebSite'].get('inLanguage') == 'en-US', 'Explicit structured data language'
-    for section in ('projects', 'approach', 'about', 'contact'):
+    for section in ('projects', 'contact'):
         assert section in page.ids, f'Homepage section #{section}'
     assert 'mailto:viktor@ermolov.dev' in text, 'Email contact'
 
