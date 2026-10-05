@@ -1,6 +1,10 @@
-{{- $title := cond .IsHome .Site.Title (printf "%s · %s" .Title .Site.Params.author) -}}
+{{- $title := cond .IsHome .Site.Title (printf "%s · %s" .Title .Site.Params.brand) -}}
 {{- $desc := or .Params.description .Site.Params.description -}}
-{{- $ogImage := absURL (or .Site.Params.ogImage "og/og-default.png") -}}
+{{- $ogImage := absURL (or .Params.ogImage .Site.Params.ogImage "og/og-default.png") -}}
+{{- $ogAlt := or .Params.ogImageAlt .Site.Params.ogImageAlt -}}
+{{- $isNote := and .IsPage (eq .Section "notes") -}}
+{{- $isProject := eq .Params.schemaType "SoftwareApplication" -}}
+{{- $isLegal := eq .Params.schemaType "WebPage" -}}
 {{- $themeLight := or .Site.Params.themeColorLight "#ffffff" -}}
 {{- $themeDark := or .Site.Params.themeColorDark "#0b0b0c" -}}
 {{- $twitterHandle := or .Site.Params.twitterHandle "" -}}
@@ -9,15 +13,15 @@
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $desc }}">
 <meta name="author" content="{{ .Site.Params.author }}">
-<meta name="robots" content="max-image-preview:large">
+<meta name="robots" content="{{ if eq .Kind "404" }}noindex{{ else }}max-image-preview:large{{ end }}">
 <link rel="canonical" href="{{ .Permalink }}">
 <meta name="theme-color" content="{{ $themeLight }}" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="{{ $themeDark }}" media="(prefers-color-scheme: dark)">
 
 <!-- Open Graph -->
-<meta property="og:type" content="{{ cond (and .IsPage (ne .Params.schemaType "WebPage")) "article" "website" }}">
+<meta property="og:type" content="{{ cond $isNote "article" "website" }}">
 <meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="{{ .Site.Params.author }}">
+<meta property="og:site_name" content="{{ .Site.Params.brand }}">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $desc }}">
 <meta property="og:url" content="{{ .Permalink }}">
@@ -25,8 +29,8 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Viktor Ermolov — Good ideas deserve working software. SaaS, AI and automation.">
-{{- if .IsPage }}
+<meta property="og:image:alt" content="{{ $ogAlt }}">
+{{- if $isNote }}
 <meta property="article:published_time" content="{{ .Date.Format "2006-01-02" }}">
 <meta property="article:author" content="{{ .Site.Params.author }}">
 {{- end }}
@@ -40,7 +44,7 @@
 <meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $desc }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
-<meta name="twitter:image:alt" content="Viktor Ermolov — Good ideas deserve working software. SaaS, AI and automation.">
+<meta name="twitter:image:alt" content="{{ $ogAlt }}">
 
 <!-- Favicons + PWA -->
 <link rel="icon" href="/img/favicon.ico" sizes="any">
@@ -48,56 +52,37 @@
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 
-<!-- Self-hosted Inter Variable, subset to Latin, punctuation, and interface symbols. -->
-<link rel="preload" href="/fonts/InterVariable-Latin.woff2" as="font" type="font/woff2" crossorigin>
-<!-- Instrument Serif Italic (OFL-1.1, see /fonts/InstrumentSerif-OFL.txt), Latin subset for display accents. -->
-<link rel="preload" href="/fonts/InstrumentSerif-Italic-Latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Self-hosted variable fonts, Latin subsets, OFL-1.1 (see /fonts/*-OFL.txt): Bricolage Grotesque for headings and interface, Newsreader for reading text. -->
+<link rel="preload" href="/fonts/BricolageGrotesque-Latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Newsreader-Latin.woff2" as="font" type="font/woff2" crossorigin>
 
-{{- $jobTitle := or .Site.Params.jobTitle "Full-Cycle Software Engineer" -}}
+{{- $jobTitle := or .Site.Params.jobTitle "Independent software developer" -}}
 {{- $personID := printf "%s#person" .Site.BaseURL -}}
-{{- $serviceID := printf "%s#service" .Site.BaseURL -}}
 {{- $websiteID := printf "%s#website" .Site.BaseURL -}}
 {{- $profileID := printf "%s#profile" .Site.BaseURL -}}
 {{- $sameAs := slice .Site.Params.contact.github .Site.Params.contact.linkedin .Site.Params.contact.x -}}
 {{- $knowsAbout := slice
-  "Full-cycle product development"
-  "AI integration"
-  "LLM systems"
-  "SaaS engineering"
+  "Browser extensions"
+  "Chrome extension development"
+  "Software product development"
   "Micro-SaaS"
-  "Automation"
-  "Backend architecture"
--}}
-{{- $serviceTypes := slice
-  "Full-cycle SaaS delivery"
-  "AI integration"
-  "LLM systems engineering"
-  "Automation and internal tools"
-  "Technical advisory"
+  "Local-first software"
 -}}
 {{- $person := dict
   "@type" "Person"
   "@id" $personID
   "name" .Site.Params.author
+  "alternateName" .Site.Params.brand
   "url" .Site.BaseURL
   "jobTitle" $jobTitle
   "description" .Site.Params.description
   "sameAs" $sameAs
   "knowsAbout" $knowsAbout
 -}}
-{{- $service := dict
-  "@type" "Service"
-  "@id" $serviceID
-  "name" (printf "%s — SaaS, AI and Automation Engineering" .Site.Params.author)
-  "url" .Site.BaseURL
-  "provider" (dict "@id" $personID)
-  "areaServed" "Worldwide"
-  "serviceType" $serviceTypes
--}}
 {{- $website := dict
   "@type" "WebSite"
   "@id" $websiteID
-  "name" .Site.Params.author
+  "name" .Site.Params.brand
   "alternateName" "ermolov.dev"
   "url" .Site.BaseURL
   "inLanguage" "en-US"
@@ -111,11 +96,45 @@
   "description" $desc
   "inLanguage" "en-US"
   "about" (dict "@id" $personID)
-  "mainEntity" (dict "@id" $serviceID)
   "isPartOf" (dict "@id" $websiteID)
 -}}
-{{- $graph := slice (merge $person (dict "mainEntityOfPage" (dict "@id" $profileID))) $service $website $profile -}}
-{{- if and .IsPage (eq .Params.schemaType "WebPage") -}}
+{{- $graph := slice (merge $person (dict "mainEntityOfPage" (dict "@id" $profileID))) $website $profile -}}
+{{- if $isProject -}}
+  {{- $appID := printf "%s#app" .Permalink -}}
+  {{- $shots := slice -}}
+  {{- range .Params.highlights }}{{ $shots = $shots | append (absURL .image) }}{{ end -}}
+  {{- $app := dict
+    "@type" "SoftwareApplication"
+    "@id" $appID
+    "name" (or .Params.name .Title)
+    "alternateName" .Title
+    "url" .Permalink
+    "description" $desc
+    "applicationCategory" "BrowserApplication"
+    "operatingSystem" "Chrome"
+    "image" (absURL .Params.icon)
+    "screenshot" $shots
+    "featureList" .Params.features
+    "inLanguage" "en-US"
+    "author" (dict "@id" $personID)
+    "publisher" (dict "@id" $personID)
+  -}}
+  {{- if and (eq .Params.status "live") .Params.storeURL -}}
+    {{- $app = merge $app (dict "installUrl" .Params.storeURL) -}}
+  {{- end -}}
+  {{- $page := dict
+    "@type" "WebPage"
+    "@id" (printf "%s#page" .Permalink)
+    "url" .Permalink
+    "name" $title
+    "description" $desc
+    "inLanguage" "en-US"
+    "dateModified" (.Lastmod.Format "2006-01-02")
+    "mainEntity" (dict "@id" $appID)
+    "isPartOf" (dict "@id" $websiteID)
+  -}}
+  {{- $graph = slice $person $website $page $app -}}
+{{- else if and .IsPage $isLegal -}}
   {{- $legal := dict
     "@type" "WebPage"
     "@id" (printf "%s#page" .Permalink)
@@ -128,7 +147,7 @@
     "isPartOf" (dict "@id" $websiteID)
   -}}
   {{- $graph = slice $person $website $legal -}}
-{{- else if .IsPage -}}
+{{- else if $isNote -}}
   {{- $article := dict
     "@type" "BlogPosting"
     "@id" (printf "%s#article" .Permalink)

@@ -6,26 +6,28 @@ relativeURLs = true
 enableRobotsTXT = true
 locale = "en-US"
 language = "en"
-title = "Viktor Ermolov — SaaS, AI & Automation Engineer"
+title = "Viktor E. — Independent software developer"
 disableKinds = ["taxonomy", "term", "RSS"]
 
 [params]
+  # Visible brand. The full legal name stays in `author` (schema, copyright, meta author).
+  brand = "Viktor E."
   author = "Viktor Ermolov"
-  description = "SaaS development, practical AI integration, and workflow automation for founders. Work directly with an independent engineer, from idea to production."
-  shortDescription = "Good ideas deserve working software."
-  jobTitle = "Full-Cycle Software Engineer"
+  description = "I make small software products, starting with Chrome extensions, built and maintained by one developer."
+  shortDescription = "Small products that keep working."
+  jobTitle = "Independent software developer"
   favicon = "img/favicon.ico"
   ogImage = "og/og-default.png"
+  ogImageAlt = "Viktor E. Small products that keep working."
   defaultTheme = "light"
-  accentColor = "#176858"
-  themeColorLight = "#f7f6f2"
-  themeColorDark = "#141b19"
+  accentColor = "#1d4fe0"
+  themeColorLight = "#f6f8fe"
+  themeColorDark = "#081230"
   analyticsToken = "99147b109be9494d85d44b60d9b075a4"
   twitterHandle = "@viktor__ermolov"
 
   [params.contact]
     email = "viktor@ermolov.dev"
-    turnstileSiteKey = "0x4AAAAAAE_S0Zi7A-HNhgIq"
     github = "https://github.com/viktorermolov"
     linkedin = "https://www.linkedin.com/in/vermolov/"
     x = "https://x.com/viktor__ermolov"

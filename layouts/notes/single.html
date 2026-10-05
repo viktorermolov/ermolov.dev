@@ -1,24 +1,22 @@
 {{ define "main" }}
-  <article class="section note" aria-labelledby="note-title">
-    <div class="container note__layout">
-      <header class="note__header">
-        <p class="eyebrow"><a href="/notes/">Engineering notes</a></p>
+  <article class="page article" aria-labelledby="note-title">
+    <div class="wrap article__layout">
+      <header class="article__header">
+        <p class="article__crumb"><a href="/notes/">Engineering notes</a></p>
         <h1 id="note-title" class="page-title">{{ .Title }}</h1>
-        <p class="note__lede">{{ .Description }}</p>
-        <p class="note__meta">{{ .Site.Params.author }} · <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time> · {{ .ReadingTime }} min read</p>
+        <p class="article__lede">{{ .Description }}</p>
+        <p class="article__meta">{{ .Site.Params.author }}, <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>. {{ .ReadingTime }} min read.</p>
       </header>
       <div class="prose">
         {{ .Content }}
       </div>
-      <aside class="note__cta" aria-label="Work together">
-        <p class="small-label">Weighing a similar decision?</p>
-        <p>Describe the problem and what you have so far. I’ll reply within two business days with a concrete next step.</p>
-        <a class="btn btn--primary" href="/#contact" data-cta="note">Discuss your project <span aria-hidden="true">↗</span></a>
+      <aside class="article__aside" aria-label="Contact">
+        <p>Thoughts or questions? Email <a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a>.</p>
       </aside>
       {{- $others := where (where .Site.RegularPages "Section" "notes") "Permalink" "ne" .Permalink }}
       {{- with $others }}
-      <nav class="note__more" aria-label="More engineering notes">
-        <p class="small-label">More notes</p>
+      <nav class="article__more" aria-label="More engineering notes">
+        <h2 class="small-heading">More notes</h2>
         <ul>{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
       </nav>
       {{- end }}

@@ -1,48 +1,32 @@
 # ermolov.dev
 
-An English service site for Viktor Ermolov: SaaS delivery, AI integration, and automation. Hugo renders the page; a Cloudflare Worker durably accepts enquiries; an outbound-only Raspberry Pi relay delivers them through the existing Notification Bot.
+The website of Viktor Ermolov, an independent developer who builds and maintains small software products, starting with Chrome extensions. It shows the products and hosts their pages (description, support, privacy policy). Hugo builds a static site; GitHub `master` deploys through DigitalOcean App Platform.
 
 ## Develop and check
 
-Use Hugo **0.166.0** (`.hugo-version`), Node.js 22+, and Python 3.11+.
+Use Hugo **0.166.0** (`.hugo-version`), Node.js 22+ and Python 3.11+.
 
 ```sh
 hugo server
 hugo --environment production --destination /tmp/ermolov-site
 python3 scripts/check_site.py /tmp/ermolov-site
 node --check assets/js/app.js
-cd services/worker
-npm ci
-npm run check
 ```
-
-Relay tests use the Python standard library and test doubles; they never contact Telegram:
-
-```sh
-cd services/relay
-python3 -m unittest discover -s tests -v
-```
-
-The production Turnstile key is hostname-restricted. Use Cloudflare's documented test widget/secret pair with a local Worker for submission tests. Never disable Turnstile on the public endpoint. No-JavaScript visitors can always use the visible email address.
 
 ## Structure
 
-- `layouts/`, `assets/`, `static/`: Hugo templates, CSS, browser JS and local assets.
-- `config.toml`: public site information, public Turnstile sitekey and analytics token (not credentials).
-- `services/worker/`: API, D1 migrations, Wrangler configuration and integration tests.
-- `services/relay/`: Python consumer, container, Compose configuration and tests.
-- `scripts/`: generated-site checks and guarded relay deployment.
-- `docs/`: audit, operations and release evidence.
+- `content/`: product pages (one markdown file per product, `type: project`) and the Clipstay privacy policy. Engineering notes go in `content/notes/` (none published right now); the homepage section appears when the first note exists.
+- `layouts/`, `assets/`, `static/`: Hugo templates, CSS, browser JS, fonts, images.
+- `config.toml`: public site information and analytics token (not credentials).
+- `scripts/check_site.py`: checks the generated site (links, SEO, structured data, project pages).
+- `docs/`: operations notes and the September 2026 audit and release records.
+- `services/worker/`, `services/relay/`: the former contact-form pipeline. Still deployed, no longer used by the site, and parked until a separate decommissioning step. See [operations](docs/OPERATIONS.md).
 
-```text
-Browser -> Cloudflare Worker -> D1 durable inbox
-                                  ^
-                                  | HTTPS poll/claim/update
-Raspberry Pi relay -> private Notification Bot -> Telegram
-```
+## Add a product
 
-Acceptance and delivery are different events. The form succeeds only after D1 commits. A Bot `202` means queued; the relay marks delivery only after `sent`. Both boundaries use idempotency. Telegram is at-least-once: a crash after Telegram accepts a message can rarely cause a duplicate.
+1. Copy `content/clipstay.md` to `content/<slug>.md` and edit the front matter.
+2. Put the icon and screenshots in `static/img/<slug>/`.
+3. Keep `status: pending-review` until the product is published; the site shows "Coming soon" until it is `live`.
+4. Build and run `scripts/check_site.py`.
 
-GitHub `master` triggers the existing DigitalOcean static-site deployment. Keep build command `hugo`, source root `/`, and output `public/`; the component build variable `HUGO_VERSION` must match `.hugo-version`. Never commit `public/`. GitHub Actions checks all three components and holds no deployment secrets.
-
-See [operations](docs/OPERATIONS.md), [audit](docs/AUDIT.md), [Worker API](services/worker/README.md), and [relay](services/relay/README.md).
+Fonts: Bricolage Grotesque and Newsreader (SIL Open Font License; licenses in `static/fonts/`).

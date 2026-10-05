@@ -1,0 +1,9 @@
+{{- /* Visitors never see "Pending review". Until a product is live they see a neutral "coming soon". */ -}}
+{{- $store := or .Params.store "Chrome Web Store" -}}
+{{- if eq .Params.status "live" -}}
+  <span class="chip chip--live">Available on the {{ $store }}</span>
+{{- else if eq .Params.status "archived" -}}
+  <span class="chip">Archived</span>
+{{- else -}}
+  <span class="chip">Coming soon to the {{ $store }}</span>
+{{- end -}}

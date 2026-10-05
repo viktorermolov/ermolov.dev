@@ -1,10 +1,10 @@
 {{ define "main" }}
-  <section class="section notes-index" aria-labelledby="notes-index-title">
-    <div class="container">
-      <div class="section-heading"><p class="eyebrow">Engineering judgment</p><h1 id="notes-index-title" class="page-title">The reasoning<br><span class="serif">behind the build.</span></h1><p>{{ .Description }}</p></div>
+  <section class="page" aria-labelledby="notes-index-title">
+    <div class="wrap">
+      <header class="page-head"><h1 id="notes-index-title" class="page-title">Engineering notes</h1><p class="page-lede">{{ .Description }}</p></header>
       <ol class="note-list">
         {{- range .Pages.ByWeight }}
-        <li><a href="{{ .RelPermalink }}"><h2>{{ .Title }}</h2><p>{{ .Description }}</p><span class="text-link">Read the note <span aria-hidden="true">↗</span></span></a></li>
+        <li><a href="{{ .RelPermalink }}"><h2>{{ .Title }}</h2><p>{{ .Description }}</p></a></li>
         {{- end }}
       </ol>
     </div>

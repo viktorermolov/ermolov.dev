@@ -1,5 +1,7 @@
 # Operations
 
+> **October 2026:** the contact form was removed from the site when ermolov.dev became the home of Viktor's own products. The Worker, D1 database, Turnstile widget and Pi relay described below are still deployed and unchanged, but nothing on the site sends them inquiries. Do not disable or remove them without Viktor's explicit confirmation; decommissioning is a separate step. The sections below remain accurate for the deployed components.
+
 ## Resources
 
 | Resource | Identifier |
