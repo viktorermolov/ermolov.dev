@@ -1,0 +1,11 @@
+<article class="project">
+  <img class="project__icon" src="{{ .Params.icon }}" alt="" width="72" height="72" loading="lazy">
+  <div class="project__body">
+    <h3 class="project__name"><a href="{{ .RelPermalink }}">{{ .Params.name | default .Title }}</a></h3>
+    <p class="project__tagline">{{ .Params.tagline }}</p>
+    <p class="project__meta">{{ partial "project-status.html" . }}{{ with .Params.privacyURL }}<a class="project__link" href="{{ . }}">Privacy policy</a>{{ end }}</p>
+  </div>
+  {{- with .Params.cardImage }}
+  <img class="project__shot" src="{{ . }}" alt="{{ $.Params.cardImageAlt }}" width="1280" height="800" loading="lazy">
+  {{- end }}
+</article>
