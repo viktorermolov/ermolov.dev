@@ -3,10 +3,12 @@
     <div class="wrap hero__grid">
       <div class="hero__copy">
         <h1 id="hero-title" class="hero__title">Small products that keep working.</h1>
-        <p class="hero__lede">I’m Viktor Ermolov, an independent developer in the US. I make small software products, starting with Chrome extensions: simple, local-first where possible, and built and maintained by one developer.</p>
+        <p class="hero__lede">I’m Viktor, an independent developer. I make small software products, starting with Chrome extensions: simple, local-first where possible, and built and maintained by one developer.</p>
         <div class="button-row">
           <a class="btn btn--primary" href="/clipstay/">See Clipstay</a>
+          {{- if gt (len (where .Site.RegularPages "Type" "project")) 1 }}
           <a class="btn btn--quiet" href="#projects">All projects</a>
+          {{- end }}
         </div>
       </div>
       <div class="clips" role="img" aria-label="Illustration: a stack of copied snippets, with the top one pinned">
@@ -41,11 +43,12 @@
     </div>
   </section>
 
+{{- with (where .Site.RegularPages "Section" "notes").ByWeight }}
   <section class="section" id="notes" aria-labelledby="notes-title">
     <div class="wrap">
-      <div class="section-head"><h2 id="notes-title">Engineering notes</h2><p>{{ (site.GetPage "/notes").Description }}</p></div>
+      <div class="section-head"><h2 id="notes-title">Engineering notes</h2><p>{{ with site.GetPage "/notes" }}{{ .Description }}{{ end }}</p></div>
       <ol class="note-list">
-        {{- range (where .Site.RegularPages "Section" "notes").ByWeight }}
+        {{- range . }}
         <li><a href="{{ .RelPermalink }}"><h3>{{ .Title }}</h3><p>{{ .Description }}</p></a></li>
         {{- end }}
       </ol>
@@ -53,11 +56,13 @@
     </div>
   </section>
 
+{{- end }}
+
   <section class="section" id="about" aria-labelledby="about-title">
     <div class="wrap about">
       <h2 id="about-title">About</h2>
       <div class="about__copy">
-        <p class="about__lead">I’m Viktor, an independent software developer, US-based.</p>
+        <p class="about__lead">I’m Viktor, an independent software developer.</p>
         <p>I build small software products and maintain them myself. I don’t take on client work or consulting.</p>
         <p class="about__links"><a class="text-link" href="{{ .Site.Params.contact.github }}" target="_blank" rel="me noopener noreferrer">GitHub<span class="sr-only"> (opens in a new tab)</span></a><a class="text-link" href="{{ .Site.Params.contact.linkedin }}" target="_blank" rel="me noopener noreferrer">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></p>
       </div>

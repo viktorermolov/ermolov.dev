@@ -6,17 +6,19 @@ relativeURLs = true
 enableRobotsTXT = true
 locale = "en-US"
 language = "en"
-title = "Viktor Ermolov — Independent software developer"
+title = "Viktor E. — Independent software developer"
 disableKinds = ["taxonomy", "term", "RSS"]
 
 [params]
+  # Visible brand. The full legal name stays in `author` (schema, copyright, meta author).
+  brand = "Viktor E."
   author = "Viktor Ermolov"
   description = "I make small software products, starting with Chrome extensions: simple, local-first where possible, and built and maintained by one developer."
   shortDescription = "Small products that keep working."
   jobTitle = "Independent software developer"
   favicon = "img/favicon.ico"
   ogImage = "og/og-default.png"
-  ogImageAlt = "Viktor Ermolov. Small products that keep working."
+  ogImageAlt = "Viktor E. Small products that keep working."
   defaultTheme = "light"
   accentColor = "#1d4fe0"
   themeColorLight = "#f6f8fe"

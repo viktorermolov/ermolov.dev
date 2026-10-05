@@ -31,9 +31,10 @@ Hugo site. Active templates in `layouts/`:
 - `partials/head.html`: SEO/meta, favicons, font preload, JSON-LD for every page type, fingerprinted CSS, pre-paint theme init, Cloudflare Web Analytics beacon
 - `partials/header.html`, `footer.html`, `brand-mark.html`
 - `partials/project-row.html`, `project-status.html`: homepage project row and the visitor-facing status chip
-- `index.html`: homepage (hero → projects → how I build → engineering notes → about → contact)
+- `index.html`: homepage (hero → projects → how I build → engineering notes, only when notes exist → about → contact)
+- `404.html`: not-found page (noindex)
 - `project/single.html`: product page (hero, what it does, privacy, free plan, good to know, support with FAQ)
-- `notes/single.html`, `notes/list.html`: engineering notes (BlogPosting / CollectionPage schema)
+- `notes/single.html`, `notes/list.html`: engineering notes (BlogPosting / CollectionPage schema). There are no notes right now: the three service-era notes were removed in October 2026. The homepage section and the Notes links in the header and footer appear automatically once `content/notes/` has a published note; add `content/notes/_index.md` with a description at the same time.
 - `robots.txt`
 
 Header and footer anchors use `/#section` off the homepage. `scripts/check_site.py` checks every generated page (self-canonical, one h1, schema, local links and cross-page anchors, sitemap equals the generated pages) plus the rules below.
@@ -50,7 +51,9 @@ Each product is **one markdown file** in `content/` with `type: project` (see `c
 - Do not add placeholder projects. Only show products Viktor has approved (BytLot is intentionally not shown).
 - Do not publish prices until a paid plan exists.
 
-Engineering notes and the About text are published under Viktor's name: get his approval on new or rewritten text before merging to `master`.
+Engineering notes and the About text are published under Viktor's name: get his approval on new or rewritten text before merging to `master`. Notes should be about his own products and how they are built, not advice for clients.
+
+**Name and location:** the visible brand is `brand` in `config.toml` ("Viktor E."). The full name stays in `author` for structured data, meta author and the copyright line. Do not add a location line (US-based and similar); `check_site.py` fails on it.
 
 ## Visual preference
 

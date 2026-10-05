@@ -15,7 +15,7 @@ node --check assets/js/app.js
 
 ## Structure
 
-- `content/`: product pages (one markdown file per product, `type: project`), the Clipstay privacy policy, and `notes/` engineering notes.
+- `content/`: product pages (one markdown file per product, `type: project`) and the Clipstay privacy policy. Engineering notes go in `content/notes/` (none published right now); the homepage section appears when the first note exists.
 - `layouts/`, `assets/`, `static/`: Hugo templates, CSS, browser JS, fonts, images.
 - `config.toml`: public site information and analytics token (not credentials).
 - `scripts/check_site.py`: checks the generated site (links, SEO, structured data, project pages).

@@ -1,4 +1,4 @@
-{{- $title := cond .IsHome .Site.Title (printf "%s · %s" .Title .Site.Params.author) -}}
+{{- $title := cond .IsHome .Site.Title (printf "%s · %s" .Title .Site.Params.brand) -}}
 {{- $desc := or .Params.description .Site.Params.description -}}
 {{- $ogImage := absURL (or .Params.ogImage .Site.Params.ogImage "og/og-default.png") -}}
 {{- $ogAlt := or .Params.ogImageAlt .Site.Params.ogImageAlt -}}
@@ -13,7 +13,7 @@
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $desc }}">
 <meta name="author" content="{{ .Site.Params.author }}">
-<meta name="robots" content="max-image-preview:large">
+<meta name="robots" content="{{ if eq .Kind "404" }}noindex{{ else }}max-image-preview:large{{ end }}">
 <link rel="canonical" href="{{ .Permalink }}">
 <meta name="theme-color" content="{{ $themeLight }}" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="{{ $themeDark }}" media="(prefers-color-scheme: dark)">
@@ -21,7 +21,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="{{ cond $isNote "article" "website" }}">
 <meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="{{ .Site.Params.author }}">
+<meta property="og:site_name" content="{{ .Site.Params.brand }}">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $desc }}">
 <meta property="og:url" content="{{ .Permalink }}">
@@ -72,6 +72,7 @@
   "@type" "Person"
   "@id" $personID
   "name" .Site.Params.author
+  "alternateName" .Site.Params.brand
   "url" .Site.BaseURL
   "jobTitle" $jobTitle
   "description" .Site.Params.description
@@ -81,7 +82,7 @@
 {{- $website := dict
   "@type" "WebSite"
   "@id" $websiteID
-  "name" .Site.Params.author
+  "name" .Site.Params.brand
   "alternateName" "ermolov.dev"
   "url" .Site.BaseURL
   "inLanguage" "en-US"

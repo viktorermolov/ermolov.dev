@@ -35,8 +35,8 @@ highlights:
     text: "Search your history, pin the clips you reuse and copy any of them back with one click. Open Clipstay from the keyboard with the shortcut below."
     image: "/img/clipstay/search.webp"
     alt: "The Clipstay popup filtered by the word git, showing three matching clips."
-  - title: "Yours alone"
-    text: "Everything stays on your device: no account, no servers, no analytics and no network requests. Password fields and Incognito windows are never captured. Exclude any site, pause capture, or export your whole history to JSON or CSV."
+  - title: "You decide what it keeps"
+    text: "Exclude any site, pause capture whenever you like, and export your whole history to JSON or CSV. Password fields and Incognito windows are never captured."
     image: "/img/clipstay/private.webp"
     alt: "The Clipstay settings page with a pause switch, an excluded sites list and the option to add the clipboard when the popup opens."
 features:

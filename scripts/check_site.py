@@ -38,6 +38,7 @@ class Page(HTMLParser):
 
 
 SITE = 'https://ermolov.dev/'
+BRAND = 'Viktor E.'
 
 
 def check_page(root, path):
@@ -54,7 +55,7 @@ def check_page(root, path):
     metadata = {attrs.get('property') or attrs.get('name'): attrs.get('content', '') for tag, attrs in page.elements if tag == 'meta'}
     assert metadata.get('description'), f'{url}: description'
     assert metadata.get('og:url') == url, f'{url}: Open Graph canonical URL'
-    assert metadata.get('og:site_name') == 'Viktor Ermolov', f'{url}: consistent site brand'
+    assert metadata.get('og:site_name') == BRAND, f'{url}: consistent site brand'
     for tag, attrs in page.elements:
         if tag == 'meta' and attrs.get('name', '').lower() in ('robots', 'googlebot', 'bingbot', 'googlebot-news'):
             directives = {part.strip().lower() for part in attrs.get('content', '').split(',')}
@@ -120,16 +121,21 @@ def main():
         assert not any(tag == 'form' for tag, _ in page.elements), f'{url}: the site has no contact form'
         assert 'pending review' not in text.lower(), f'{url}: never show the internal review status'
         assert '/api/' not in text, f'{url}: no references to the retired inquiry API'
+        assert not any(phrase in text for phrase in ('US-based', 'Based in the US', 'in the US.')), f'{url}: no location line'
+    notes = [url for url in results if url.startswith(SITE + 'notes/') and url != SITE + 'notes/']
+    home_ids = results[SITE][1].ids
+    assert ('notes' in home_ids) == bool(notes), 'Homepage notes section appears exactly when notes exist'
 
     text, page, metadata, nodes = results[canonical]
     assert set(nodes) == {'Person', 'WebSite', 'WebPage'}, 'Expected structured data entities'
     graph = list(nodes.values())
     assert all(node.get('url') == canonical for node in graph), 'Schema URLs match canonical'
-    assert nodes['WebSite'].get('name') == nodes['Person'].get('name') == metadata['og:site_name'], 'Schema and social site names agree'
+    assert nodes['WebSite'].get('name') == nodes['Person'].get('alternateName') == metadata['og:site_name'], 'Brand agrees across schema and social metadata'
+    assert nodes['Person'].get('name') and nodes['Person']['name'] != nodes['Person']['alternateName'], 'Person keeps the full name; the brand is its alternate name'
     assert nodes['WebSite'].get('alternateName') == 'ermolov.dev', 'Domain is an alternate site name'
     assert 'email' not in nodes['Person'], 'Do not duplicate contact email in structured data'
     assert nodes['WebPage'].get('inLanguage') == nodes['WebSite'].get('inLanguage') == 'en-US', 'Explicit structured data language'
-    for section in ('projects', 'approach', 'notes', 'about', 'contact'):
+    for section in ('projects', 'approach', 'about', 'contact'):
         assert section in page.ids, f'Homepage section #{section}'
     assert 'mailto:viktor@ermolov.dev' in text, 'Email contact'
 
