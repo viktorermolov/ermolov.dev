@@ -17,7 +17,13 @@ Build into a temporary destination for checks; `public/` is gitignored and never
 
 ## Deploy pipeline
 
-Push `master` to GitHub → DigitalOcean App Platform runs `hugo` automatically → serves `public/`. Hugo is pinned in `.hugo-version`. GitHub Actions (`.github/workflows/check.yml`) checks the site, Worker and relay; confirm the branch is green before publishing `master`. Work on a branch and merge only after Viktor approves the result.
+Push `master` to GitHub → DigitalOcean App Platform runs `hugo` automatically → serves `public/`. Hugo is pinned in `.hugo-version`. GitHub Actions (`.github/workflows/check.yml`) checks the site, Worker and relay; confirm the branch is green before publishing `master`.
+
+**Workflow with Viktor:** he sets the goal, you lead the work; don't ask about small things, collect real open decisions into one short list.
+- Substantial changes (repositioning, redesign, new site sections): a branch and a PR, merged only after Viktor approves.
+- Smaller changes: commit to `master` so Viktor can check them on the live site and iterate. Prepare everything (build, `check_site.py`, a short note on what changes and what to check live), then stop right before `git push`: the push deploys, and Viktor gives the go-ahead.
+- If a deploy clearly broke the live site, revert to the last working commit and push without waiting, then report.
+- Money, deleting data and cloud resources always need Viktor's explicit confirmation.
 
 ## What the site is
 
