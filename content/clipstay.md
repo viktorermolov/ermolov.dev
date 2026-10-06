@@ -49,7 +49,7 @@ features:
   - "Keyboard shortcut"
   - "Excluded sites and a pause switch"
   - "Export to JSON and CSV, always free"
-freePlan: "The free plan keeps your 100 most recent clips and up to 5 pinned clips. When the history is full, the oldest unpinned clips make room for new ones, and Clipstay lets you know. Exporting to JSON or CSV is always free."
+freePlan: "The free plan keeps your 100 most recent unpinned clips, plus up to 5 pinned clips on top. When the history is full, the oldest unpinned clips make room for new ones, and Clipstay lets you know. Pinned clips are never removed. Exporting to JSON or CSV is always free."
 goodToKnow:
   - "Clipstay captures text you copy or cut on web pages in Chrome."
   - "For other apps, it adds whatever is on your clipboard at the moment you open the popup. It does not run in the background of other apps."
