@@ -38,7 +38,7 @@ Hugo site. Active templates in `layouts/`:
 - `partials/head.html`: SEO/meta, favicons, font preload, JSON-LD for every page type, fingerprinted CSS, pre-paint theme init, Cloudflare Web Analytics beacon
 - `partials/header.html`, `footer.html`, `brand-mark.html`
 - `partials/project-row.html`, `project-status.html`: homepage project row and the visitor-facing status chip
-- `index.html`: homepage (hero → projects → engineering notes, only when notes exist → contact). It shows the products; no principles, services or about blocks.
+- `index.html`: homepage (hero → projects → engineering notes, only when notes exist → contact). It shows the products; no principles, services or about blocks. The hero is text only and product-neutral (no product visuals or links to one product): the Projects list is the showcase and should start on the first screen.
 - `404.html`: not-found page (noindex)
 - `project/single.html`: product page (hero, what it does, privacy, free plan, good to know, support with FAQ)
 - `notes/single.html`, `notes/list.html`: engineering notes (BlogPosting / CollectionPage schema). There are no notes right now: the three service-era notes were removed in October 2026. The homepage section and the Notes links in the header and footer appear automatically once `content/notes/` has a published note; add `content/notes/_index.md` with a description at the same time.

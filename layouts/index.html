@@ -4,18 +4,7 @@
       <div class="hero__copy">
         <h1 id="hero-title" class="hero__title">Small products that keep working.</h1>
         <p class="hero__lede">I’m Viktor, an independent developer. I make small software products, starting with Chrome extensions, built and maintained by one developer.</p>
-        <div class="button-row">
-          <a class="btn btn--primary" href="/clipstay/">See Clipstay</a>
-          {{- if gt (len (where .Site.RegularPages "Type" "project")) 1 }}
-          <a class="btn btn--quiet" href="#projects">All projects</a>
-          {{- end }}
-        </div>
-      </div>
-      <div class="clips" role="img" aria-label="Illustration: a stack of copied snippets, with the top one pinned">
-        <div class="clip clip--pinned" style="--i:0" aria-hidden="true"><span class="clip__text clip__text--display">Small products that keep working.</span><svg class="clip__pin" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15.5 3.5 20.5 8.5l-2.1.7-3.2 3.2.2 3.3-1.4 1.4-3.3-3.3L5 19l-.9-.9 5.6-5.6-3.3-3.3 1.4-1.4 3.3.2 3.2-3.2z" fill="currentColor"/></svg></div>
-        <div class="clip" style="--i:1" aria-hidden="true"><code class="clip__text">git rebase -i HEAD~3</code><span class="clip__age">2 min ago</span></div>
-        <div class="clip" style="--i:2" aria-hidden="true"><span class="clip__swatch"></span><code class="clip__text">#1D4FE0</code><span class="clip__age">9 min ago</span></div>
-        <div class="clip" style="--i:3" aria-hidden="true"><span class="clip__text">{{ .Site.Params.contact.email }}</span><span class="clip__age">1 h ago</span></div>
+        <div class="button-row"><a class="btn btn--primary" href="#projects">See projects</a></div>
       </div>
     </div>
   </section>
