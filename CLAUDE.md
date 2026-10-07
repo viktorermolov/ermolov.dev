@@ -26,6 +26,18 @@ Push `master` to GitHub → DigitalOcean App Platform runs `hugo` automatically 
 - If a deploy clearly broke the live site, revert to the last working commit and push without waiting, then report.
 - Money, deleting data and cloud resources always need Viktor's explicit confirmation.
 
+**Boundary with the Clipstay project (since 2026-10-07).**
+- This project (ermolov.dev) is the only owner of the site: only it merges to `master`, deploys and verifies production, and it is responsible for the site as a whole (copy, templates, structured data, homepage, sitemap, `check_site.py`).
+- The Clipstay project owns the product facts: what the extension does, limits, permissions, keyboard shortcuts, Chrome Web Store status, and the extension's privacy policy. It never pushes to `master` of this repository.
+- How Clipstay changes arrive:
+  1. For each change, Clipstay creates a fresh branch `clipstay/<what-changes>` from the current `origin/master`.
+  2. It edits only Clipstay files (`content/clipstay.md`, `content/clipstay-privacy.md`, `static/img/clipstay/`), builds with the Hugo version in `.hugo-version`, runs `scripts/check_site.py` and pushes the branch. Pushing a branch deploys nothing.
+  3. Viktor brings a note here: the branch name, what changed and why, what to check.
+  4. Here: fetch the branch and re-check the whole site for consistency (homepage, structured data and any other place that mentions Clipstay), finish it if needed, merge to `master` under the usual rules (with Viktor's go-ahead), verify production with `?v=<commit>`, then delete the branch.
+  5. If anything in the branch conflicts with the site's rules, do not merge: take the question back to Viktor.
+- The other direction: this project does not change product facts itself. If work on the site reveals a mismatch with the product (for example, limits on the site differ from the store listing), write the question down for Viktor instead of editing the fact.
+- Before this agreement Clipstay pushed to `master` directly twice: `9e0d297` (free plan wording: 100 unpinned clips plus up to 5 pinned) and `912f820` (`status: live`, Clipstay published in the Chrome Web Store on 2026-10-06). Both are in production and verified; nothing to redo.
+
 ## What the site is
 
 ermolov.dev is the home of Viktor Ermolov's own software products (currently Chrome extensions). The site shows the products and hosts each product's pages: description, support and privacy policy. Site copy is English. Keep the tone positive and plain; describe what the products do. Do not add blocks about the developer's approach, principles or availability, and do not mention client work or services, even to rule them out.
