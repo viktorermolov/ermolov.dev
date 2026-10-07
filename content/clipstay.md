@@ -15,7 +15,7 @@ weight: 1
 url: "/clipstay/"
 type: "project"
 schemaType: "SoftwareApplication"
-status: "pending-review"
+status: "live"
 store: "Chrome Web Store"
 itemID: "biellalamlbfmgljmpfppaebblmmhokn"
 storeURL: "https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn"
