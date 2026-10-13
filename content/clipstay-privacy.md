@@ -15,7 +15,7 @@ All of the following is kept in your browser's local extension storage (`chrome.
 
 - **Text you copy or cut on web pages**, with the time it was copied.
 - **Your current clipboard text when you open the Clipstay popup**, if it is new. This lets text copied in other apps appear in your history. You can turn this off in Settings (“Add clipboard when the popup opens”), for example if you copy passwords from a password manager.
-- **Your settings:** whether capture is paused, your list of excluded sites, and whether Clipstay adds your clipboard when the popup opens.
+- **Your settings:** whether capture is paused, your list of excluded sites, whether Clipstay adds your clipboard when the popup opens, and your plan (free or Pro).
 - **A short fingerprint (hash) of text copied on an excluded site.** The text itself is never saved. The fingerprint only lets Clipstay recognize and skip that text when you open the popup.
 - **A local error log** for troubleshooting. An entry may include the website's domain name where an error happened. It never includes copied text.
 
