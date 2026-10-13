@@ -7,9 +7,9 @@
 title: "Clipstay — Clipboard History Manager"
 name: "Clipstay"
 description: "Clipstay is a Chrome extension that keeps your clipboard history on your device: search it, pin it and copy it back in one click. No account, no analytics."
-headline: "Clipboard history that never loses your clips."
-tagline: "Clipboard history that never loses your clips. Stored on your device."
-lede: "Clipstay saves everything you copy in Chrome, so you can search it, pin it and copy it back in one click. Your history stays on your device."
+headline: "Your clipboard history, saved."
+tagline: "Your clipboard history, saved. Your clips never leave your device."
+lede: "Clipstay saves everything you copy in Chrome, so you can search it, pin it and copy it back in one click. Your clips never leave your device."
 date: 2026-10-05
 lastmod: 2026-10-13
 weight: 1
@@ -25,7 +25,7 @@ icon: "/img/clipstay/icon-128.png"
 cardImage: "/img/clipstay/history.webp"
 cardImageAlt: "The Clipstay popup showing a list of recent clips, with three pinned. Caption: Your clipboard history, saved."
 ogImage: "og/og-clipstay.png"
-ogImageAlt: "Clipstay: never lose a copy again. A Chrome extension for clipboard history."
+ogImageAlt: "Clipstay: your clipboard history, saved. A Chrome extension for clipboard history."
 shortcuts:
   mac: "Control+Shift+V"
   other: "Alt+Shift+V"
@@ -54,6 +54,8 @@ features:
   - "Keyboard shortcut"
   - "Excluded sites and a pause switch"
   - "Export to JSON and CSV, always free"
+proPlan: "Pro: $4.99 one-time, unlimited history and pins. Search and export stay free."
+refundsURL: "/clipstay/refunds/"
 freePlan: "The free plan keeps your 100 most recent unpinned clips, plus up to 5 pinned clips on top. When the history is full, the oldest unpinned clips make room for new ones, and Clipstay lets you know. Pinned clips never roll off. Exporting to JSON or CSV is always free."
 goodToKnow:
   - "Clipstay captures text you copy or cut on web pages in Chrome."
