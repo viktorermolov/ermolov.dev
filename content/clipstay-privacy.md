@@ -46,7 +46,7 @@ The use of information received by Clipstay adheres to the [Chrome Web Store Use
 - Delete any item, clear your history, or pause capture at any time from the popup or the options page.
 - Turn off adding your clipboard when the popup opens in Settings.
 - Export your full history as JSON or CSV at any time. Export is always free.
-- To have your purchase email removed from the license service, write to the address below.
+- To have your purchase records removed from the license service, write to the address below.
 - Uninstalling Clipstay removes all of its stored data from your browser.
 
 ## Pro purchase and activation
@@ -55,7 +55,7 @@ Clipstay has a free plan and an optional Pro plan, a one-time purchase of $4.99.
 
 - **Payment is handled by [Stripe](https://stripe.com/privacy)**, on a Stripe-hosted page that opens in a new browser tab, outside the extension. Stripe collects your payment details and email address under its own privacy policy. The developer receives your email address and the fact that the payment was made; card details are handled by Stripe and are not seen or stored by the developer. Clipstay itself never sees any payment information.
 - **Activation sends one request.** In Settings you enter the email address you paid with and press Activate. Clipstay then sends **only that email address** to a small license service run by the developer (a Cloudflare Worker), which answers yes or no. If the answer is yes, Pro is switched on locally in your browser. The email address is not saved in the extension.
-- **The purchase email is stored by the developer** (as a record that this email bought Pro) so that activation can work, on Cloudflare's infrastructure. It is used only for that, and removed if the purchase is refunded. Nothing else is stored, and no device identifiers or license keys are used.
+- **What the license service stores.** The developer's license service (a Cloudflare Worker) stores a one-way SHA-256 hash of your normalized purchase email and the Stripe payment ID, so that activation and refunds can work. The email address itself is not stored by the service; it stays with Stripe. Both records are deleted if the purchase is fully refunded. Nothing else is stored, and no device identifiers or license keys are used.
 - **Clipstay checks only when you press Activate**, never in the background and never again afterwards. Your clips, settings and history are never part of this request. The service sees your IP address like any web server and uses it only for brief rate limiting.
 - To use Pro on another computer, enter the same email there.
 - Refund terms are on the [Pro refund policy](/clipstay/refunds/) page.
