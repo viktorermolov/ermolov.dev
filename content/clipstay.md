@@ -6,12 +6,11 @@
 #   publishes the item, change `status` to `live`; `storeURL` is already filled in.
 title: "Clipstay — Clipboard History Manager"
 name: "Clipstay"
-description: "Clipstay is a Chrome extension that keeps your clipboard history on your device: search it, pin it and copy it back in one click. No account, no analytics."
-headline: "Your clipboard history, saved."
-tagline: "Your clipboard history, saved. Your clips never leave your device."
-lede: "Clipstay saves everything you copy in Chrome, so you can search it, pin it and copy it back in one click. Your clips never leave your device."
+description: "Clipstay is a Chrome extension that keeps your clipboard history on your device: search it, pin it and copy it back in one click. No account, no servers, no analytics."
+headline: "Clipboard history that never loses your clips."
+tagline: "Clipboard history that never loses your clips. 100% local."
+lede: "Clipstay saves everything you copy in Chrome, so you can search it, pin it and copy it back in one click. It runs 100% on your device."
 date: 2026-10-05
-lastmod: 2026-10-13
 weight: 1
 url: "/clipstay/"
 type: "project"
@@ -23,9 +22,9 @@ storeURL: "https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmm
 privacyURL: "/clipstay/privacy/"
 icon: "/img/clipstay/icon-128.png"
 cardImage: "/img/clipstay/history.webp"
-cardImageAlt: "The Clipstay popup showing a list of recent clips, with three pinned. Caption: Your clipboard history, saved."
+cardImageAlt: "The Clipstay popup showing a searchable list of recent clips, with three pinned."
 ogImage: "og/og-clipstay.png"
-ogImageAlt: "Clipstay: your clipboard history, saved. A Chrome extension for clipboard history."
+ogImageAlt: "Clipstay: never lose a copy again. A Chrome extension for clipboard history."
 shortcuts:
   mac: "Control+Shift+V"
   other: "Alt+Shift+V"
@@ -35,15 +34,11 @@ highlights:
   - title: "Find it again in seconds"
     text: "Search your history, pin the clips you reuse and copy any of them back with one click. Open Clipstay from the keyboard with the shortcut below."
     image: "/img/clipstay/search.webp"
-    alt: "The Clipstay popup filtered by the word git, showing three matching clips. Caption: search by several words in any order, filter by date or pinned clips."
+    alt: "The Clipstay popup filtered by the word git, showing three matching clips."
   - title: "You decide what it keeps"
     text: "Exclude any site, pause capture whenever you like, and export your whole history to JSON or CSV. Password fields and Incognito windows are never captured."
     image: "/img/clipstay/private.webp"
-    alt: "The Clipstay settings page with a pause switch, an excluded sites list and the option to add the clipboard when the popup opens. Caption: Stays on your device."
-  - title: "Free, with an optional Pro"
-    text: "Pro removes the history and pin limits. $4.99, paid once, no subscription. Unlock it by entering your purchase email once. Search and export stay free."
-    image: "/img/clipstay/pro.webp"
-    alt: "The Plan section of Clipstay settings: free limits, Pro with unlimited history and pins for $4.99 one-time, a Buy Pro button and a field to activate with your purchase email."
+    alt: "The Clipstay settings page with a pause switch, an excluded sites list and the option to add the clipboard when the popup opens."
 features:
   - "Saves copy and cut on every web page"
   - "Works in tabs opened before you installed"
@@ -54,8 +49,6 @@ features:
   - "Keyboard shortcut"
   - "Excluded sites and a pause switch"
   - "Export to JSON and CSV, always free"
-proPlan: "Pro: $4.99 one-time, unlimited history and pins. Search and export stay free."
-refundsURL: "/clipstay/refunds/"
 freePlan: "The free plan keeps your 100 most recent unpinned clips, plus up to 5 pinned clips on top. When the history is full, the oldest unpinned clips make room for new ones, and Clipstay lets you know. Pinned clips never roll off. Exporting to JSON or CSV is always free."
 goodToKnow:
   - "Clipstay captures text you copy or cut on web pages in Chrome."
@@ -64,7 +57,7 @@ goodToKnow:
 supportNote: "Include your Chrome version and operating system if you can, and leave out any private text you copied."
 faq:
   - q: "Where is my clipboard history stored?"
-    a: "On your device, in Chrome's local extension storage. Clipstay makes no network requests, except a single one-time check when you activate Pro. Uninstalling it removes the data."
+    a: "On your device, in Chrome's local extension storage. Clipstay makes no network requests, and uninstalling it removes the data."
   - q: "How do I keep passwords out of my history?"
     a: "Clipstay never captures password fields. If you copy passwords from a password manager, turn off “Add clipboard when the popup opens” in Settings."
   - q: "How do I keep a clip for good?"

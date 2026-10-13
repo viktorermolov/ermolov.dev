@@ -1,13 +1,13 @@
 ---
 title: "Clipstay Pro Refund Policy"
-description: "Clipstay Pro is a one-time purchase of $4.99. Ask for a refund within 30 days and get your money back, no questions asked."
+description: "Starting with Clipstay 1.1, Pro is an optional one-time purchase of $4.99. Ask for a refund within 30 days and get your money back, no questions asked."
 date: 2026-10-13
 url: "/clipstay/refunds/"
 layout: "legal"
 schemaType: "WebPage"
 ---
 
-Clipstay Pro is a one-time purchase of $4.99. There is no subscription and no recurring charge.
+Starting with Clipstay 1.1, Pro is an optional one-time purchase of $4.99. There is no subscription and no recurring charge.
 
 ## Refunds
 
