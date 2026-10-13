@@ -1,6 +1,6 @@
 ---
 title: "Clipstay Privacy Policy"
-description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics. Its only network request is the one-time Pro activation, which sends the purchase email you type."
+description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics. No network requests, except a single one-time check when you activate Pro, which sends the purchase email you type."
 date: 2026-10-13
 url: "/clipstay/privacy/"
 layout: "legal"
@@ -37,7 +37,7 @@ Clipstay does **not** save the address of the page you copied from, your browsin
 
 ## Sharing and selling
 
-Clipstay makes no network requests while you use it. The single exception is activating Pro, described below. Your data is never sold, shared, transferred to third parties, used for advertising, or used to determine creditworthiness. The developer has no access to your clips.
+Clipstay makes no network requests, except a single one-time check when you activate Pro (described below). Your data is never sold, shared, transferred to third parties, used for advertising, or used to determine creditworthiness. The developer has no access to your clips.
 
 The use of information received by Clipstay adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies), including the Limited Use requirements.
 
@@ -59,7 +59,7 @@ Clipstay has a free plan and an optional Pro plan, a one-time purchase of $4.99.
 - **Clipstay checks only when you press Activate**, never in the background and never again afterwards. Your clips, settings and history are never part of this request. The service sees your IP address like any web server and uses it only for brief rate limiting.
 - To use Pro on another computer, enter the same email there.
 
-If you never activate Pro, Clipstay makes no network requests at all.
+If you never activate Pro, Clipstay makes no network requests at all. If you do, the activation is that one request and nothing is checked afterwards.
 
 ## This website
 

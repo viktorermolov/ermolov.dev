@@ -57,7 +57,7 @@ goodToKnow:
 supportNote: "Include your Chrome version and operating system if you can, and leave out any private text you copied."
 faq:
   - q: "Where is my clipboard history stored?"
-    a: "On your device, in Chrome's local extension storage. Clipstay makes no network requests while you use it; the only exception is the one-time check when you activate Pro. Uninstalling it removes the data."
+    a: "On your device, in Chrome's local extension storage. Clipstay makes no network requests, except a single one-time check when you activate Pro. Uninstalling it removes the data."
   - q: "How do I keep passwords out of my history?"
     a: "Clipstay never captures password fields. If you copy passwords from a password manager, turn off “Add clipboard when the popup opens” in Settings."
   - q: "How do I keep a clip for good?"
