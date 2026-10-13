@@ -8,8 +8,8 @@ title: "Clipstay — Clipboard History Manager"
 name: "Clipstay"
 description: "Clipstay is a Chrome extension that keeps your clipboard history on your device: search it, pin it and copy it back in one click. No account, no analytics."
 headline: "Clipboard history that never loses your clips."
-tagline: "Clipboard history that never loses your clips. 100% local."
-lede: "Clipstay saves everything you copy in Chrome, so you can search it, pin it and copy it back in one click. It runs 100% on your device."
+tagline: "Clipboard history that never loses your clips. Stored on your device."
+lede: "Clipstay saves everything you copy in Chrome, so you can search it, pin it and copy it back in one click. Your history stays on your device."
 date: 2026-10-05
 weight: 1
 url: "/clipstay/"

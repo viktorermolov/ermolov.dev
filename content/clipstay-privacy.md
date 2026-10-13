@@ -58,6 +58,7 @@ Clipstay has a free plan and an optional Pro plan, a one-time purchase of $4.99.
 - **The purchase email is stored by the developer** (as a record that this email bought Pro) so that activation can work, on Cloudflare's infrastructure. It is used only for that, and removed if the purchase is refunded. Nothing else is stored, and no device identifiers or license keys are used.
 - **Clipstay checks only when you press Activate**, never in the background and never again afterwards. Your clips, settings and history are never part of this request. The service sees your IP address like any web server and uses it only for brief rate limiting.
 - To use Pro on another computer, enter the same email there.
+- Refund terms are on the [Pro refund policy](/clipstay/refunds/) page.
 
 If you never activate Pro, Clipstay makes no network requests at all. If you do, the activation is that one request and nothing is checked afterwards.
 
