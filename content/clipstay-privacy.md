@@ -1,13 +1,13 @@
 ---
 title: "Clipstay Privacy Policy"
-description: "Clipstay keeps your clipboard history on your device. It collects nothing, sends nothing, and has no account or analytics."
-date: 2026-10-05
+description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics. Its only network request is the one-time Pro activation, which sends the purchase email you type."
+date: 2026-10-13
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
 ---
 
-Clipstay is a Chrome extension that keeps a history of the text you copy in the browser. This policy explains what it handles and where that data goes. The short version: **everything stays on your device. Clipstay has no server, no account, and no analytics, and it does not send your data anywhere.**
+Clipstay is a Chrome extension that keeps a history of the text you copy in the browser. This policy explains what it handles and where that data goes. The short version: **your clips and settings stay on your device. Clipstay has no account and no analytics, and it never sends your clips anywhere. The only thing it can ever send is the email address you type to activate Pro (see “Pro purchase and activation”).**
 
 ## What Clipstay stores
 
@@ -37,7 +37,7 @@ Clipstay does **not** save the address of the page you copied from, your browsin
 
 ## Sharing and selling
 
-Clipstay makes no network requests. Your data is never sold, shared, transferred to third parties, used for advertising, or used to determine creditworthiness. The developer has no access to it.
+Clipstay makes no network requests while you use it. The single exception is activating Pro, described below. Your data is never sold, shared, transferred to third parties, used for advertising, or used to determine creditworthiness. The developer has no access to your clips.
 
 The use of information received by Clipstay adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies), including the Limited Use requirements.
 
@@ -46,11 +46,20 @@ The use of information received by Clipstay adheres to the [Chrome Web Store Use
 - Delete any item, clear your history, or pause capture at any time from the popup or the options page.
 - Turn off adding your clipboard when the popup opens in Settings.
 - Export your full history as JSON or CSV at any time. Export is always free.
+- To have your purchase email removed from the license service, write to the address below.
 - Uninstalling Clipstay removes all of its stored data from your browser.
 
-## Future paid features
+## Pro purchase and activation
 
-Clipstay currently has no paid features and no payment code. If a paid plan is added later, payments will be handled by a third-party payment processor, and this policy will be updated before that change is released.
+Clipstay has a free plan and an optional Pro plan, a one-time purchase of $4.99.
+
+- **Payment is handled by [Stripe](https://stripe.com/privacy)**, on a Stripe-hosted page that opens in a new browser tab, outside the extension. Stripe collects your payment details and email address under its own privacy policy. The developer receives your email address and the fact that the payment was made; card details are handled by Stripe and are not seen or stored by the developer. Clipstay itself never sees any payment information.
+- **Activation sends one request.** In Settings you enter the email address you paid with and press Activate. Clipstay then sends **only that email address** to a small license service run by the developer (a Cloudflare Worker), which answers yes or no. If the answer is yes, Pro is switched on locally in your browser. The email address is not saved in the extension.
+- **The purchase email is stored by the developer** (as a record that this email bought Pro) so that activation can work, on Cloudflare's infrastructure. It is used only for that, and removed if the purchase is refunded. Nothing else is stored, and no device identifiers or license keys are used.
+- **Clipstay checks only when you press Activate**, never in the background and never again afterwards. Your clips, settings and history are never part of this request. The service sees your IP address like any web server and uses it only for brief rate limiting.
+- To use Pro on another computer, enter the same email there.
+
+If you never activate Pro, Clipstay makes no network requests at all.
 
 ## This website
 
