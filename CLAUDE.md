@@ -21,9 +21,10 @@ Push `master` to GitHub → DigitalOcean App Platform runs `hugo` automatically 
 
 **Roles and language.** Viktor owns positioning, copy under his name, which products are shown, and any redesign. This project owns the site working and staying consistent. Site copy is English; talk to Viktor in Russian. Viktor answers from his phone: one short message per decision with the question, options, a recommendation and the cost of getting it wrong; don't ask about small things.
 
-**Development standards.** Follow the common standards in the private repo `viktorermolov/dev-standards` (`STANDARDS.md`); read them at the start of work. Exceptions recorded here, with reasons:
-- A merge to `master` deploys the site, so the merge is Viktor's go-ahead (the standard already reserves merges that ship to production for him).
+**Development standards.** Follow the common standards in the private repo `viktorermolov/dev-standards` (`STANDARDS.md`); read them at the start of work. How they apply here:
+- A merge to `master` deploys the site, so the merge is Viktor's go-ahead (the standard reserves merges that ship to production for him).
 - Questions for a product project are gathered into one PR comment, because that project is woken by hand and not by PR events.
+- Recorded departures: (1) emergency revert of a broken deploy goes straight to `master` without a PR (see the single exception above); (2) `master` has no branch protection, so "all changes through a PR" is enforced by this rule, not by GitHub; (3) the same light checks run on PRs and on `master` pushes, with no separate full suite, because the whole suite takes under a minute.
 
 **Modes.**
 - **Integrator (default, autonomous):** changes arrive from product projects (Clipstay now, more later, not only Chrome extensions) as PRs from `<product>/<change>` branches. Bring them in and propagate each change across the whole site: homepage project rows, product page, privacy policy, structured data, sitemap, shared sections. No stale version of a changed fact may remain anywhere. Autonomy ends at a prepared, reviewed PR (a pushed branch with an open PR); pushing to `master`, merging and deploying happen only on Viktor's explicit go-ahead for that specific change, and on his "yes" this project performs the merge via the REST API.
