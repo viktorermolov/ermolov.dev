@@ -13,6 +13,19 @@ The site is static Hugo on DigitalOcean App Platform behind Cloudflare. Pushes t
 
 Never commit or print credentials.
 
+## Contact-form infrastructure awaiting decommission
+
+The code is gone from this repository. Resources outside it may still exist until Viktor confirms their removal; delete them only on his explicit go-ahead.
+
+| Resource | Status (2026-10-14) |
+| --- | --- |
+| Worker `ermolov-leads-api` | Not present in the Cloudflare account. Check the zone for a leftover `ermolov.dev/api/*` route |
+| D1 `ermolov-leads` (`825db71d-c29a-4bc4-99de-71b4a59122b4`) | Exists; two delivered test leads |
+| Turnstile widget (ermolov.dev) | Not verified |
+| Raspberry Pi relay `ermolov-lead-relay`, Notification Bot source `ermolov-site` | Not verified |
+
+Do not touch `clipstay-license` and its KV namespace: they belong to Clipstay.
+
 ## Scoped Cloudflare rules
 
 The desired definitions are [canonical-redirects.json](../infrastructure/cloudflare/canonical-redirects.json) and [security-headers.json](../infrastructure/cloudflare/security-headers.json). They use Free-plan features and add no Worker execution or paid service. Treat them as reviewed definitions, not as permission to replace an entire existing phase ruleset. Read current rules before every change and preserve unrelated rules.
@@ -36,11 +49,11 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()
 Strict-Transport-Security: max-age=31536000
 ```
 
-It removes `x-do-app-origin` and `x-rgw-object-type`. This CSP restricts base URLs, embedded objects, framing and form destinations; it is not a strict script policy. There is no `script-src`/`default-src` restriction. Any later strict CSP needs separate browser tests for Hugo's inline theme setup, Turnstile, analytics and form fetches. HSTS intentionally omits `includeSubDomains` and preload; a browser that learns it still applies HTTPS to that hostname's API paths.
+It removes `x-do-app-origin` and `x-rgw-object-type`. This CSP restricts base URLs, embedded objects, framing and form destinations; it is not a strict script policy. There is no `script-src`/`default-src` restriction. Any later strict CSP needs separate browser tests for Hugo's inline theme setup and analytics. HSTS intentionally omits `includeSubDomains` and preload; a browser that learns it still applies HTTPS to that hostname's API paths.
 
 After an edge change, use an honest user agent such as `ermolov-release-check/1.0 (+https://ermolov.dev)` and inspect redirects without following them first. Check apex `/` is 200, www `/` and apex/www `/index.html` are 301 to the intended canonical, and query strings survive. Verify `/robots.txt`, `/sitemap.xml`, static CSS/JS and a missing path (404). Check that another existing subdomain retains its expected response. Do not submit an inquiry merely to inspect headers.
 
-If robots/sitemap still show an older build, inspect the public body and cache response first. During this release `robots.txt` was a stale Cloudflare HIT; purging only `https://ermolov.dev/robots.txt` and `https://ermolov.dev/sitemap.xml` fixed it. Prefer this targeted purge after confirming publication; do not purge the whole zone or alter API cache behavior for a static metadata update.
+If robots/sitemap still show an older build, inspect the public body and cache response first. `robots.txt` once was a stale Cloudflare HIT; purging only `https://ermolov.dev/robots.txt` and `https://ermolov.dev/sitemap.xml` fixed it. Prefer this targeted purge after confirming publication; do not purge the whole zone for a static metadata update.
 
 ### Cache rules and zone settings
 
@@ -68,7 +81,7 @@ For an API-based rollback using the existing authorized connector:
 
 If the rollback specifically needs to retract HSTS, disabling the header rule is insufficient for browsers that already cached it. Keep valid HTTPS available. Use the same single-rule update with `enabled: true` and set its HSTS value to `max-age=0`, retaining the intended remaining fields and original hostname scope; verify that HTTPS responses emit it. Remove a problematic individual header from that definition if necessary instead of disabling the HSTS-clearing response. Clients clear the learned policy only when they receive that response; other clients can retain the prior one-year policy until expiry. Do not switch the site to HTTP or disable TLS as an incident workaround. Ordinary rollback of a CSP/header regression does not require removing HTTPS or HSTS.
 
-References: [Cloudflare single-rule updates](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule/) and [HSTS requirements](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/http-strict-transport-security/). The September audit changes require no Worker/D1 rollback, since those components were not changed.
+References: [Cloudflare single-rule updates](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule/) and [HSTS requirements](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/http-strict-transport-security/).
 
 ## Site rollback
 
