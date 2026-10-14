@@ -1,6 +1,6 @@
 # Operations
 
-> **October 2026:** the contact form was removed from the site when ermolov.dev became the home of Viktor's own products. The Worker, D1 database, Turnstile widget and Pi relay described below are still deployed and unchanged, but nothing on the site sends them inquiries. Do not disable or remove them without Viktor's explicit confirmation; decommissioning is a separate step. The sections below remain accurate for the deployed components.
+The site is static Hugo on DigitalOcean App Platform behind Cloudflare. Pushes to `master` deploy it (see `CLAUDE.md`). The contact form was removed in October 2026, and its Worker and Pi relay code was removed from this repository; nothing here depends on them. The `/api/` exclusions in the edge rules below date from that API and are harmless.
 
 ## Resources
 
@@ -8,40 +8,10 @@
 | --- | --- |
 | Cloudflare account | `52a5f4d5c9b84f6ab34ad87c1651f61d` |
 | Zone | `3532291be695455e1ce46639f0a7dcb4` |
-| Worker | `ermolov-leads-api` |
-| D1 | `ermolov-leads` / `825db71d-c29a-4bc4-99de-71b4a59122b4` |
-| Pi | SSH alias `pi` |
-| Relay root | `/data/programming/projects/ermolov.dev` |
-| Bot source | `ermolov-site` |
-| Private Bot URL | `http://notification-bot:8080` |
 | Canonical redirect ruleset | `925c1da6060a4fff90f20e7879f8424c` |
 | Static security-header ruleset | `04393da9a4634d67a815b6af4ef0acec` |
 
-Worker secrets: `TURNSTILE_SECRET_KEY`, `RELAY_TOKEN`. Pi environment: `RELAY_TOKEN`, `NOTIFICATION_API_KEY`; no Telegram token or Cloudflare account credential. Keep `.env.relay` outside releases with mode `0600`. Never commit/print credentials or put them in URLs.
-
-## Deployment
-
-From `services/worker`, run `npm ci`, `npm run check`, `npx wrangler d1 migrations apply ermolov-leads --remote`, then `npm run deploy`. On first deployment use `npx wrangler deploy --secrets-file /private/path/worker-secrets.json` with a mode-0600 JSON file containing the two Worker secrets. Existing secrets survive subsequent deployment; rotate them with `wrangler secret bulk` from a private file. Review migrations and never erase accepted leads. Routes cover only `/api/*` on apex/www; DNS remains proxied to DigitalOcean.
-
-On the Pi, register the source with the Bot's `scripts/manage_api_keys.py add ermolov-site --output <private-path>`, without printing credentials. Load the changed source map through that repository's guarded `scripts/deploy_remote.sh`: candidate build and unit/integration tests precede replacement. Preserve queue volume and other sources.
-
-Provision the relay's environment from its example, commit the site code, then run `scripts/deploy_relay.sh`. This isolated deployment tests a candidate image with no network before replacement. See [relay instructions](../services/relay/README.md) for release layout, health, rollback and configuration. Publish the frontend last, with production Turnstile configuration.
-
-The 21 September audit deployed relay revision `bcebd580115d34c435a93bc47e47d50b8cb693d6` after 28 passing candidate tests. A post-deployment snapshot showed healthy runtime, poll age 36 seconds, heartbeat age six seconds, pending 0, sent 2 and attention 0; the log check returned zero lines. These are historical observations, not current health values. The final UI-only follow-up does not require another relay, Worker or Bot deployment.
-
-## Delivery and recovery
-
-The relay claims up to five leads with a short lease. A stable Bot idempotency key and immutable payload close the crash window between enqueue and saving the Bot ID. Keep that ID while awaiting delivery; only `sent`, not `202`, permits completion.
-
-Transient failures retry with backoff and `Retry-After`. A stale lease stops processing. Terminal failure, conflicting idempotency and ambiguous results beyond the Bot's 30-day deduplication window require attention. Preserve D1 data; do not invent a new ID and silently resend.
-
-Authenticated `GET /api/internal/status` exposes redacted queue state. Investigate private leads deliberately through D1, keeping them off logs/shared screenshots. Resolve failures by direct email or documented recovery after checking Telegram. There is no public inbox.
-
-Cloudflare Browser Integrity Check rejects the default Python user agent with error 1010. The relay sends the descriptive `ermolov-lead-relay/1.0 (+https://ermolov.dev)` user agent. Use that header for command-line health checks too; do not disable the zone's protection.
-
-Fault/recovery alerts pass through the existing Bot and their deduplication state survives relay restart. During total Pi outage, Cloudflare continues bounded intake, but Telegram alerts cannot originate from the offline Pi. Check last-poll/oldest-pending in API status and Cloudflare logs; restoring the relay resumes processing.
-
-An attention warning is persisted locally before the Worker receives the terminal `attention` transition. If the alert queue is full (100 pending warnings) or local state cannot be saved, that transition is withheld and the lead remains reclaimable. Restore local storage/alert delivery before intervening in D1. A warning may arrive before a terminal update succeeds; reconcile the current Worker state and exact Bot receipt before taking action. Never clear the alert volume merely to silence a warning. See the [guarded operator recovery statements](../services/worker/README.md#recover-an-attention-item) to resume a known-safe receipt or mark a manually handled inquiry `resolved` without corrupting the unresolved counter.
+Never commit or print credentials.
 
 ## Scoped Cloudflare rules
 
@@ -53,7 +23,7 @@ The desired definitions are [canonical-redirects.json](../infrastructure/cloudfl
 | Same redirect ruleset | `ermolov_www_canonical` | Then: GET/HEAD on www → apex with the same path/query, 301; excludes `/api/` and `/cdn-cgi/` prefixes. |
 | `http_response_headers_transform` / `04393da9a4634d67a815b6af4ef0acec` | `ermolov_static_security` | Apex/www responses except `/api/` and `/cdn-cgi/` prefixes. |
 
-Exact hostname conditions exclude unrelated subdomains. Non-GET/HEAD requests are not affected by these redirect rules. API responses retain their existing Worker policy, including `Cache-Control: no-store`. Existing HTTPS behavior and Cloudflare protection remain separate from these rules.
+Exact hostname conditions exclude unrelated subdomains. Non-GET/HEAD requests are not affected by these redirect rules. Existing HTTPS behavior and Cloudflare protection remain separate from these rules.
 
 The static response rule sets:
 
@@ -68,9 +38,9 @@ Strict-Transport-Security: max-age=31536000
 
 It removes `x-do-app-origin` and `x-rgw-object-type`. This CSP restricts base URLs, embedded objects, framing and form destinations; it is not a strict script policy. There is no `script-src`/`default-src` restriction. Any later strict CSP needs separate browser tests for Hugo's inline theme setup, Turnstile, analytics and form fetches. HSTS intentionally omits `includeSubDomains` and preload; a browser that learns it still applies HTTPS to that hostname's API paths.
 
-After an edge change, use an honest user agent such as `ermolov-release-check/1.0 (+https://ermolov.dev)` and inspect redirects without following them first. Check apex `/` is 200, www `/` and apex/www `/index.html` are 301 to the intended canonical, and query strings survive. Verify `/robots.txt`, `/sitemap.xml`, static CSS/JS and a missing path (404). Verify a private API request without credentials still returns the Worker `401` JSON/no-store response without redirection. Check that another existing subdomain retains its expected response. Do not submit an inquiry merely to inspect headers.
+After an edge change, use an honest user agent such as `ermolov-release-check/1.0 (+https://ermolov.dev)` and inspect redirects without following them first. Check apex `/` is 200, www `/` and apex/www `/index.html` are 301 to the intended canonical, and query strings survive. Verify `/robots.txt`, `/sitemap.xml`, static CSS/JS and a missing path (404). Check that another existing subdomain retains its expected response. Do not submit an inquiry merely to inspect headers.
 
-The final audit edge checks confirmed query preservation, private API `401`/`no-store` on both hostnames, expected security headers and `404` for the checked sensitive-file paths. If robots/sitemap still show an older build, inspect the public body and cache response first. During this release `robots.txt` was a stale Cloudflare HIT; purging only `https://ermolov.dev/robots.txt` and `https://ermolov.dev/sitemap.xml` fixed it, and the subsequent public response contained `Disallow: /api/`. Prefer this targeted purge after confirming publication; do not purge the whole zone or alter API cache behavior for a static metadata update.
+If robots/sitemap still show an older build, inspect the public body and cache response first. During this release `robots.txt` was a stale Cloudflare HIT; purging only `https://ermolov.dev/robots.txt` and `https://ermolov.dev/sitemap.xml` fixed it. Prefer this targeted purge after confirming publication; do not purge the whole zone or alter API cache behavior for a static metadata update.
 
 ### Cache rules and zone settings
 
@@ -100,35 +70,14 @@ If the rollback specifically needs to retract HSTS, disabling the header rule is
 
 References: [Cloudflare single-rule updates](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule/) and [HSTS requirements](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/http-strict-transport-security/). The September audit changes require no Worker/D1 rollback, since those components were not changed.
 
-## Free-tier budget and retention
+## Site rollback
 
-- Poll every 60 seconds: 1,440 Worker requests/day, plus submissions and state changes.
-- Atomic application caps: 100 accepted leads/UTC day and 1,000 unresolved leads.
-- Shared Free allowance: Workers 100,000 requests/day, 10 ms CPU/request; D1 5 million rows read and 100,000 written/day, 500 MB/database, 5 GB/account.
-- Watch account totals in Cloudflare and D1 query metadata. Investigate at 80% of an allowance; slow the relay if needed. Never upgrade automatically.
-- Rejected Worker requests also consume quota. Turnstile/origin/body/rate limits reduce abuse but cannot guarantee availability under unlimited traffic. On quota failure, offer email and never claim a failed save succeeded.
-- Hourly bounded cleanup removes delivered personal data after 30 days and technical deduplication records after 90. Pending/attention data stays until handled, within its cap. Telegram messages are outside D1 automatic cleanup.
-
-References: [Workers](https://developers.cloudflare.com/workers/platform/pricing/), [D1 pricing](https://developers.cloudflare.com/d1/platform/pricing/), [D1 limits](https://developers.cloudflare.com/d1/platform/limits/), [Turnstile](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/).
-
-## Rollback
-
-Redeploy the previous site commit through GitHub/DigitalOcean if UI fails. For the Worker, inspect `wrangler deployments list`, then `wrangler rollback <version-id>`; ensure schema compatibility. Restore the relay's prior release independently. Never delete D1, purge the Bot queue volume, or recreate pending leads during rollback.
+Redeploy the previous site commit through GitHub/DigitalOcean.
 
 ## Analytics and privacy
 
-Cloudflare Web Analytics measures visits/performance using a public token. D1 stores accepted leads and bounded attribution. Marketing analytics receives no enquiry content; referrer is a hostname, not a full URL. The form explains purpose, processors and retention. No automated email or advertising tracking is added.
+Cloudflare Web Analytics measures visits and performance with a public token (`analyticsToken` in `config.toml`; not a secret). The site collects no other data. The visible email stays in the footer and the contact section.
 
-The visible business email remains in the footer, privacy notice and no-JavaScript fallback; the contact-intro callout and JSON-LD email property are removed. Do not describe the public address, analytics token or Turnstile site key as a secret. Keep credentials, form content and private D1 records out of reports, screenshots and logs.
+## Search
 
-## Search and audit follow-up
-
-The canonical sitemap is `https://ermolov.dev/sitemap.xml`. Google Search Console processed it successfully during the 21 September audit: last read 21 September 2026, one discovered page. URL Inspection separately confirmed the canonical URL is on Google, indexed and served over HTTPS, with Google's chosen canonical matching the declared URL and last crawl on 21 September 2026. Manual actions and Security issues both reported No issues detected. Performance reports were still processing. These results do not identify the exact deployed revision Google has processed. The live test, displayed as 21 September 2026 at 4:04 PM, reported URL is available to Google and Page can be indexed. One indexing request was accepted into the priority crawl queue; no repeated requests were sent. Monitor subsequent reports rather than repeatedly requesting the same URL. Queue acceptance does not guarantee a recrawl time. No Bing submission was made. Sitemap acceptance alone is not proof of indexing. Preserve one canonical homepage URL and use an accurate content modification date if `lastmod` is added later, not the time of every deployment.
-
-`robots.txt` disallows API crawling while allowing the homepage and render assets. This does not replace authentication and cannot guarantee exclusion from search results. When changing metadata or routing, run the production Hugo build and `scripts/check_site.py`, then inspect published robots/sitemap/canonical and response headers. Keep the site name consistent across the visible brand, Open Graph and WebSite JSON-LD.
-
-[FINAL-AUDIT.md](FINAL-AUDIT.md) records completed publication/CI verification, 21 Worker / 4 frontend / 28 relay tests, Pi rollout, edge checks, Search Console live-test/indexing request and the bounded security scan. The site serves final UI revision `7b7d3f2044fdac0ca3cb5e1dc4aaf7e0aa0e46e8`, verified after all three jobs in [CI run 35665844967](https://github.com/viktorermolov/ermolov.dev/actions/runs/35665844967) succeeded. Published mobile and desktop Lighthouse reports each score accessibility/best practices/SEO/Agentic at 100, with 53 passed and zero failed audits. The Pi keeps the unchanged tested service revision `bcebd580115d34c435a93bc47e47d50b8cb693d6`.
-
-The published mobile lab trace measured LCP 1,845 ms, CLS 0 and TTFB 154 ms with cache bypass, 390 × 844/DPR 2, 4× CPU slowdown and Slow 4G; it is not field CrUX/INP evidence. The 320/720/1,440 px responsive matrix and 200% CSS-zoom check ran on the local build/mock copy at port 1315, not production; CSS zoom is not native browser zoom. Public light/dark checks at 390 px confirmed no horizontal overflow, portrait or floating bottom CTA.
-
-When checking Turnstile, distinguish a loaded SDK/rendered widget from successful human verification. This audit observed SDK `200` and a visible human-verification control. The final published page shows “Complete the spam verification to send your inquiry.” with the SDK available and submit enabled. During challenge rendering the browser contained obfuscated console entries whose origin was not established; no application CSP violation was observed. Automated checks intentionally did not complete the human challenge or submit a new inquiry. Acceptance and Telegram delivery must not be inferred from widget rendering alone.
+The canonical sitemap is `https://ermolov.dev/sitemap.xml`. When changing metadata or routing, run the production Hugo build and `scripts/check_site.py`, then inspect the published robots, sitemap, canonical and response headers. Keep the site name consistent across the visible brand, Open Graph and structured data.

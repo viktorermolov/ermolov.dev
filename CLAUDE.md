@@ -9,15 +9,13 @@ hugo server                                   # local dev server with live reloa
 hugo --environment production --destination /tmp/ermolov-site
 python3 scripts/check_site.py /tmp/ermolov-site   # generated HTML, links, structured data, project pages, SEO
 node --check assets/js/app.js
-cd services/worker && npm ci && npm run check     # typecheck, vitest, wrangler dry-run (parked, see below)
-cd services/relay && python3 -m unittest discover -s tests -v   # parked, see below
 ```
 
 Build into a temporary destination for checks; `public/` is gitignored and never committed.
 
 ## Deploy pipeline
 
-Push `master` to GitHub → DigitalOcean App Platform runs `hugo` automatically → serves `public/`. Hugo is pinned in `.hugo-version`. GitHub Actions (`.github/workflows/check.yml`) checks the site, Worker and relay; confirm the branch is green before publishing `master`.
+Push `master` to GitHub → DigitalOcean App Platform runs `hugo` automatically → serves `public/`. Hugo is pinned in `.hugo-version`. GitHub Actions (`.github/workflows/check.yml`) checks the site; confirm the branch is green before publishing `master`.
 
 **Roles and language.** Viktor owns positioning, copy under his name, which products are shown, and any redesign. This project owns the site working and staying consistent. Site copy is English; talk to Viktor in Russian. Viktor answers from his phone: one short message per decision with the question, options, a recommendation and the cost of getting it wrong; don't ask about small things.
 
@@ -34,7 +32,7 @@ Push `master` to GitHub → DigitalOcean App Platform runs `hugo` automatically 
 **How to work.**
 - Implementation goes to executor threads on Sonnet; the coordinator plans, coordinates and integrates. One-line fixes may be done directly by the integrating thread.
 - Review is by risk. A separate fresh review thread on Opus that has not seen the work is mandatory for every PR and for builder-mode work. One-line edits and simple fact swaps are self-checked, with no separate reviewer; say so in the report. Never approve your own PR-level work.
-- Site mechanics (build, deploy prep, propagation, fixes, `check_site.py` rules, maintenance of the parked Worker and relay) are this project's call; note decisions in the report.
+- Site mechanics (build, deploy prep, propagation, fixes, `check_site.py` rules) are this project's call; note decisions in the report.
 - Substantial changes (repositioning, redesign, new site sections): a branch and a PR, merged only after Viktor approves.
 - Smaller changes: they reach `master` through a PR merged on Viktor's go-ahead, so Viktor can check them on the live site and iterate. Prepare everything (build, `check_site.py`, a short note on what changes and what to check live), then wait for Viktor's go-ahead: reaching `master` deploys.
 - **Branches are merged through pull requests.** The repository has "Automatically delete head branches" on, and this session cannot delete branches itself (git and the API both refuse), so a merged PR is the only way a branch disappears on its own. Anything waiting for Viktor's go-ahead lives on a pushed branch with an open PR, not as an unpushed local commit; on his "yes", merge the PR with the REST API (`PUT /repos/viktorermolov/ermolov.dev/pulls/<n>/merge`), and GitHub deletes the branch. Do not leave branches without a PR. Create PRs with `gh api` (REST); `gh pr` uses GraphQL, which is blocked here.
@@ -93,9 +91,5 @@ Engineering notes and any first-person text are published under Viktor's name: g
 ## Visual preference
 
 Do not use personal photographs, portrait illustrations, avatars, or Memoji. Use typography, spacing, rules and restrained abstract graphics. Do not add floating bottom call-to-action bars that cover page content. Keep the blue palette.
-
-## Parked inquiry infrastructure
-
-The contact form was removed from the site (October 2026). `services/worker/` (Cloudflare Worker + D1 + Turnstile) and `services/relay/` (Raspberry Pi relay → Notification Bot → Telegram) are still deployed and still have tests and CI jobs, but nothing on the site uses them. Maintenance (dependency updates, security patches, CI fixes) is this project's call and goes through a PR with the usual review. **Do not disable, delete or decommission the Worker, D1, Turnstile widget, relay or Bot without Viktor's explicit confirmation.** Decommissioning is a separate step with its own plan of what is removed and what is lost. Until then: use only Free-tier resources and no paid upgrades; never log credentials, request bodies or personal information; never expose the Pi or Bot API to the Internet; keep `robots.txt` disallowing `/api/`. See `docs/OPERATIONS.md`.
 
 **Site metadata** (name, bio, social links, analytics token) lives in `config.toml` under `[params]` and `[params.contact]`. Public tokens are not secrets.

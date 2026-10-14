@@ -19,8 +19,7 @@ node --check assets/js/app.js
 - `layouts/`, `assets/`, `static/`: Hugo templates, CSS, browser JS, fonts, images.
 - `config.toml`: public site information and analytics token (not credentials).
 - `scripts/check_site.py`: checks the generated site (links, SEO, structured data, project pages).
-- `docs/`: operations notes and the September 2026 audit and release records.
-- `services/worker/`, `services/relay/`: the former contact-form pipeline. Still deployed, no longer used by the site, and parked until a separate decommissioning step. See [operations](docs/OPERATIONS.md).
+- `docs/`: operations notes (Cloudflare edge rules).
 
 ## Add a product
 
