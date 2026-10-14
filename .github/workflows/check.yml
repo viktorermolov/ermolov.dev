@@ -1,6 +1,7 @@
 name: Check site and lead delivery
 on:
   push:
+    branches: [master]
   pull_request:
 permissions:
   contents: read
@@ -10,6 +11,7 @@ concurrency:
 jobs:
   site:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Install pinned Hugo with checksum verification
@@ -29,6 +31,7 @@ jobs:
       - run: node --check assets/js/app.js
   worker:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: services/worker
@@ -45,6 +48,7 @@ jobs:
           WRANGLER_SEND_METRICS: 'false'
   relay:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - run: python3 -m unittest discover -s tests -v
