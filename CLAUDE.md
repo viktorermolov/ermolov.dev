@@ -32,7 +32,7 @@ Push `master` to GitHub → DigitalOcean App Platform runs `hugo` automatically 
 - The Clipstay project owns the product facts: what the extension does, limits, permissions, keyboard shortcuts, Chrome Web Store status, and the extension's privacy policy. It never pushes to `master` of this repository.
 - How Clipstay changes arrive:
   1. For each change, Clipstay creates a fresh branch `clipstay/<what-changes>` from the current `origin/master`.
-  2. It edits only Clipstay files (`content/clipstay.md`, `content/clipstay-privacy.md`, `static/img/clipstay/`), builds with the Hugo version in `.hugo-version`, runs `scripts/check_site.py` and pushes the branch. Pushing a branch deploys nothing.
+  2. It edits only Clipstay files (`content/clipstay.md`, `content/clipstay-privacy.md`, `content/clipstay-refunds.md`, `static/img/clipstay/`), builds with the Hugo version in `.hugo-version`, runs `scripts/check_site.py` and pushes the branch. Pushing a branch deploys nothing.
   3. Viktor brings a note here: the branch name, what changed and why, what to check.
   4. Here: fetch the branch and re-check the whole site for consistency (homepage, structured data and any other place that mentions Clipstay), finish it if needed, open a PR for the branch if there is none, merge the PR under the usual rules (with Viktor's go-ahead; GitHub then deletes the branch), and verify production with `?v=<commit>`.
   5. If anything in the branch conflicts with the site's rules, do not merge: take the question back to Viktor.
