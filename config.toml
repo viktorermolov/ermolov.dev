@@ -8,6 +8,7 @@ locale = "en-US"
 language = "en"
 title = "Viktor E. — Independent software developer"
 disableKinds = ["taxonomy", "term", "RSS"]
+enableGitInfo = true  # lastmod (sitemap, dateModified) = last commit touching the page; needs full git history at build time
 
 [params]
   # Visible brand. The full legal name stays in `author` (schema, copyright, meta author).
