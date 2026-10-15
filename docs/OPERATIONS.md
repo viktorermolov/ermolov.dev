@@ -1,6 +1,6 @@
 # Operations
 
-The site is static Hugo on DigitalOcean App Platform behind Cloudflare. Pushes to `master` deploy it (see `CLAUDE.md`). The contact form was removed in October 2026, and its Worker and Pi relay code was removed from this repository; nothing here depends on them. The `/api/` exclusions in the edge rules below date from that API and are harmless.
+The site is static Hugo on DigitalOcean App Platform behind Cloudflare. Pushes to `master` deploy it (see `CLAUDE.md`). The contact form was removed in October 2026, together with its Worker, D1 database, Turnstile widget, Pi relay and Notification Bot source; nothing here depends on them. The `/api/` exclusions in the edge rules below date from that API and are harmless.
 
 ## Resources
 
@@ -12,17 +12,6 @@ The site is static Hugo on DigitalOcean App Platform behind Cloudflare. Pushes t
 | Static security-header ruleset | `04393da9a4634d67a815b6af4ef0acec` |
 
 Never commit or print credentials.
-
-## Contact-form infrastructure awaiting decommission
-
-The code is gone from this repository. Resources outside it may still exist until Viktor confirms their removal; delete them only on his explicit go-ahead.
-
-| Resource | Status (2026-10-14) |
-| --- | --- |
-| Worker `ermolov-leads-api` | Not present in the Cloudflare account. Check the zone for a leftover `ermolov.dev/api/*` route |
-| D1 `ermolov-leads` (`825db71d-c29a-4bc4-99de-71b4a59122b4`) | Exists; two delivered test leads |
-| Turnstile widget (ermolov.dev) | Not verified |
-| Raspberry Pi relay `ermolov-lead-relay`, Notification Bot source `ermolov-site` | Not verified |
 
 Do not touch `clipstay-license` and its KV namespace: they belong to Clipstay.
 
