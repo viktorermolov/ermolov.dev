@@ -73,4 +73,9 @@ faq:
     a: "Copy it in the app, then open Clipstay. It adds what is on your clipboard at that moment."
   - q: "How do I take my history with me?"
     a: "Export it to JSON or CSV at any time. Export is always free."
+  - q: "Switching from an extension removed in the Manifest V2 cleanup?"
+    a: "Clipstay keeps a local text history of what you copy in Chrome."
+    link:
+      text: "See what it covers and what is different."
+      href: "/clipstay/alternatives/"
 ---

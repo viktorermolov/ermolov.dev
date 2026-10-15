@@ -3,12 +3,17 @@
     <div class="wrap article__layout">
       <header class="article__header">
         <h1 id="legal-title" class="page-title">{{ .Title }}</h1>
+        {{- if not .Params.plain }}
         <p class="article__lede">{{ .Description }}</p>
         <p class="article__meta">Last updated <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "January 2, 2006" }}</time></p>
+        {{- end }}
       </header>
       <div class="prose">
         {{ .Content }}
       </div>
+      {{- if and .Params.ctaURL .Params.ctaText }}
+      <p class="button-row"><a class="btn btn--primary" href="{{ .Params.ctaURL }}">{{ .Params.ctaText }}</a></p>
+      {{- end }}
     </div>
   </article>
 {{ end }}
