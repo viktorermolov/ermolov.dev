@@ -102,7 +102,7 @@
 {{- if $isProject -}}
   {{- $appID := printf "%s#app" .Permalink -}}
   {{- $shots := slice -}}
-  {{- range .Params.highlights }}{{ $shots = $shots | append (absURL .image) }}{{ end -}}
+  {{- range .Params.highlights }}{{ with .image }}{{ $shots = $shots | append (absURL .) }}{{ end }}{{ end -}}
   {{- $app := dict
     "@type" "SoftwareApplication"
     "@id" $appID

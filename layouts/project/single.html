@@ -47,7 +47,7 @@
     <div class="wrap split">
       <div><h2 id="privacy-title">Privacy</h2></div>
       <div class="split__body">
-        <p class="lead">Everything stays on your device. Clipstay has no account, no servers, no analytics and makes no network requests.</p>
+        <p class="lead">Your clips stay on your device. Clipstay has no account and no analytics, and makes no network requests, except a single one-time check when you activate Pro.</p>
         <p>It never captures password fields or Incognito windows, and you can exclude any site or pause capture. The full details are in the <a href="{{ .Params.privacyURL }}">privacy policy</a>.</p>
       </div>
     </div>
@@ -55,8 +55,11 @@
 
   <section class="section" id="plan" aria-labelledby="plan-title">
     <div class="wrap split">
-      <div><h2 id="plan-title">Free plan</h2></div>
-      <div class="split__body"><p class="lead">{{ .Params.freePlan }}</p></div>
+      <div><h2 id="plan-title">Free and Pro</h2></div>
+      <div class="split__body">
+        <p class="lead">{{ .Params.freePlan }}</p>
+        {{- with .Params.proPlan }}<p>{{ . }}{{ with $.Params.refundsURL }} <a href="{{ . }}">Refund policy</a>.{{ end }}</p>{{ end }}
+      </div>
     </div>
   </section>
 
