@@ -81,7 +81,7 @@ Each product is **one markdown file** in `content/` with `type: project` (see `c
 - `status` is `pending-review`, `live` or `archived`. **The site never shows "Pending review".** Until `live`, visitors see "Coming soon to the Chrome Web Store" and no store link. Switching to `live` shows the store link and adds `installUrl` to the schema.
 - Product pages carry SoftwareApplication schema (`applicationCategory: BrowserApplication`, `operatingSystem: Chrome`). `check_site.py` validates it, the homepage row, the privacy link and the store-link rules.
 - **`/clipstay/privacy/` must never change address.** It is listed in the Chrome Web Store, and `check_site.py` fails if it moves. Update its text and its `date` whenever the extension's data handling changes, and keep it accurate for the shipped extension. The policy covers the extension; the website's analytics are described in its "This website" section.
-- Do not add placeholder projects. Only show products Viktor has approved (BytLot is intentionally not shown).
+- Do not add placeholder projects. Only show products Viktor has approved.
 - Do not publish prices until a paid plan exists.
 
 Engineering notes and any first-person text are published under Viktor's name: get his approval on new or rewritten text before merging to `master`. The exception is a direct fact swap that keeps the product consistent (see Modes above). Notes should be about his own products and how they are built, not advice for clients.
