@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Pro Refund Policy"
 description: "Starting with Clipstay 1.1, Pro is an optional one-time purchase of $4.99. Ask for a refund within 30 days and get your money back, no questions asked."
-date: 2026-10-13
+date: 2026-10-14
 url: "/clipstay/refunds/"
 layout: "legal"
 schemaType: "WebPage"
