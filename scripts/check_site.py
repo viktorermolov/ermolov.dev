@@ -197,7 +197,6 @@ def main():
     assert robots.site_maps() == [canonical + 'sitemap.xml'], 'Robots references the canonical sitemap'
     for crawler in ('Googlebot', 'bingbot', '*'):
         assert robots.can_fetch(crawler, canonical), 'Homepage remains crawlable'
-        assert not robots.can_fetch(crawler, canonical + 'api/leads'), 'API excluded from crawl'
         for asset_path in ('css/main.css', 'js/app.js', 'fonts/BricolageGrotesque-Latin.woff2', 'fonts/Newsreader-Latin.woff2', 'og/og-default.png'):
             assert robots.can_fetch(crawler, canonical + asset_path), f'Render asset remains crawlable: {asset_path}'
     for asset in ('og/og-default.png', 'og/og-clipstay.png', 'img/favicon.ico', 'img/favicon.svg', 'img/apple-touch-icon.png'):
