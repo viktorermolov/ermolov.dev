@@ -11,7 +11,6 @@ headline: "Your clipboard history, saved."
 tagline: "Your clipboard history, saved. Your clips never leave your device."
 lede: "Clipstay saves everything you copy in Chrome, so you can search it, pin it and copy it back in one click. Your clips never leave your device."
 date: 2026-10-05
-lastmod: 2026-10-13
 weight: 1
 url: "/clipstay/"
 type: "project"

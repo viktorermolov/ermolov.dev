@@ -83,3 +83,7 @@ Cloudflare Web Analytics measures visits and performance with a public token (`a
 ## Search
 
 The canonical sitemap is `https://ermolov.dev/sitemap.xml`. When changing metadata or routing, run the production Hugo build and `scripts/check_site.py`, then inspect the published robots, sitemap, canonical and response headers. Keep the site name consistent across the visible brand, Open Graph and structured data.
+
+## Sitemap lastmod
+
+`enableGitInfo = true` makes each page's `lastmod` (sitemap, `dateModified`) the author date of the last commit touching its content file. Front-matter `lastmod` is ignored for tracked files, so don't add one. The build needs a `.git` directory: without it Hugo fails (`not a git repository`) and nothing deploys. With a shallow clone it succeeds silently but every page gets the same date. CI uses `fetch-depth: 0`. After a deploy, check that `https://ermolov.dev/sitemap.xml` shows different dates per page (a failed DigitalOcean build leaves the old site up). Legal pages show their front-matter `date` as "Last updated", not the git date.
