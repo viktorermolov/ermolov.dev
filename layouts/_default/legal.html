@@ -9,6 +9,9 @@
       <div class="prose">
         {{ .Content }}
       </div>
+      {{- with .Params.ctaURL }}
+      <p class="button-row"><a class="btn btn--primary" href="{{ . }}">{{ $.Params.ctaText }}</a></p>
+      {{- end }}
     </div>
   </article>
 {{ end }}

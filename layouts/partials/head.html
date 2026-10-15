@@ -1,4 +1,4 @@
-{{- $title := cond .IsHome .Site.Title (printf "%s · %s" .Title .Site.Params.brand) -}}
+{{- $title := cond .IsHome .Site.Title (or .Params.seoTitle (printf "%s · %s" .Title .Site.Params.brand)) -}}
 {{- $desc := or .Params.description .Site.Params.description -}}
 {{- $ogImage := absURL (or .Params.ogImage .Site.Params.ogImage "og/og-default.png") -}}
 {{- $ogAlt := or .Params.ogImageAlt .Site.Params.ogImageAlt -}}
