@@ -6,6 +6,7 @@ date: 2026-10-15
 url: "/clipstay/alternatives/"
 layout: "legal"
 schemaType: "WebPage"
+plain: true
 ctaText: "Add Clipstay to Chrome"
 ctaURL: "https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=alt-alternatives"
 ---
