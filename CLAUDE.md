@@ -22,7 +22,8 @@ A merge to `master` (only through a pull request, with the required check `site`
 **Development standards.** Follow the common standards in the private repo `viktorermolov/dev-standards` (`STANDARDS.md`); read them at the start of work. How they apply here:
 - A merge to `master` deploys the site, so the merge is Viktor's go-ahead (the standard reserves merges that ship to production for him).
 - Questions for a product project are gathered into one PR comment, because that project is woken by hand and not by PR events.
-- Recorded departures: (1) emergency revert of a broken deploy goes through a PR merged without waiting for Viktor's go-ahead (see the single exception below); (2) the same light checks run on PRs and on `master` pushes, with no separate full suite, because the whole suite takes under a minute.
+- Checks: the same checks run on PRs and on `master` pushes (the whole suite takes under a minute, so there is no separate full suite).
+- Recorded departure: emergency revert of a broken deploy goes through a PR merged without waiting for Viktor's go-ahead (see the single exception below).
 - Branch protection: `master` is protected by the GitHub ruleset "Dev standards" (verified by Viktor, 2026-10-19): changes only through a pull request, the required status check `site` (GitHub Actions) must pass, no force pushes, no branch deletion, no bypass. So "all changes through a PR" is enforced by GitHub, and direct pushes to `master` are impossible.
 - The required check `site` takes its name from the job id in `.github/workflows/check.yml` (the job is `site:`, with no `name:`). Do not rename that job, and do not add `name:` or a `matrix` to it, without updating the ruleset first; otherwise the check is never reported under the required name and merges are blocked.
 
@@ -33,7 +34,7 @@ A merge to `master` (only through a pull request, with the required check `site`
 
 **How to work.**
 - Implementation goes to executor threads on Sonnet; the coordinator plans, coordinates and integrates. One-line fixes may be done directly by the integrating thread.
-- Review is by risk. A separate fresh review thread on Opus that has not seen the work is mandatory for every PR and for builder-mode work. One-line edits and simple fact swaps are self-checked, with no separate reviewer; say so in the report. Never approve your own PR-level work.
+- Every PR gets an independent review in a clean session on Opus that has not seen the work, including one-line edits and simple fact swaps, and builder-mode work. Never approve your own PR-level work.
 - Site mechanics (build, deploy prep, propagation, fixes, `check_site.py` rules) are this project's call; note decisions in the report.
 - Substantial changes (repositioning, redesign, new site sections): a branch and a PR, merged only after Viktor approves.
 - Smaller changes: they reach `master` through a PR merged on Viktor's go-ahead, so Viktor can check them on the live site and iterate. Prepare everything (build, `check_site.py`, a short note on what changes and what to check live), then wait for Viktor's go-ahead: reaching `master` deploys.
