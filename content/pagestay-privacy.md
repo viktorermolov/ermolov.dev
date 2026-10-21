@@ -51,7 +51,7 @@ The use of information received by Pagestay adheres to the [Chrome Web Store Use
 
 ## Pro purchase and activation
 
-Pagestay has a free plan and an optional Pro plan: $4.99, paid once. Pro is also sold together with Clipstay for $6.99, and owners of one Pro can add the other for $2, through a link shown inside the extension they already own. The free plan includes unlimited notes, page and site notes, autosave, revisions, trash and export.
+Pagestay has a free plan and an optional Pro plan: $4.99, paid once. Pro is also sold together with Clipstay for $6.99, and Pagestay Pro owners can add Clipstay Pro for $2, through a link shown inside Pagestay. The free plan includes unlimited notes, page and site notes, autosave, revisions, trash and export.
 
 - **Payment is handled by [Stripe](https://stripe.com/privacy)**, on a Stripe-hosted page that opens in a new browser tab, outside the extension. Stripe collects your payment details and email address under its own privacy policy. The developer receives your email address and the fact that the payment was made; card details are handled by Stripe and are not seen or stored by the developer. Pagestay itself never sees any payment information.
 - **Activation sends one request.** In Options, under Plan, you enter the email address you paid with and press Activate. Pagestay then sends **only that email address, and the name of the product (“pagestay”)** to a small license service run by the developer (a Cloudflare Worker, shared with Clipstay), which answers yes or no. If the answer is yes, Pro is switched on locally in your browser. The email address is not saved in the extension.

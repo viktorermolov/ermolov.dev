@@ -11,7 +11,7 @@ Pagestay Pro is an optional one-time purchase. There is no subscription and no r
 
 - **Pagestay Pro:** $4.99.
 - **Clipstay + Pagestay bundle:** $6.99, which unlocks Pro in both extensions.
-- **Upgrade:** $2 for owners of one Pro who want the other, offered through a link inside the extension you already own.
+- **Upgrade:** $2 for Pagestay Pro owners who want Clipstay Pro too, offered through a link inside Pagestay.
 
 ## Refunds
 
@@ -22,7 +22,7 @@ If Pagestay Pro does not work for you, email [viktor@ermolov.dev](mailto:viktor@
 A Pro license stays active as long as at least one payment that bought it has not been refunded. When a refund leaves no such payment, the purchase email can no longer be used to activate Pro for that product. This matters when you made more than one payment:
 
 - If you bought the bundle and ask for a refund, both Pagestay Pro and Clipstay Pro end, unless another payment of yours still covers one of them.
-- If you bought Clipstay Pro and then paid $2 to upgrade, refunding the $2 ends Pagestay Pro only. Clipstay Pro stays, because your first payment still covers it. The same applies the other way around.
+- If you bought Pagestay Pro and then paid $2 to add Clipstay Pro, refunding the $2 ends Clipstay Pro only. Pagestay Pro stays, because your first payment still covers it.
 
 A copy of Pagestay that was already activated keeps working as Pro, because the extension never re-checks your purchase.
 
