@@ -14,9 +14,9 @@ Pagestay is a Chrome extension that keeps notes in the browser's side panel. A n
 All of the following is kept in your browser's local extension storage (`chrome.storage.local`) on your computer:
 
 - **Your notes:** the text you write, with titles, folders and tags, and when each note was created and changed.
-- **Where a note is attached.** A site note stores the site's host name (for example `example.com`). A page note stores the page address without its query string or fragment, unless you turn on “keep query” for that site. Pagestay stores an address only for a note you attach to it.
-- **Earlier versions and the trash:** a few recent versions of each note, and deleted notes for 30 days.
-- **Unsaved text:** when you close the panel in the middle of typing, the unsaved text is kept briefly so it can be recovered.
+- **Where a note is attached.** A site note stores the site's host name (for example `example.com`). A page note stores the page address without its query string or fragment, unless you turn on “keep query” for that site. A rule note (Pro) stores the URL pattern you typed, such as `example.com/docs/*`. Pagestay stores an address or pattern only for a note you attach to it.
+- **Earlier versions and the trash:** up to 20 earlier versions of each note, and deleted notes for 30 days.
+- **Unsaved text:** when you close the panel in the middle of typing, the unsaved text is kept until the panel next opens, so it can be recovered.
 - **Your settings:** including your plan (free or Pro), the sites where you keep the query string and your backup schedule.
 - **A local error log** for troubleshooting: error messages with the time they happened. You can copy it from the options page. Pagestay never sends it anywhere.
 
@@ -30,6 +30,7 @@ Installing Pagestay shows no permission warning, because the two permissions tha
 - **Storage and unlimited storage:** to keep your notes on your device without a size cap.
 - **Active tab:** to read the address of the tab where you click the Pagestay button, so a note can be attached to that page or site.
 - **Alarms:** to run scheduled backups and to empty the trash after 30 days.
+- **Offscreen:** used only by scheduled backups, to wrap a backup file for saving. It shows no warning at install and reads no web page.
 - **Tabs (optional):** requested when you choose “Enable page notes”. It lets Pagestay see the address of the tab you are on, so the panel can follow you between pages and the toolbar badge can show that a note exists for the current page or site. Pagestay uses tab addresses on your device only, to find your notes, and does not store or send them.
 - **Downloads (optional):** requested when you turn on scheduled backups. It lets Pagestay save backup files to your Downloads folder.
 

@@ -23,7 +23,6 @@ A Pro license stays active as long as at least one payment that bought it has no
 
 - If you bought the bundle and ask for a refund, both Pagestay Pro and Clipstay Pro end, unless another payment of yours still covers one of them.
 - If you bought Clipstay Pro and then paid $2 to upgrade, refunding the $2 ends Pagestay Pro only. Clipstay Pro stays, because your first payment still covers it. The same applies the other way around.
-- If you refund the original purchase but keep a later upgrade payment that also covers that product, that product stays active.
 
 A copy of Pagestay that was already activated keeps working as Pro, because the extension never re-checks your purchase.
 
