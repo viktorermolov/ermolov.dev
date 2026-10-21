@@ -28,10 +28,10 @@ Installing Pagestay shows no permission warning, because the two permissions tha
 
 - **Side panel:** to show the notes panel.
 - **Storage and unlimited storage:** to keep your notes on your device without a size cap.
-- **Active tab:** to read the address of the tab where you click the Pagestay button, so a note can be attached to that page or site.
+- **Active tab:** when you click the Pagestay button (or press its keyboard shortcut), Chrome lets Pagestay read the address of that one tab, for that visit only, so the panel can show that page's notes and a note can be attached to that page or site. It ends when the tab goes to another site.
 - **Alarms:** to run scheduled backups and to empty the trash after 30 days.
 - **Offscreen:** used only by scheduled backups, to wrap a backup file for saving. It shows no warning at install and reads no web page.
-- **Tabs (optional):** requested when you choose “Enable page notes”. It lets Pagestay see the address of the tab you are on, so the panel can follow you between pages and the toolbar badge can show that a note exists for the current page or site. Pagestay uses tab addresses on your device only, to find your notes, and does not store or send them.
+- **Tabs (optional):** requested when you choose “Enable page notes”. It lets Pagestay see the address of any tab you are on, so the panel can keep following you between tabs and sites without another click, and the toolbar badge can show that a note exists for the current page or site. Pagestay uses tab addresses on your device only, to find your notes, and does not store or send them.
 - **Downloads (optional):** requested when you turn on scheduled backups. It lets Pagestay save backup files to your Downloads folder.
 
 ## Sharing and selling
@@ -45,7 +45,7 @@ The use of information received by Pagestay adheres to the [Chrome Web Store Use
 - Edit, delete or restore any note at any time. Emptying the trash deletes its notes permanently.
 - Export all your notes as JSON or Markdown, and import them again. Export and restore are always free, with or without Pro.
 - Scheduled backups are files saved to your own computer. They are never uploaded.
-- Turn off “Enable page notes” by removing the optional permission in Chrome's extension settings.
+- Uninstalling Pagestay also removes the permission to read tab addresses.
 - To have your purchase records (the hash and the payment ID) deleted from the license service, email [viktor@ermolov.dev](mailto:viktor@ermolov.dev) from the address you paid with. They are not deleted automatically. After they are deleted, that email can no longer be used to activate Pro, so keep your Stripe receipt if you want proof of purchase.
 - Uninstalling Pagestay removes all of its stored data from your browser. Backup files you saved stay where they are until you delete them.
 
