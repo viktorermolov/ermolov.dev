@@ -11,7 +11,7 @@ Pagestay Pro is an optional one-time purchase. There is no subscription and no r
 
 - **Pagestay Pro:** $4.99.
 - **Clipstay + Pagestay bundle:** $6.99, which unlocks Pro in both extensions.
-- **Upgrade:** $2 for owners of Clipstay Pro or Pagestay Pro who want the other one.
+- **Upgrade:** $2 for owners of one Pro who want the other, offered through a link inside the extension you already own.
 
 ## Refunds
 
@@ -26,7 +26,7 @@ A Pro license stays active as long as at least one payment that bought it has no
 
 A copy of Pagestay that was already activated keeps working as Pro, because the extension never re-checks your purchase.
 
-If Pro is no longer active on a computer (for example, after reinstalling without activating), your notes are never deleted, hidden or locked, and export and restore stay free. Only creating new Pro items, such as rules, new folders and tags or scheduled backups, needs Pro, and full-text and tag search stay Pro features.
+If Pro is no longer active on a computer (for example, after reinstalling without activating), your notes are never deleted, hidden or locked, and export and restore stay free. Creating new rules, folders and tags needs Pro, and full-text and tag search, auto-surface (opening the matching note when the panel opens) and scheduled backups pause until Pro is active again. Your existing rules, folders and tags stay and keep working as matches.
 
 ## Activation problems
 
