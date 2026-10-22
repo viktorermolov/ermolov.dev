@@ -26,7 +26,7 @@ A Pro license stays active as long as at least one payment that bought it has no
 
 A copy of Pagestay that was already activated keeps working as Pro, because the extension never re-checks your purchase.
 
-If Pro is no longer active on a computer (for example, after reinstalling without activating), your notes are never deleted, hidden or locked, and export and restore stay free. Creating new rules, folders and tags needs Pro, and full-text and tag search, auto-surface (opening the matching note when the panel opens) and scheduled backups pause until Pro is active again. Your existing rules, folders and tags stay and keep working as matches.
+If Pro is no longer active on a computer (for example, after reinstalling without activating), your notes are never deleted, hidden or locked, and export and restore stay free. Creating new rules, folders and tags needs Pro, and full-text and tag search, auto-surface (opening the matching note when the panel opens) and scheduled backups pause until Pro is active again. Your existing rules stay and keep matching, and your existing folders and tags stay visible, but on the free plan you cannot add notes to them.
 
 ## Activation problems
 
