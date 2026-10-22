@@ -7,7 +7,7 @@ layout: "legal"
 schemaType: "WebPage"
 ---
 
-Pagestay is a Chrome extension that keeps notes in the browser's side panel. A note can be global or attached to a site or a single page. This policy explains what Pagestay handles and where that data goes. The short version: **your notes, the addresses they are attached to and your settings stay on your device. Pagestay has no account, no sync, no AI and no analytics. The only thing it can ever send anywhere is the email address you type to activate the optional Pro plan (see “Pro purchase and activation”). If you never activate Pro, Pagestay makes no network requests at all.**
+Pagestay is a Chrome extension that keeps notes in the browser's side panel. A note can be global or attached to a site or a single page. This policy explains what Pagestay handles and where that data goes. The short version: **your notes, the addresses they are attached to and your settings stay on your device. Pagestay has no account, no sync, no AI and no analytics. The only thing it can ever send anywhere is the email address you type to activate the optional Pro plan, together with the product name “pagestay” (see “Pro purchase and activation”). If you never activate Pro, Pagestay makes no network requests at all.**
 
 ## What Pagestay stores
 
