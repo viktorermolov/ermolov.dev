@@ -5,7 +5,7 @@
 #   "Coming soon to the Chrome Web Store" and no store link. When Chrome Web Store
 #   publishes the item, change `status` to `live`; `storeURL` is already filled in.
 # privacyURL must be <product url>privacy/ (the page must exist). privacyLead and privacyNote are the
-# product page's Privacy section text. footerPrivacy: false hides the product's privacy link in the footer.
+# product page's Privacy section text (both required, plain text only). footerPrivacy: false hides the product's privacy link in the footer.
 title: "Clipstay — Clipboard History Manager"
 name: "Clipstay"
 description: "Clipstay is a Chrome extension that keeps your clipboard history on your device: search it, pin it and copy it back in one click. No account, no analytics."

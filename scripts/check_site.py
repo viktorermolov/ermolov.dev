@@ -153,6 +153,7 @@ def main():
     assert 'Add clipboard when the popup opens' in privacy_text, f'{privacy_url}: documents the popup clipboard setting'
     # Every product keeps its policy at <product page>privacy/ (listed in its store listing); each is a dated page that
     # separates the extension from the website's analytics.
+    assert canonical + 'clipstay/' in project_urls, 'Clipstay keeps its product page'
     for url in project_urls:
         product_privacy = url + 'privacy/'
         assert product_privacy in results, f'{url}: privacy policy must exist at {product_privacy}'
