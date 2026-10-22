@@ -149,10 +149,16 @@ def main():
 
     privacy_url = canonical + PRIVACY_PATH.lstrip('/')
     assert privacy_url in results, f'Privacy policy must stay at {PRIVACY_PATH}'
-    privacy_text, _, _, privacy_nodes = results[privacy_url]
-    assert 'Last updated' in privacy_text and 'WebPage' in privacy_nodes, f'{privacy_url}: dated policy page'
+    privacy_text = results[privacy_url][0]
     assert 'Add clipboard when the popup opens' in privacy_text, f'{privacy_url}: documents the popup clipboard setting'
-    assert 'Cloudflare Web Analytics' in privacy_text, f'{privacy_url}: distinguishes the website from the extension'
+    # Every product keeps its policy at <product page>privacy/ (listed in its store listing); each is a dated page that
+    # separates the extension from the website's analytics.
+    for url in project_urls:
+        product_privacy = url + 'privacy/'
+        assert product_privacy in results, f'{url}: privacy policy must exist at {product_privacy}'
+        policy_text, _, _, policy_nodes = results[product_privacy]
+        assert 'Last updated' in policy_text and 'WebPage' in policy_nodes, f'{product_privacy}: dated policy page'
+        assert 'Cloudflare Web Analytics' in policy_text, f'{product_privacy}: distinguishes the website from the extension'
 
     sitemap = ET.parse(root / 'sitemap.xml')
     sitemap_urls = [element.text for element in sitemap.iter() if element.tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}loc']
@@ -172,7 +178,7 @@ def main():
             assert app.get('author', {}).get('@id') == nodes['Person'].get('@id'), f'{url}: author is the site owner'
             assert page_nodes['WebPage'].get('mainEntity', {}).get('@id') == app.get('@id'), f'{url}: page describes the application'
             assert page_metadata.get('og:type') == 'website', f'{url}: Open Graph website type'
-            assert PRIVACY_PATH in {urlsplit(urljoin(url, link)).path for link in links}, f'{url}: links to its privacy policy'
+            assert urlsplit(url).path + 'privacy/' in {urlsplit(urljoin(url, link)).path for link in links}, f'{url}: links to its privacy policy'
             assert 'mailto:viktor@ermolov.dev' in page_text, f'{url}: support email'
             assert PROJECT_SECTIONS <= page_obj.ids, f'{url}: product page sections {PROJECT_SECTIONS - page_obj.ids}'
             store_links = [link for link in links if STORE_HOST in link]
