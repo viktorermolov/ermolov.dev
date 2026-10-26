@@ -4,6 +4,8 @@
 #   The site never shows "Pending review". Until the status is `live`, visitors see
 #   "Coming soon to the Chrome Web Store" and no store link. When Chrome Web Store
 #   publishes the item, change `status` to `live`; `storeURL` is already filled in.
+# privacyURL must be <product url>privacy/ (the page must exist). privacyLead and privacyNote are the
+# product page's Privacy section text (both required, plain text only). footerPrivacy: false hides the product's privacy link in the footer.
 title: "Clipstay — Clipboard History Manager"
 name: "Clipstay"
 description: "Clipstay is a Chrome extension that keeps your clipboard history on your device: search it, pin it and copy it back in one click. No account, no analytics."
@@ -20,6 +22,8 @@ store: "Chrome Web Store"
 itemID: "biellalamlbfmgljmpfppaebblmmhokn"
 storeURL: "https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn"
 privacyURL: "/clipstay/privacy/"
+privacyLead: "Your clips stay on your device. Clipstay has no account and no analytics, and makes no network requests, except a single one-time check when you activate Pro."
+privacyNote: "It never captures password fields or Incognito windows, and you can exclude any site or pause capture."
 icon: "/img/clipstay/icon-128.png"
 cardImage: "/img/clipstay/history.webp"
 cardImageAlt: "The Clipstay popup showing a list of recent clips, with three pinned. Caption: Your clipboard history, saved."
