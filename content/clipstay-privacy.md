@@ -46,7 +46,7 @@ The use of information received by Clipstay adheres to the [Chrome Web Store Use
 - Delete any item, clear your history, or pause capture at any time from the popup or the options page.
 - Turn off adding your clipboard when the popup opens in Settings.
 - Export your full history as JSON or CSV at any time. Export is always free.
-- To have your purchase records (the hash and payment IDs, including those kept after a refund) removed from the license service, write to the address below. After that, the email can no longer be used to activate Pro; a copy that is already activated keeps working, because Clipstay never re-checks.
+- To have your purchase records (the hash and payment IDs, including those kept after a refund) removed from the license service, write to the address below. After that, the email can no longer be used to activate Pro.
 - Uninstalling Clipstay removes all of its stored data from your browser.
 
 ## Pro purchase and activation (version 1.1 and later)
