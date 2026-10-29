@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Privacy Policy"
 description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics. Version 1.0 makes no network requests; starting with version 1.1, the only request is a single one-time check when you activate the optional Pro plan."
-date: 2026-10-21
+date: 2026-10-29
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -16,6 +16,8 @@ All of the following is kept in your browser's local extension storage (`chrome.
 - **Text you copy or cut on web pages**, with the time it was copied.
 - **Your current clipboard text when you open the Clipstay popup**, if it is new. This lets text copied in other apps appear in your history. You can turn this off in Settings (“Add clipboard when the popup opens”), for example if you copy passwords from a password manager.
 - **Your settings:** whether capture is paused, your list of excluded sites, whether Clipstay adds your clipboard when the popup opens and, starting with version 1.1, your plan (free or Pro).
+- **The last clip you deleted, for up to 5 minutes**, so that you can undo the delete (starting with version 1.1.1). Only one such clip is kept; deleting another clip replaces it, and it is discarded after 5 minutes or when you undo.
+- **A few counters for a one-time rating reminder** (starting with version 1.1.2): when you installed Clipstay, how many times you copied from the popup, and whether the reminder was shown. They stay on your device and are never sent anywhere.
 - **A short fingerprint (hash) of text copied on an excluded site.** The text itself is never saved. The fingerprint only lets Clipstay recognize and skip that text when you open the popup.
 - **A local error log** for troubleshooting. An entry may include the website's domain name where an error happened. It never includes copied text.
 
@@ -43,9 +45,10 @@ The use of information received by Clipstay adheres to the [Chrome Web Store Use
 
 ## Your control
 
-- Delete any item, clear your history, or pause capture at any time from the popup or the options page.
+- Delete any item, clear your history, or pause capture at any time from the popup or the options page. A deleted clip can be undone for up to 5 minutes (see above).
 - Turn off adding your clipboard when the popup opens in Settings.
 - Export your full history as JSON or CSV at any time. Export is always free.
+- Import a JSON or CSV file you exported earlier in Settings. The file is read on your device and nothing is uploaded.
 - To have your purchase records (the hash and payment IDs, including those kept after a refund) removed from the license service, write to the address below. After that, the email can no longer be used to activate Pro; a copy that is already activated keeps working, because Clipstay never re-checks.
 - Uninstalling Clipstay removes all of its stored data from your browser.
 
