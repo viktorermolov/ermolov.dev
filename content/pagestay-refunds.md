@@ -1,7 +1,7 @@
 ---
 title: "Pagestay Pro Refund Policy"
 description: "Pagestay Pro is an optional one-time purchase of $4.99, or $6.99 together with Clipstay Pro. Ask for a refund within 30 days and get your money back, no questions asked."
-date: 2026-10-21
+date: 2026-10-29
 url: "/pagestay/refunds/"
 layout: "legal"
 schemaType: "WebPage"
@@ -23,8 +23,6 @@ A Pro license stays active as long as at least one payment that bought it has no
 
 - If you bought the bundle and ask for a refund, both Pagestay Pro and Clipstay Pro end, unless another payment of yours still covers one of them.
 - If you bought Pagestay Pro and then paid $2 to add Clipstay Pro, refunding the $2 ends Clipstay Pro only. Pagestay Pro stays, because your first payment still covers it.
-
-A copy of Pagestay that was already activated keeps working as Pro, because the extension never re-checks your purchase.
 
 If Pro is no longer active on a computer (for example, after reinstalling without activating), your notes are never deleted, hidden or locked, and export and restore stay free. Creating new rules, folders and tags needs Pro, and full-text and tag search, auto-surface (opening the matching note when the panel opens) and scheduled backups pause until Pro is active again. Your existing rules stay and keep matching, and your existing folders and tags stay visible, but on the free plan you cannot add notes to them.
 
