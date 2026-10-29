@@ -15,7 +15,7 @@ If Clipstay Pro does not work for you, email [viktor@ermolov.dev](mailto:viktor@
 
 ## What happens to Pro after a refund
 
-After a refund, the refunded payment can no longer be used to activate Pro. A copy of Clipstay that was already activated keeps working as Pro, because the extension never re-checks your purchase.
+After a refund, the refunded payment can no longer be used to activate Pro.
 
 If Pro is no longer active on a computer (for example, after reinstalling without activating), your saved clips are never deleted or hidden, and export stays free. Only the free plan's limits (100 unpinned clips and 5 pinned clips) apply to clips captured afterwards.
 
