@@ -17,17 +17,18 @@ If Clipstay Pro does not work for you, email [viktor@ermolov.dev](mailto:viktor@
 
 After a refund, the refunded payment can no longer be used to activate Pro. A copy of Clipstay that was already activated keeps working as Pro, because the extension never re-checks your purchase.
 
+If Pro is no longer active on a computer (for example, after reinstalling without activating), your saved clips are never deleted or hidden, and export stays free. Only the free plan's limits (100 unpinned clips and 5 pinned clips) apply to clips captured afterwards.
+
 ## Bundle and upgrade purchases
 
-Clipstay and Pagestay, another extension from the same developer, can be bought together as a bundle, and if you already own one of them you can buy the other as an upgrade. Each purchase is a single payment, refunded as a whole on the same terms as above (within 30 days, no questions asked). A refund ends only what that payment granted:
+Clipstay Pro can also come from a bundle with Pagestay, another extension from the same developer, or from an upgrade for someone who already owns one of the two. Each is a single payment, refunded as a whole on the same terms as above. A full refund affects Clipstay Pro like this:
 
-- **Bundle:** a full refund ends both Clipstay Pro and Pagestay Pro for the purchase email.
-- **Upgrade:** a full refund ends only the Pro plan the upgrade added. The Pro plan you bought first stays.
-- **Another payment still counts.** If a different, unrefunded payment with the same purchase email also covers a plan (for example, you bought Clipstay Pro first and the bundle later), refunding one payment does not end that plan.
+- **Bundle:** the refunded payment can no longer be used to activate Clipstay Pro.
+- **Upgrade that added Clipstay:** the refunded payment can no longer be used to activate Clipstay Pro.
+- **Upgrade that added only Pagestay:** Clipstay Pro is not affected.
+- **Another payment still counts.** If a different, unrefunded payment with the same purchase email also covers Clipstay Pro (for example, you bought Clipstay Pro first and the bundle later), refunding one payment does not stop that email from activating it.
 
-As with any refund, a copy of Clipstay that was already activated keeps working as Pro.
-
-If Pro is no longer active on a computer (for example, after reinstalling without activating), your saved clips are never deleted or hidden, and export stays free. Only the free plan's limits (100 unpinned clips and 5 pinned clips) apply to clips captured afterwards.
+A copy of Clipstay that was already activated keeps working as Pro. Pagestay's own terms are on its own refund page.
 
 ## Activation problems
 
