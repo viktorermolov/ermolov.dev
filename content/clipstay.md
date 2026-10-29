@@ -73,7 +73,7 @@ faq:
   - q: "How do I keep passwords out of my history?"
     a: "Clipstay never captures password fields. If you copy passwords from a password manager, turn off “Add clipboard when the popup opens” in Settings."
   - q: "How do I keep a clip for good?"
-    a: "Pin it. You can pin up to 5 clips, and pinned clips stay when older ones make room. You can also export your history at any time."
+    a: "Pin it. You can pin up to 5 clips yourself, and pinned clips stay when older ones make room. Pinned clips that come in through an import are all kept. You can also export your history at any time."
   - q: "How do I save text from other apps?"
     a: "Copy it in the app, then open Clipstay. It adds what is on your clipboard at that moment."
   - q: "How do I take my history with me?"
