@@ -28,7 +28,7 @@ Clipstay Pro can also come from a bundle with Pagestay, another extension from t
 - **Upgrade that added only Pagestay:** Clipstay Pro is not affected.
 - **Another payment still counts.** If a different, unrefunded payment with the same purchase email also covers Clipstay Pro (for example, you bought Clipstay Pro first and the bundle later), refunding one payment does not stop that email from activating it.
 
-A copy of Clipstay that was already activated keeps working as Pro. Pagestay's own terms are on its own refund page.
+Pagestay's own terms are on its own refund page.
 
 ## Activation problems
 
