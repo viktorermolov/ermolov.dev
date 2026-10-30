@@ -59,7 +59,7 @@ features:
   - "Keyboard control in the popup: search, arrows, Enter to copy, P to pin"
   - "Delete a clip with undo for 5 minutes"
   - "Export to JSON and CSV and import them back, always free"
-proPlan: "Pro: $4.99 one-time, unlimited history and pins. Search, export and import stay free."
+proPlan: "Pro: $4.99 one-time, unlimited history and pins. Search, export and import stay free. Clipstay and Pagestay together are $6.99 as a bundle, which unlocks Pro in both."
 refundsURL: "/clipstay/refunds/"
 freePlan: "The free plan keeps your 100 most recent unpinned clips, plus up to 5 pinned clips on top. When the history is full, the oldest unpinned clips make room for new ones, and Clipstay lets you know. Pinned clips never roll off. Exporting to JSON or CSV is always free. Importing a file keeps the newest 100 unpinned clips overall, and pinned clips are always kept."
 goodToKnow:
