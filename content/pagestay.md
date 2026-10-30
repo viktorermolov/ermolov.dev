@@ -1,8 +1,7 @@
 ---
 # Product page for Pagestay 1.0.0. Fields are documented in content/clipstay.md.
-# Status stays pending-review until the Chrome Web Store listing is live: the site then shows
-# "Coming soon to the Chrome Web Store" and no store link. When it is live, change `status` to `live`
-# and add `storeURL` (https://chromewebstore.google.com/detail/<id>) and `itemID`.
+# Live in the Chrome Web Store since 1.0.0: the page shows "Add to Chrome" with `storeURL`
+# (the ID-only store address, no slug) and `itemID`.
 title: "Pagestay — Side Panel Notes"
 name: "Pagestay"
 description: "Pagestay is a Chrome extension for notes in the side panel. Attach a note to a page or a whole site, and everything stays on your device. No account, no sync, no analytics."
@@ -14,8 +13,10 @@ weight: 2
 url: "/pagestay/"
 type: "project"
 schemaType: "SoftwareApplication"
-status: "pending-review"
+status: "live"
 store: "Chrome Web Store"
+itemID: "lehddjgolnpdbmmijbefdffhblbgiejj"
+storeURL: "https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj"
 privacyURL: "/pagestay/privacy/"
 privacyLead: "Your notes stay on your device. Pagestay has no account, no sync, no AI and no analytics, and makes no network requests, except a single one-time check when you activate Pro."
 privacyNote: "The only thing it can send is the email address you type to activate Pro, with the product name. Pagestay shows no permission warning when you install it; the permissions to follow your tabs and to save backup files are optional and asked for only when you turn those features on."
