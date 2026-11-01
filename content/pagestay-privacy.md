@@ -1,13 +1,13 @@
 ---
 title: "Pagestay Privacy Policy"
-description: "Pagestay keeps your notes and the addresses of the pages they are attached to on your device. It has no account, no sync, no AI and no analytics. No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade."
+description: "Pagestay keeps your notes and the addresses of the pages they are attached to on your device. It has no account, no sync, no AI and no analytics."
 date: 2026-11-01
 url: "/pagestay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
 ---
 
-Pagestay is a Chrome extension that keeps notes in the browser's side panel. A note can be global or attached to a site or a single page. This policy explains what Pagestay handles and where that data goes. The short version: **your notes, the addresses they are attached to and your settings stay on your device. Pagestay has no account, no sync, no AI and no analytics. No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade.**
+Pagestay is a Chrome extension that keeps notes in the browser's side panel. A note can be global or attached to a site or a single page. This policy explains what Pagestay handles and where that data goes. The short version: **your notes, the addresses they are attached to and your settings stay on your device. Pagestay has no account, no sync, no AI and no analytics.**
 
 ## What Pagestay stores
 
@@ -36,7 +36,11 @@ Installing Pagestay shows no permission warning: the Active tab access below wor
 
 ## Sharing and selling
 
-No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade. Your data is never sold, shared with or transferred to third parties (other than the service providers that run the Pro purchase and activation, Stripe and Cloudflare, as described below), used for advertising, or used to determine creditworthiness. The developer has no access to your notes or to the addresses you attach them to.
+No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade.
+
+The $2 eligibility check sends your email, target product and attempt ID. The Worker keeps a temporary checkout association containing the email hash, product and Stripe Checkout Session ID for up to 35 days from the start of the attempt.
+
+Your data is never sold, shared with or transferred to third parties (other than the service providers that run the Pro purchase and activation, Stripe and Cloudflare, as described below), used for advertising, or used to determine creditworthiness. The developer has no access to your notes or to the addresses you attach them to.
 
 The use of information received by Pagestay adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies), including the Limited Use requirements.
 
@@ -56,12 +60,10 @@ Pagestay has a free plan and an optional Pro plan: $4.99, paid once. Pro is also
 
 - **Payment is handled by [Stripe](https://stripe.com/privacy)**, on a Stripe-hosted page that opens in a new browser tab, outside the extension. Stripe collects your payment details and email address under its own privacy policy. The developer receives your email address and the payment details Stripe shows a merchant (such as name, amount, country or postcode, and card brand and last four digits); full card numbers are never seen or stored by the developer. Pagestay itself never sees any payment information.
 - **Activation sends one request.** In Options, under Plan, you enter the email address you paid with and press Activate. Pagestay then sends **only that email address, and the name of the product (“pagestay”)** to a small license service run by the developer (a Cloudflare Worker, shared with Clipstay), which answers yes or no. If the answer is yes, Pro is switched on locally in your browser. The email address is not saved in the extension.
-- **What the license service stores.** It stores an unsalted SHA-256 hash of your normalized purchase email (a one-way function, but one that could be matched against a list of known email addresses), per product, together with the Stripe payment ID, so that activation and refunds can work. The email address itself is not stored by the service; it stays with Stripe. If a payment is fully refunded and no other payment still covers the license, the license entry is deleted. Two records remain: the payment record and a refund marker, so that a repeated refund notice from Stripe is handled correctly. Both contain the hash and the payment ID. These records are kept without an expiry date and are deleted by hand when you ask (see “Your control” above). Nothing else is stored, and no device identifiers or license keys are used.
-- Your notes, addresses, settings and history are never part of this request. The service sees your IP address like any web server and uses it only for brief rate limiting.
+- **What the license service stores.** It stores an unsalted SHA-256 hash of your normalized purchase email (a one-way function, but one that could be matched against a list of known email addresses), per product, together with the Stripe payment ID, so that activation and refunds can work. The email address itself is not stored by the service; it stays with Stripe. If a payment is fully refunded and no other payment still covers the license, the license entry is deleted. Two records remain: the payment record and a refund marker, so that a repeated refund notice from Stripe is handled correctly. Both contain the hash and the payment ID. These records are kept without an expiry date and are deleted by hand when you ask (see “Your control” above). A separate replay-prevention marker containing only an opaque HMAC ID and the attempt start time is kept without expiry. No device identifiers or license keys are used.
+- **Network checks happen only when you activate Pro or start the $2 upgrade, never in the background.** Your notes, addresses, settings and history are never sent for activation or upgrade eligibility. The service sees your IP address like any web server and uses it only for brief rate limiting.
 - To use Pro on another computer, enter the same email there.
 - Refund terms are on the [Pro refund policy](/pagestay/refunds/) page.
-
-No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade.
 
 ## This website
 
