@@ -1,13 +1,13 @@
 ---
 title: "Clipstay Privacy Policy"
-description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics. Version 1.0 makes no network requests; starting with version 1.1, the only request is a single one-time check when you activate the optional Pro plan."
-date: 2026-10-29
+description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics. No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade."
+date: 2026-11-01
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
 ---
 
-Clipstay is a Chrome extension that keeps a history of the text you copy in the browser. This policy explains what it handles and where that data goes. The short version: **your clips and settings stay on your device. Clipstay has no account and no analytics, and it never sends your clips anywhere. Version 1.0 makes no network requests at all. Starting with version 1.1, the only thing Clipstay can ever send is the email address you type to activate the optional Pro plan (see “Pro purchase and activation”).**
+Clipstay is a Chrome extension that keeps a history of the text you copy in the browser. This policy explains what it handles and where that data goes. The short version: **your clips and settings stay on your device. Clipstay has no account and no analytics, and it never sends your clips anywhere. No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade.**
 
 ## What Clipstay stores
 
@@ -40,7 +40,7 @@ Clipstay does **not** save the address of the page you copied from, your browsin
 
 ## Sharing and selling
 
-Clipstay version 1.0 makes no network requests. Starting with version 1.1, its only network request is a single one-time check when you activate Pro (described below). Your data is never sold, shared, transferred to third parties, used for advertising, or used to determine creditworthiness. The developer has no access to your clips.
+No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade. Your data is never sold, shared, transferred to third parties, used for advertising, or used to determine creditworthiness. The developer has no access to your clips.
 
 The use of information received by Clipstay adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies), including the Limited Use requirements.
 
@@ -60,11 +60,11 @@ Starting with version 1.1, Clipstay has a free plan and an optional Pro plan, a 
 - **Payment is handled by [Stripe](https://stripe.com/privacy)**, on a Stripe-hosted page that opens in a new browser tab, outside the extension. Stripe collects your payment details and email address under its own privacy policy. The developer receives your email address and the fact that the payment was made; card details are handled by Stripe and are not seen or stored by the developer. Clipstay itself never sees any payment information.
 - **Activation sends one request** (version 1.1 and later). In Settings you enter the email address you paid with and press Activate. Clipstay then sends **only that email address** to a small license service run by the developer (a Cloudflare Worker), which answers yes or no. If the answer is yes, Pro is switched on locally in your browser. The email address is not saved in the extension.
 - **What the license service stores.** The developer's license service (a Cloudflare Worker) stores a one-way SHA-256 hash of your normalized purchase email and the Stripe payment ID, so that activation and refunds can work. The email address itself is not stored by the service; it stays with Stripe. The service keeps one such record for each payment that covers your license. After a full refund, that payment can no longer be used to activate Pro, and the payment ID of the refunded payment (and, where one was recorded, the hash) is kept, with no expiry, only so that a late or repeated notification of the refunded payment cannot switch Pro on again for that email; you can have them removed on request (see “Your control”). The same license service also answers for the developer's other extensions and keeps the same kind of records for them (a hash and payment IDs, never your email address). Nothing else is stored, and no device identifiers or license keys are used.
-- **Clipstay checks only when you press Activate**, never in the background and never again afterwards. Your clips, settings and history are never part of this request. The service sees your IP address like any web server and uses it only for brief rate limiting.
+- Your clips, settings and history are never part of this request. The service sees your IP address like any web server and uses it only for brief rate limiting.
 - To use Pro on another computer, enter the same email there.
 - Refund terms are on the [Pro refund policy](/clipstay/refunds/) page.
 
-If you never activate Pro, Clipstay makes no network requests at all, in any version. If you do, the activation is that one request and nothing is checked afterwards.
+No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade.
 
 ## This website
 
