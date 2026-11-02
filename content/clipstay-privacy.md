@@ -41,13 +41,15 @@ Clipstay does **not** save the address of the page you copied from, your browsin
 
 ## Sharing and selling
 
-Starting with Clipstay 1.1.3:
+### Network requests and $2 checkout (Clipstay 1.1.3 and later)
 
 No network requests, except a one-time check when you activate Pro and an eligibility check when you start the $2 upgrade.
 
-The $2 eligibility check sends your email, target product and attempt ID to the developer’s license service, hosted by Cloudflare. The Worker keeps a temporary checkout association containing the email hash, product and Stripe Checkout Session ID for up to 35 days from the start of the attempt.
+The $2 eligibility check sends your email, target product and attempt ID to the developer’s license service, hosted by Cloudflare. The Worker keeps a temporary checkout association containing the email hash, product, Stripe Checkout Session ID and checkout URL for up to 35 days from the start of the attempt.
 
 The Worker sends your normalized email to Stripe to create the upgrade Checkout Session; Stripe handles checkout and payment under its own privacy policy.
+
+### Data use (all versions)
 
 Your clips, settings and history are not shared with Cloudflare or Stripe. Purchase and activation data is handled by those service providers as described here. Your data is never sold, used for advertising, or used to determine creditworthiness. The developer has no access to your clips.
 

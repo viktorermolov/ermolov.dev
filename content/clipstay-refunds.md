@@ -15,7 +15,7 @@ If Clipstay Pro does not work for you, email [viktor@ermolov.dev](mailto:viktor@
 
 ## What happens to Pro after a refund
 
-After a refund, the refunded payment can no longer be used to activate Pro. A refund does not remotely switch off Pro that is already activated on a computer.
+After a refund, the refunded payment can no longer be used to activate Pro.
 
 If Pro is no longer active on a computer (for example, after reinstalling without activating), your saved clips are never deleted or hidden, and export stays free. Only the free plan's limits (100 unpinned clips and 5 pinned clips) apply to clips captured afterwards.
 
@@ -24,8 +24,8 @@ If Pro is no longer active on a computer (for example, after reinstalling withou
 Clipstay Pro can also come from a bundle with Pagestay, another extension from the same developer, or from a $2 upgrade for Pagestay Pro owners, offered inside Pagestay. Each is a single payment, refunded as a whole on the same terms as above. A full refund applies to the payment you made:
 
 - **Bundle:** the refunded payment can no longer be used to activate Clipstay Pro.
-- **Upgrade that added Clipstay:** the refunded $2 payment can no longer be used to activate Clipstay Pro; the original Pagestay purchase is unaffected. Refunding the original Pagestay purchase does not retroactively cancel an already authorized Clipstay purchase.
-- **Upgrade that added Pagestay:** starting with Clipstay 1.1.3, Clipstay Pro owners can buy Pagestay Pro for $2 inside Clipstay, on the same 30-day refund terms. Refunding that $2 payment means it can no longer be used to activate Pagestay Pro; the original Clipstay purchase is unaffected. Refunding the original Clipstay purchase does not retroactively cancel an already authorized Pagestay purchase.
+- **Upgrade that added Clipstay:** the refunded $2 payment can no longer be used to activate Clipstay Pro; the original Pagestay purchase is unaffected.
+- **Upgrade that added Pagestay:** starting with Clipstay 1.1.3, Clipstay Pro owners can buy Pagestay Pro for $2 inside Clipstay, on the same 30-day refund terms. Refunding that $2 payment means it can no longer be used to activate Pagestay Pro; the original Clipstay purchase is unaffected.
 - **Another payment still counts.** If a different, unrefunded payment with the same purchase email also covers Clipstay Pro (for example, you bought Clipstay Pro first and the bundle later), refunding one payment does not stop that email from activating it.
 
 See the [Pagestay Pro refund policy](/pagestay/refunds/) for Pagestay's terms, including activation when another valid payment still covers it.

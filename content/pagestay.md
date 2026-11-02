@@ -60,7 +60,7 @@ goodToKnow:
   - "Pagestay needs Chrome 130 or newer."
   - "Clicking the toolbar button lets Pagestay read the address of that one tab, for that visit only. To keep the panel following your tabs and to show a dot on the toolbar button when the page or site has a note, press “Enable page notes”. Chrome then asks for the tabs permission, which it words as “read your browsing history”. Pagestay uses addresses on your device only, to find your notes."
   - "Scheduled backups ask for permission to save files only when you turn them on. Turn off “Ask where to save each file” in Chrome's download settings, or backups cannot run unattended."
-  - "If Pro ever lapses, search inside notes, rule notes that show a matching note and scheduled backups pause. Your notes, folders, tags and rules are never hidden or locked, but you cannot create new Pro items."
+  - "If Pro is no longer active on a computer (for example, after reinstalling without activating), search inside notes, rule notes that show a matching note and scheduled backups pause. Your notes, folders, tags and rules are never hidden or locked, but you cannot create new Pro items."
 supportNote: "Include your Chrome version and operating system if you can, and leave out any private text from your notes."
 faq:
   - q: "Where are my notes stored?"
@@ -71,7 +71,7 @@ faq:
     a: "Only if you press “Enable page notes”. That asks for the tabs permission, which Chrome words as “read your browsing history”. Pagestay compares the address of the current tab with your notes on your device and sends it nowhere. Without it, Pagestay still works on the tab where you click its button."
   - q: "How do I take my notes with me?"
     a: "Export them to JSON or Markdown in Settings at any time, and import a JSON export on another computer. Export is always free."
-  - q: "What happens to my notes if I do not buy Pro, or Pro ends?"
+  - q: "What happens to my notes if I do not buy Pro, or Pro is no longer active?"
     a: "Nothing is deleted, hidden or locked. Notes in folders and with tags stay visible, editable and exportable on the free plan. Only search inside notes, rule notes that show a matching note, scheduled backups and creating new rules, folders and tags need Pro."
   - q: "Can I use Pro on another computer?"
     a: "Yes. Enter the same purchase email in Settings under Plan. Pagestay checks it once, when you press Activate, and does not store the email."
