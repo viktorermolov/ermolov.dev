@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Pro Refund Policy"
 description: "Starting with Clipstay 1.1, Pro is an optional one-time purchase of $4.99. Ask for a refund within 30 days and get your money back, no questions asked."
-date: 2026-10-30
+date: 2026-11-02
 url: "/clipstay/refunds/"
 layout: "legal"
 schemaType: "WebPage"
@@ -21,13 +21,14 @@ If Pro is no longer active on a computer (for example, after reinstalling withou
 
 ## Bundle and upgrade purchases
 
-Clipstay Pro can also come from a bundle with Pagestay, another extension from the same developer, or from a $2 upgrade for Pagestay Pro owners, offered inside Pagestay. Each is a single payment, refunded as a whole on the same terms as above. A full refund affects Clipstay Pro like this:
+Clipstay Pro can also come from a bundle with Pagestay, another extension from the same developer, or from a $2 upgrade for Pagestay Pro owners, offered inside Pagestay. Each is a single payment, refunded as a whole on the same terms as above. A full refund applies to the payment you made:
 
 - **Bundle:** the refunded payment can no longer be used to activate Clipstay Pro.
-- **Upgrade that added Clipstay:** the refunded payment can no longer be used to activate Clipstay Pro.
+- **Upgrade that added Clipstay:** the refunded $2 payment can no longer be used to activate Clipstay Pro; the original Pagestay purchase is unaffected.
+- **Upgrade that added Pagestay:** starting with Clipstay 1.1.3, Clipstay Pro owners can buy Pagestay Pro for $2 inside Clipstay, on the same 30-day refund terms. Refunding that $2 payment means it can no longer be used to activate Pagestay Pro; the original Clipstay purchase is unaffected.
 - **Another payment still counts.** If a different, unrefunded payment with the same purchase email also covers Clipstay Pro (for example, you bought Clipstay Pro first and the bundle later), refunding one payment does not stop that email from activating it.
 
-Pagestay's own terms are on its own refund page.
+See the [Pagestay Pro refund policy](/pagestay/refunds/) for Pagestay's terms, including activation when another valid payment still covers it.
 
 ## Activation problems
 
