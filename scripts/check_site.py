@@ -110,8 +110,49 @@ def hrefs(page):
     return [attrs.get('href') for tag, attrs in page.elements if tag == 'a' and attrs.get('href')]
 
 
+def check_not_found(root):
+    """The same 404 artifact is served at missing URLs of arbitrary depth."""
+    page = Page()
+    page.feed((root / '404.html').read_text())
+    assert sum(tag == 'h1' for tag, _ in page.elements) == 1, '404: exactly one h1'
+    assert any(tag == 'meta' and attrs.get('name') == 'robots' and
+               'noindex' in attrs.get('content', '').split(',')
+               for tag, attrs in page.elements), '404: must remain noindex'
+    for missing in ('old-page', 'clipstay/old-page', 'pagestay/old/page/'):
+        url = urljoin(SITE, missing)
+        links = [urljoin(url, href) for href in hrefs(page)]
+        assert SITE in links and SITE + '#projects' in links, f'{url}: 404 recovery links go home'
+        assert SITE + 'clipstay/privacy/' in links and SITE + 'pagestay/privacy/' in links, f'{url}: 404 footer policies'
+        for tag, attrs in page.elements:
+            for key in ('href', 'src'):
+                target = attrs.get(key)
+                if not target:
+                    continue
+                resolved = urlsplit(urljoin(url, target))
+                if resolved.netloc != urlsplit(SITE).netloc:
+                    continue
+                if target.startswith('#'):
+                    assert unquote(resolved.fragment) in page.ids, f'{url}: 404 local anchor {target}'
+                    continue
+                asset = root / unquote(resolved.path).lstrip('/')
+                if resolved.path.endswith('/'):
+                    asset /= 'index.html'
+                assert asset.is_file(), f'{url}: 404 missing target {target}'
+                if resolved.fragment:
+                    linked = Page()
+                    linked.feed(asset.read_text())
+                    assert unquote(resolved.fragment) in linked.ids, f'{url}: 404 broken anchor {target}'
+        for rel in ('stylesheet', 'preload', 'icon', 'manifest'):
+            assert any(tag == 'link' and rel in attrs.get('rel', '').split()
+                       for tag, attrs in page.elements), f'{url}: 404 {rel} present'
+        assert any(tag == 'script' and attrs.get('src') and
+                   urlsplit(urljoin(url, attrs['src'])).netloc == urlsplit(SITE).netloc
+                   for tag, attrs in page.elements), f'{url}: 404 theme script present'
+
+
 def main():
     root = Path(sys.argv[1] if len(sys.argv) > 1 else 'public').resolve()
+    check_not_found(root)
     pages = sorted(path for path in root.rglob('index.html'))
     results = {url: (text, page, metadata, nodes) for url, text, page, metadata, nodes in (check_page(root, path) for path in pages)}
     canonical = SITE
