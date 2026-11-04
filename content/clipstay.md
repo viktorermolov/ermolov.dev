@@ -42,7 +42,7 @@ highlights:
   - title: "You decide what it keeps"
     text: "Exclude any site, pause capture whenever you like, and export your history to JSON or CSV and import it back. Password fields and Incognito windows are never captured."
     image: "/img/clipstay/private.webp"
-    alt: "The Clipstay settings page with a pause switch, an excluded sites list and the option to add the clipboard when the popup opens. Caption: Stays on your device."
+    alt: "The Clipstay Capture settings section with a pause switch, clipboard-import option, resume-baseline explanation and shared-clipboard limitation. Caption: Stays on your device."
   - title: "Free, with an optional Pro"
     text: "Pro removes the history and pin limits. $4.99, paid once, no subscription. Unlock it by entering your purchase email once. Search, export and import stay free."
     image: "/img/clipstay/pro.webp"
@@ -87,3 +87,4 @@ faq:
       text: "See what it covers and what is different."
       href: "/clipstay/alternatives/"
 ---
+
