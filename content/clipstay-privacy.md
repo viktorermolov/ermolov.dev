@@ -20,7 +20,7 @@ All of the following is kept in your browser's local extension storage (`chrome.
 - **Optional names for pinned clips** (starting with version 1.1.3). These names are stored only on your device.
 - **A few counters for a one-time rating reminder** (starting with version 1.1.2): when you installed or updated Clipstay, how many times you copied from the popup, and whether the reminder was shown. They stay on your device and are never sent anywhere.
 - **A short fingerprint (hash) of text copied on an excluded site.** The text itself is never saved. The fingerprint only lets Clipstay recognize and skip that text when you open the popup. A similar fingerprint of the last capture is kept to avoid saving the same copy twice.
-- **A separate temporary local fingerprint of the clipboard text read when capture resumes** (starting with version 1.1.4). It helps prevent that text from immediately being added by popup clipboard import. The marker is not a record of everything copied while paused.
+- **Capture-state metadata** (starting with version 1.1.4): two revision counters, a fingerprint of the clipboard text read at Resume, and boolean markers for a new permitted page copy or saved-clip copy-back. The fingerprint contains the text length and a non-cryptographic hash after Clipstay's text-size limit is applied, not the raw clipboard text. These metadata stay on your device and are not included in clip exports or diagnostics. Their lifecycle is described below.
 - **A count of clips rolled off by the free plan's limit, and when.** It contains no clip text.
 - **A local error log** for troubleshooting. An entry may include the website's domain name where an error happened. It never includes copied text.
 
@@ -34,7 +34,13 @@ Optional clipboard import is a separate path: opening the normal popup can save 
 
 ### Resuming capture (Clipstay 1.1.4 and later)
 
-Starting with Clipstay 1.1.4, pausing capture pauses web-page capture and popup clipboard import. Resume temporarily suppresses popup import of the clipboard text read at that point. This applies to that current text; it does not identify everything copied while capture was paused.
+Starting with Clipstay 1.1.4, pausing capture pauses web-page capture and popup clipboard import. Resume reads the current clipboard and saves its separate local fingerprint before enabling capture; read or storage problems are reported.
+
+Popup import skips that unchanged text across popup closure and browser restart. Suppression ends when enabled popup import observes different or empty clipboard content, or Clipstay processes a new permitted page copy or saved-clip copy-back. An identical external-app recopy is indistinguishable from leaving the clipboard unchanged: first let a normal popup observe different or empty content. There is no timer that later imports unchanged text.
+
+The fingerprint has no time-based expiry. The popup import check clears it after observing changed or empty content or a processed-copy marker; a later Resume replaces it. A permitted copy can therefore end suppression before the stored fingerprint is cleared by the next enabled popup import check. Revision counters remain. Obsolete boolean markers are removed on a best-effort basis; inert older markers may remain without time-based expiry. Uninstalling Clipstay removes this local extension data.
+
+Clipboard reads and capture changes are not atomic. This safeguard concerns the text observed at Resume, not everything ever copied while paused, and it does not identify where clipboard text came from.
 
 ## Why Clipstay needs its permissions
 
