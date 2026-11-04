@@ -40,3 +40,31 @@ Pillow 13.0.0 / libwebp 1.6.0. Open the PNG, convert to RGB, then save WebP with
 The Clipstay image retains the complete Capture section, including the shared-clipboard limitation. Its new alt text no longer claims an excluded-sites list that is absent from this composition. Pagestay notes, rule-editing and search images retain their Free/Pro captions and visible controls. The notes image also feeds the homepage card through the existing content configuration.
 
 Independent review and current site CI on this exact change are required before integration into the preparation release branch. The source images include unreleased bug-fix preparation; they are not proof of live-store compatibility. Master merge and production deployment require the owner's separate explicit go-ahead and the corresponding version/publication decision. No deployment, store upload or publication is performed here.
+
+## Current Plan image follow-up
+
+The initial four-image batch above is unchanged. This separate follow-up replaces only `static/img/clipstay/pro.webp`, whose previous UI said Free keeps the newest 100 clips. The new complete Plan section shows the accepted 1.1.4 history-retention rule, existing prices and activation controls. Existing product-page placement and alt text remain accurate and unchanged.
+
+- Source: [Clipstay PR80](https://github.com/viktorermolov/Clipstay/pull/80), exact asset head `b5a5713c7d9bcf027fd2d1ff967b98b998c13f0e`, `store/screenshots/04-pro.png`, Git blob `c0b3e09cb1fecbf2ae9edd3f1523b1da4fac3bf0`. The coordinator reported independent content/provenance review; the website consumer also opened the actual input and output and checked their hashes and pixels.
+- Read source attribution in `store/asset-provenance.md` and `store/screenshots/04-pro.capture.json` at that head. Actual renderer checkout `04395f2e1364b02eade0e6c12460cfe769b98b7a`, tree `c2208736fc57ccdc1a72795e100400ae1419a4d9`, unpublished manifest 1.1.4; [Linux capture run 41899447917](https://github.com/viktorermolov/Clipstay/actions/runs/41899447917), attempt 1. The diagnostic source branch is not for merge. This records image provenance, not acceptance of that branch or a diagnosis of the earlier product test failure.
+- Existing real extension Plan section composed with the existing marketing frame, using synthetic fixture data. No native OS/browser-frame acceptance, purchase, activation or Store publication is represented. No regenerated UI, text replacement, crop, resize or overlay was added by the website consumer.
+- The connector blob reader could not decode the binary PNG as UTF-8. The exact committed bytes were obtained through a normal read-only git fetch of PR80, not by retrying an artifact download. Both the Git blob and SHA-256 matched before conversion.
+- Conversion matches the initial batch: Pillow 13.0.0 / libwebp 1.6.0; open PNG, convert to RGB, save WebP with `lossless=True, method=6, exact=True`. Both images are 1280 × 800. The decoded RGB bytes are identical, including the full card and Clipstay brand attribution; visual inspection found no clipping.
+
+| File | Bytes | SHA-256 |
+| --- | --- | --- |
+| Input `store/screenshots/04-pro.png` | 336344 | `c95c32e619881e9f559668e617e6bca6eddaec4e3139f12fa0e8dffd6eec6a69` |
+| Output `static/img/clipstay/pro.webp` | 187466 | `997c85dab36bbd81e2a4bbec6b36620b9ab86b4be4d98f2e84158114f637b4aa` |
+
+Reproduce after obtaining and hash-checking the exact source PNG:
+
+```python
+from PIL import Image
+source = Image.open("04-pro.png").convert("RGB")
+source.save("pro.webp", format="WEBP", lossless=True, method=6, exact=True)
+decoded = Image.open("pro.webp").convert("RGB")
+assert source.size == decoded.size == (1280, 800)
+assert source.tobytes() == decoded.tobytes()
+```
+
+This asset PR still requires its own current site CI and independent review before release integration. The latest owner-agreed rollout is coordinated site deployment with future extension Store-review submissions; no deployment is performed now, and the exact master merge/deployment still requires direct owner confirmation. The source capture is not proof of Store publication.
