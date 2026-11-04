@@ -14,7 +14,7 @@ Clipstay is a Chrome extension that keeps a history of the text you copy in the 
 All of the following is kept in your browser's local extension storage (`chrome.storage.local`) on your computer:
 
 - **Text you copy or cut on web pages**, with the time it was copied.
-- **Your current clipboard text when you open the Clipstay popup**, if it is new, capture is active and “Add clipboard when the popup opens” is enabled. This preserves import from other apps. The shared clipboard can also contain text from Incognito or a password manager; the normal popup cannot identify where that text came from. You can turn clipboard import off in Settings.
+- **Your current clipboard text when you open the Clipstay popup**, if it is new and “Add clipboard when the popup opens” is enabled. Starting with Clipstay 1.1.4, this import requires capture to be active. This preserves import from other apps. The shared clipboard can also contain text from Incognito or a password manager; the normal popup cannot identify where that text came from. You can turn clipboard import off in Settings.
 - **Your settings:** whether capture is paused, your list of excluded sites, whether Clipstay adds your clipboard when the popup opens and, starting with version 1.1, your plan (free or Pro).
 - **The last clip you deleted, so that you can undo the delete within 5 minutes** (starting with version 1.1.1). Only one such clip is kept; deleting another clip replaces it. After 5 minutes it can no longer be restored, and it is removed the next time Clipstay saves a new clip, you open the popup or the browser starts, or right away when you undo or clear your history.
 - **Optional names for pinned clips** (starting with version 1.1.3). These names are stored only on your device.
@@ -28,13 +28,13 @@ Clipstay does **not** save the address of the page you copied from, your browsin
 
 ## Page capture and the shared clipboard
 
-Web-page capture skips copy and cut events from password fields, sites you add to the excluded list and Incognito pages, and it is paused while capture is paused. Clipstay does not request Incognito access.
+Web-page capture skips copy and cut events from password fields, sites you add to the excluded list and Incognito pages. Clipstay does not request Incognito access.
 
-Optional clipboard import is a separate path: when capture is active, opening the normal popup can save text left on your shared system clipboard. That text can come from Incognito, password managers or other apps. The popup cannot identify its origin. Turn off “Add clipboard when the popup opens” in Settings if you do not want that import.
+Optional clipboard import is a separate path: opening the normal popup can save text left on your shared system clipboard. That text can come from Incognito, password managers or other apps. The popup cannot identify its origin. Turn off “Add clipboard when the popup opens” in Settings if you do not want that import.
 
 ### Resuming capture (Clipstay 1.1.4 and later)
 
-Starting with Clipstay 1.1.4, resuming capture temporarily suppresses popup import of the clipboard text read at Resume. This applies to that current text; it does not identify everything copied while capture was paused. Pausing capture also pauses popup clipboard import while the pause is active.
+Starting with Clipstay 1.1.4, pausing capture pauses web-page capture and popup clipboard import. Resume temporarily suppresses popup import of the clipboard text read at that point. This applies to that current text; it does not identify everything copied while capture was paused.
 
 ## Why Clipstay needs its permissions
 
