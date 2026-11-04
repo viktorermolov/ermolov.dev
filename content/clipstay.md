@@ -80,7 +80,7 @@ faq:
   - q: "How do I save text from other apps?"
     a: "Leave capture active and “Add clipboard when the popup opens” enabled, copy text in the app, then open Clipstay. The popup can add the current clipboard text. Starting with Clipstay 1.1.4, text read from the clipboard at Resume is temporarily skipped rather than immediately imported."
   - q: "What does pausing capture do?"
-    a: "While capture is paused, web-page capture and popup clipboard import are paused. Starting with Clipstay 1.1.4, Resume temporarily suppresses popup import of the clipboard text read at that point. This is not a record of everything copied during the pause, and it cannot establish where clipboard text came from."
+    a: "Starting with Clipstay 1.1.4, pausing capture pauses web-page capture and popup clipboard import. Resume temporarily suppresses popup import of the clipboard text read at that point. This is not a record of everything copied during the pause, and it cannot establish where clipboard text came from."
   - q: "How do I take my history with me?"
     a: "Export it to JSON or CSV at any time and import the file on another computer in Settings. Export and import are always free. On the free plan an import keeps the newest 100 unpinned clips overall."
   - q: "Can I undo a delete?"
