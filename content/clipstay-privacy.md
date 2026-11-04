@@ -45,7 +45,7 @@ Clipboard reads and capture changes are not atomic. This safeguard concerns the 
 ## Why Clipstay needs its permissions
 
 - **Read and change data on all websites:** to notice when you copy or cut text on a page. Clipstay reads only the text you copy, at the moment you copy it. It also uses this access to start working in tabs that were already open when it was installed or updated.
-- **Read data you copy and paste:** to add your current clipboard text when you open the popup, unless you turn that off in Settings.
+- **Read data you copy and paste:** to add your current clipboard text when you open the popup, unless you turn that off in Settings. Starting with Clipstay 1.1.4, Resume also reads the current clipboard to establish its suppression fingerprint, even when automatic popup clipboard import is turned off.
 - **Modify data you copy and paste:** to put a saved item back on your clipboard when you click it.
 - **Storage and unlimited storage:** to keep your history on your device without a size cap.
 - **Scripting:** to start capture in already-open tabs after installation or an update.
