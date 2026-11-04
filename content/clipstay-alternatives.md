@@ -23,7 +23,9 @@ Search with several words in any order when you remember part of a clip. Use dat
 
 ## Choose what goes into your history
 
-Your history is stored on your device. Clipstay has no account and no analytics. You can exclude sites or pause capture. Password fields and Incognito windows are not captured. If you copy passwords from a password manager, turn off “Add clipboard when the popup opens” in Settings, because that optional setting can add the current clipboard text.
+Your history is stored on your device. Clipstay has no account and no analytics. You can exclude sites from web-page capture or pause capture. Web-page capture skips password fields and Incognito pages. Optional clipboard import in the normal popup can still save text left on the shared system clipboard, including text from Incognito, password managers or other apps. Turn off “Add clipboard when the popup opens” in Settings if you do not want that import.
+
+Starting with Clipstay 1.1.4, resuming capture temporarily suppresses popup import of the clipboard text read at Resume. This applies to that current text; it does not identify everything copied while capture was paused. Text from other apps can still be imported automatically when you open the popup while capture and clipboard import are enabled.
 
 Clipstay stores text only. Check its [capture details and controls](/clipstay/) before deciding whether it fits your routine. A replacement should match the actions you rely on, including how text is collected and how you paste it again.
 

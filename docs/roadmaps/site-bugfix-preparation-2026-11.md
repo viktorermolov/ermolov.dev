@@ -65,6 +65,8 @@ All listed Issues stay open until their delivery criteria have been verified on 
 
 ## Remaining release steps
 
+Follow-up after #51: the reviewed roadmap was merged into the release branch as `97d87eb807ae06aee4d01c2307572047d5864a74`; its tree matched the independently reviewed, green #51 head. The owner then approved a new Clipstay #55 direction (preserved external-app import, bounded Resume suppression and truthful Incognito shared-clipboard disclosure). That new preparation has its own [copy roadmap](clipstay-1.1.4-clipboard-copy.md), explicitly gated on verified implementation and actual Clipstay 1.1.4 publication. It is separate from the unchanged draft legal/refund PR #46, whose retention/publication decisions are still pending.
+
 1. Review and check the separate roadmap-status PR into the release branch; merge only after independent review and current successful PR CI. #44 and #45 are already integrated. No formal PR approval was submitted.
 2. Preserve #46 as draft until the owner's retention/publication decision. The existing independent review covers its exact unchanged head; any further changes require review and current successful PR CI before a later authorized merge.
 3. Resolve owner policy/publication decisions and Pagestay screenshot provenance. Recheck all issue acceptance criteria and prepared policy dates for the actual publication plan.
