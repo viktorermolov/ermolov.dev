@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check generated public artifacts; no network or production submissions."""
 import json
+import re
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
@@ -17,6 +18,7 @@ class Page(HTMLParser):
         self.elements = []
         self.schema_text = []
         self.in_schema = False
+        self.text_parts = []
 
     def handle_starttag(self, tag, attributes):
         attrs = dict(attributes)
@@ -33,6 +35,7 @@ class Page(HTMLParser):
             self.in_schema = False
 
     def handle_data(self, data):
+        self.text_parts.append(data)
         if self.in_schema:
             self.schema_text.append(data)
 
@@ -110,6 +113,27 @@ def hrefs(page):
     return [attrs.get('href') for tag, attrs in page.elements if tag == 'a' and attrs.get('href')]
 
 
+def check_refund_assurances(root):
+    """PR31's owner-directed removal applies to all public pages, including metadata."""
+    for path in root.rglob('*.html'):
+        page = Page()
+        page.feed(path.read_text())
+        parts = page.text_parts + [value for _, attrs in page.elements
+                                  for key, value in attrs.items()
+                                  if key in ('content', 'alt', 'title', 'aria-label') and value]
+        normalized = ' '.join(' '.join(parts).casefold().replace('’', "'").split())
+        for sentence in re.split(r'(?<=[.!?])\s+', normalized):
+            if not re.search(r'\brefund(?:s|ed|ing)?\b', sentence) or not re.search(r'\bpro\b', sentence):
+                continue
+            negative_deactivation = re.search(
+                r"\b(?:does not|doesn't|do not|don't|will not|won't|cannot|can't|never)\b"
+                r'.{0,80}\b(?:deactivate|disable|revoke|(?:switch|turn) (?:pro )?off)\b', sentence)
+            continued_activation = re.search(
+                r'\b(?:stays?|remains?|continues? to be)\s+(?:active|activated|enabled|unlocked)\b', sentence)
+            assert not (negative_deactivation or continued_activation), (
+                f'{path.relative_to(root)}: owner-prohibited assurance about Pro staying activated after a refund')
+
+
 def check_not_found(root):
     """The same 404 artifact is served at missing URLs of arbitrary depth."""
     page = Page()
@@ -152,6 +176,7 @@ def check_not_found(root):
 
 def main():
     root = Path(sys.argv[1] if len(sys.argv) > 1 else 'public').resolve()
+    check_refund_assurances(root)
     check_not_found(root)
     pages = sorted(path for path in root.rglob('index.html'))
     results = {url: (text, page, metadata, nodes) for url, text, page, metadata, nodes in (check_page(root, path) for path in pages)}

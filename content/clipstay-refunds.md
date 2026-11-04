@@ -17,8 +17,6 @@ If Clipstay Pro does not work for you, email [viktor@ermolov.dev](mailto:viktor@
 
 After a refund, the refunded payment can no longer be used to activate Pro.
 
-A refund does not remotely switch off Pro that is already activated on a computer.
-
 If Pro is no longer active on a computer (for example, after reinstalling without activating), export stays free. In Clipstay 1.1.4, existing and imported history and pins are not trimmed merely because they exceed the Free limits. Import, opening the popup, browser startup and Undo do not by themselves trim saved history to 100. When Free history is full, each genuinely new capture can replace one oldest unpinned clip, including an existing or imported clip; a replacement triggered by an earlier capture can finish later. New clipboard text imported when the popup opens counts as a new capture. Pinned clips do not roll off under the history limit. Free lets you add a pin only while fewer than five clips are pinned; existing and imported pins remain even above five.
 
 ## Bundle and upgrade purchases
