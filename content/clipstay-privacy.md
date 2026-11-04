@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Privacy Policy"
 description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics."
-date: 2026-11-01
+date: 2026-11-04
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -14,27 +14,38 @@ Clipstay is a Chrome extension that keeps a history of the text you copy in the 
 All of the following is kept in your browser's local extension storage (`chrome.storage.local`) on your computer:
 
 - **Text you copy or cut on web pages**, with the time it was copied.
-- **Your current clipboard text when you open the Clipstay popup**, if it is new. This lets text copied in other apps appear in your history. You can turn this off in Settings (“Add clipboard when the popup opens”), for example if you copy passwords from a password manager.
+- **Your current clipboard text when you open the Clipstay popup**, if it is new and “Add clipboard when the popup opens” is enabled. Starting with Clipstay 1.1.4, this import requires capture to be active. This preserves import from other apps. The shared clipboard can also contain text from Incognito or a password manager; the normal popup cannot identify where that text came from. You can turn clipboard import off in Settings.
 - **Your settings:** whether capture is paused, your list of excluded sites, whether Clipstay adds your clipboard when the popup opens and, starting with version 1.1, your plan (free or Pro).
 - **The last clip you deleted, so that you can undo the delete within 5 minutes** (starting with version 1.1.1). Only one such clip is kept; deleting another clip replaces it. After 5 minutes it can no longer be restored, and it is removed the next time Clipstay saves a new clip, you open the popup or the browser starts, or right away when you undo or clear your history.
 - **Optional names for pinned clips** (starting with version 1.1.3). These names are stored only on your device.
 - **A few counters for a one-time rating reminder** (starting with version 1.1.2): when you installed or updated Clipstay, how many times you copied from the popup, and whether the reminder was shown. They stay on your device and are never sent anywhere.
 - **A short fingerprint (hash) of text copied on an excluded site.** The text itself is never saved. The fingerprint only lets Clipstay recognize and skip that text when you open the popup. A similar fingerprint of the last capture is kept to avoid saving the same copy twice.
+- **Capture-state metadata** (starting with version 1.1.4): two revision counters, a fingerprint of the clipboard text read at Resume, and boolean markers for a new permitted page copy or saved-clip copy-back. The fingerprint contains the text length and a non-cryptographic hash after Clipstay's text-size limit is applied, not the raw clipboard text. These metadata stay on your device and are not included in clip exports or diagnostics. Their lifecycle is described below.
 - **A count of clips rolled off by the free plan's limit, and when.** It contains no clip text.
 - **A local error log** for troubleshooting. An entry may include the website's domain name where an error happened. It never includes copied text.
 
 Clipstay does **not** save the address of the page you copied from, your browsing history, or anything you did not copy.
 
-## What Clipstay never captures
+## Page capture and the shared clipboard
 
-- Text copied from password fields.
-- Anything on sites you add to the excluded list, or while capture is paused.
-- Anything in Incognito windows. Clipstay does not request Incognito access.
+Web-page capture skips copy and cut events from password fields, sites you add to the excluded list and Incognito pages. Clipstay does not request Incognito access.
+
+Optional clipboard import is a separate path: opening the normal popup can save text left on your shared system clipboard. That text can come from Incognito, password managers or other apps. The popup cannot identify its origin. Turn off “Add clipboard when the popup opens” in Settings if you do not want that import.
+
+### Resuming capture (Clipstay 1.1.4 and later)
+
+Starting with Clipstay 1.1.4, pausing capture pauses web-page capture and popup clipboard import. Resume reads the current clipboard and saves its separate local fingerprint before enabling capture; read or storage problems are reported.
+
+Popup import skips that unchanged text across popup closure and browser restart. Suppression ends when enabled popup import observes different or empty clipboard content, or Clipstay processes a new permitted page copy or saved-clip copy-back. An identical external-app recopy is indistinguishable from leaving the clipboard unchanged: first let a normal popup observe different or empty content. There is no timer that later imports unchanged text.
+
+The fingerprint has no time-based expiry. The popup import check clears it after observing changed or empty content or a processed-copy marker; a later Resume replaces it. A permitted copy can therefore end suppression before the stored fingerprint is cleared by the next enabled popup import check. Revision counters remain. Obsolete boolean markers are removed on a best-effort basis; inert older markers may remain without time-based expiry. Uninstalling Clipstay removes this local extension data.
+
+Clipboard reads and capture changes are not atomic. This safeguard concerns the text observed at Resume, not everything ever copied while paused, and it does not identify where clipboard text came from.
 
 ## Why Clipstay needs its permissions
 
 - **Read and change data on all websites:** to notice when you copy or cut text on a page. Clipstay reads only the text you copy, at the moment you copy it. It also uses this access to start working in tabs that were already open when it was installed or updated.
-- **Read data you copy and paste:** to add your current clipboard text when you open the popup, unless you turn that off in Settings.
+- **Read data you copy and paste:** to add your current clipboard text when you open the popup, unless you turn that off in Settings. Starting with Clipstay 1.1.4, Resume also reads the current clipboard to establish its suppression fingerprint, even when automatic popup clipboard import is turned off.
 - **Modify data you copy and paste:** to put a saved item back on your clipboard when you click it.
 - **Storage and unlimited storage:** to keep your history on your device without a size cap.
 - **Scripting:** to start capture in already-open tabs after installation or an update.
