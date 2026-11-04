@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Pro Refund Policy"
 description: "Starting with Clipstay 1.1, Pro is an optional one-time purchase of $4.99. Ask for a refund within 30 days and get your money back, no questions asked."
-date: 2026-11-02
+date: 2026-11-04
 url: "/clipstay/refunds/"
 layout: "legal"
 schemaType: "WebPage"
@@ -17,7 +17,9 @@ If Clipstay Pro does not work for you, email [viktor@ermolov.dev](mailto:viktor@
 
 After a refund, the refunded payment can no longer be used to activate Pro.
 
-If Pro is no longer active on a computer (for example, after reinstalling without activating), your saved clips are never deleted or hidden, and export stays free. Only the free plan's limits (100 unpinned clips and 5 pinned clips) apply to clips captured afterwards.
+A refund does not remotely switch off Pro that is already activated on a computer.
+
+If Pro is no longer active on a computer (for example, after reinstalling without activating), export stays free. In Clipstay 1.1.4, existing and imported history and pins are not trimmed merely because they exceed the Free limits. Import, opening the popup, browser startup and Undo do not by themselves trim saved history to 100. When Free history is full, each genuinely new capture can replace one oldest unpinned clip, including an existing or imported clip; a replacement triggered by an earlier capture can finish later. New clipboard text imported when the popup opens counts as a new capture. Pinned clips do not roll off under the history limit. Free lets you add a pin only while fewer than five clips are pinned; existing and imported pins remain even above five.
 
 ## Bundle and upgrade purchases
 

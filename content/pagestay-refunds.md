@@ -1,7 +1,7 @@
 ---
 title: "Pagestay Pro Refund Policy"
 description: "Pagestay Pro is an optional one-time purchase of $4.99, or $6.99 together with Clipstay Pro. Ask for a refund within 30 days and get your money back, no questions asked."
-date: 2026-11-02
+date: 2026-11-04
 url: "/pagestay/refunds/"
 layout: "legal"
 schemaType: "WebPage"
@@ -20,15 +20,19 @@ If Pagestay Pro does not work for you, email [viktor@ermolov.dev](mailto:viktor@
 
 ## What happens to Pro after a refund
 
-A purchase email can activate Pro as long as at least one unrefunded payment with that email still covers the product. When a refund leaves no such payment, the purchase email can no longer be used to activate Pro for that product. This matters when you made more than one payment:
+A purchase email can activate Pro as long as at least one unrefunded payment with that email still covers the product. When a refund leaves no such payment, the purchase email can no longer be used to activate Pro for that product.
+
+If Pro is no longer active on a computer (for example, after reinstalling without activating), your notes are never deleted, hidden or locked, and export and restore stay free. Full-text and tag search and scheduled backups pause until Pro is active again. Existing rules still match pages, and you can open their notes yourself; automatic opening and text previews when the panel opens need Pro. Your existing folders and tags stay visible. Creating rules or folders, moving a note into a different folder, or adding tags to a note needs Pro, including existing folders and tags. You can keep or remove existing folder and tag assignments on the free plan.
+
+## Bundle and upgrade purchases
+
+Bundle and upgrade purchases are single payments, refunded as a whole on the same terms as above. A full refund applies to the payment you made:
 
 - If you bought the bundle and ask for a refund, the refunded payment can no longer be used to activate either Pagestay Pro or Clipstay Pro. Another valid payment with the same purchase email can still support activation for the product it covers.
 - If you bought Pagestay Pro and then paid $2 to add Clipstay Pro, refunding the $2 means that payment can no longer be used to activate Clipstay Pro; the original Pagestay purchase is unaffected.
 - If you bought Clipstay Pro and then paid $2 inside Clipstay 1.1.3 to add Pagestay Pro, refunding the $2 means that payment can no longer be used to activate Pagestay Pro; the original Clipstay purchase is unaffected.
 
 See the [Clipstay Pro refund policy](/clipstay/refunds/) for Clipstay’s terms.
-
-If Pro is no longer active on a computer (for example, after reinstalling without activating), your notes are never deleted, hidden or locked, and export and restore stay free. Creating new rules, folders and tags needs Pro, and full-text and tag search, auto-surface (opening the matching note when the panel opens) and scheduled backups pause until Pro is active again. Your existing rules stay and keep matching, and your existing folders and tags stay visible, but on the free plan you cannot add notes to them.
 
 ## Activation problems
 

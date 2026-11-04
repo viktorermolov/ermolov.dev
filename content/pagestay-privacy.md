@@ -1,7 +1,7 @@
 ---
 title: "Pagestay Privacy Policy"
 description: "Pagestay keeps your notes and the addresses of the pages they are attached to on your device. It has no account, no sync, no AI and no analytics."
-date: 2026-11-01
+date: 2026-11-04
 url: "/pagestay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -14,7 +14,7 @@ Pagestay is a Chrome extension that keeps notes in the browser's side panel. A n
 All of the following is kept in your browser's local extension storage (`chrome.storage.local`) on your computer:
 
 - **Your notes:** the text you write, with titles, folders and tags, and when each note was created and changed.
-- **Where a note is attached.** A site note stores the site's host name (for example `example.com`). A page note stores the page address without its query string or fragment, unless you turn on “keep query” for that site. A rule note (Pro) stores the URL pattern you typed, such as `example.com/docs/*`. Pagestay stores an address or pattern for a note you attach to it. The one exception is the “keep query” switch, which remembers the host name of a site where you turned it on, even if no note is attached there.
+- **Where a note is attached.** A site note stores the site's host name (for example `example.com`). Starting with Pagestay 1.0.2, a site note can also store its creation origin: the HTTP or HTTPS protocol and optional port, such as `http://localhost:3000`, for opening its site link. Matching still uses the host name, so different protocols and ports on that host share site notes. Older notes without an origin keep the `https://hostname` link fallback; no origin is automatically filled in for them. A saved origin is preserved in Pagestay JSON exports and imports. A page note stores the page address without its query string or fragment, unless you turn on “keep query” for that site. A rule note (Pro) stores the URL pattern you typed, such as `example.com/docs/*`. Pagestay stores an address or pattern for a note you attach to it. The one exception is the “keep query” switch, which remembers the host name of a site where you turned it on, even if no note is attached there.
 - **Earlier versions and the trash:** up to 20 earlier versions of each note, and deleted notes for 30 days (you can turn the automatic emptying off in Options). When you import a file, Pagestay also keeps copies of the notes it replaced until you undo the import or start another one.
 - **Unsaved text:** when you close the panel in the middle of typing, the unsaved text is kept until the panel next opens, so it can be recovered.
 - **Your settings:** including your plan (free or Pro), the sites where you keep the query string and your backup schedule.
@@ -53,7 +53,7 @@ The use of information received by Pagestay adheres to the [Chrome Web Store Use
 ## Your control
 
 - Edit, delete or restore any note at any time. Emptying the trash deletes its notes permanently.
-- Export all your notes as JSON or Markdown, and import them again. Export and restore are always free, with or without Pro.
+- Export all your notes as JSON or Markdown. To restore or transfer them, import a Pagestay JSON export. Export and restore are always free, with or without Pro.
 - Scheduled backups are files saved to your own computer. They are never uploaded.
 - Turning off scheduled backups removes the permission to save files.
 - Uninstalling Pagestay also removes the permission to read tab addresses.
@@ -66,7 +66,7 @@ Pagestay has a free plan and an optional Pro plan: $4.99, paid once. Pro is also
 
 - **Payment is handled by [Stripe](https://stripe.com/privacy)**, on a Stripe-hosted page that opens in a new browser tab, outside the extension. Stripe collects your payment details and email address under its own privacy policy. The developer receives your email address and the payment details Stripe shows a merchant (such as name, amount, country or postcode, and card brand and last four digits); full card numbers are never seen or stored by the developer. Pagestay itself never sees any payment information.
 - **Activation sends one request.** In Options, under Plan, you enter the email address you paid with and press Activate. Pagestay then sends **only that email address, and the name of the product (“pagestay”)** to a small license service run by the developer (a Cloudflare Worker, shared with Clipstay), which answers yes or no. If the answer is yes, Pro is switched on locally in your browser. The email address is not saved in the extension.
-- **What the license service stores.** It stores an unsalted SHA-256 hash of your normalized purchase email (a one-way function, but one that could be matched against a list of known email addresses), per product, together with the Stripe payment ID, so that activation and refunds can work. The email address itself is not stored by the service; it stays with Stripe. If a payment is fully refunded and no other payment still covers the license, the license entry is deleted. Two records remain: the payment record and a refund marker, so that a repeated refund notice from Stripe is handled correctly. Both contain the hash and the payment ID. These records are kept without an expiry date and are deleted by hand when you ask (see “Your control” above). A separate replay-prevention marker containing only an opaque HMAC ID and the attempt start time is kept without expiry. No device identifiers or license keys are used.
+- **What the license service stores.** The developer's license service (a Cloudflare Worker, shared with Clipstay) stores an unsalted SHA-256 hash of your normalized purchase email (a one-way function, but one that could be matched against a list of known email addresses), per product, together with Stripe payment IDs, so that activation and refunds can work. The email address itself is not stored by the service; it stays with Stripe. Each payment has its own record of the licenses it covers. After a full refund, that payment can no longer be used to activate Pro. If no other unrefunded payment covers the license, its license entry is deleted. The payment record and a refund marker remain without expiry, so a late or repeated notification of the refunded payment cannot switch Pro on again. They contain the Stripe payment ID and, where one was recorded, the email hash; a refund marker for a payment with no known license record can contain only the payment ID. You can have these records removed on request (see “Your control”). A separate replay-prevention marker containing only an opaque HMAC ID and the attempt start time is kept without expiry. No device identifiers or license keys are used.
 - **Network checks happen only when you activate Pro or start the $2 upgrade, never in the background.** Your notes, addresses, settings and history are never sent for activation or upgrade eligibility. The service sees your IP address like any web server and uses it only for brief rate limiting.
 - To use Pro on another computer, enter the same email there.
 - Refund terms are on the [Pro refund policy](/pagestay/refunds/) page.
