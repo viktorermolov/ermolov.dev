@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Privacy Policy"
 description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics."
-date: 2026-11-01
+date: 2026-11-04
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -14,22 +14,27 @@ Clipstay is a Chrome extension that keeps a history of the text you copy in the 
 All of the following is kept in your browser's local extension storage (`chrome.storage.local`) on your computer:
 
 - **Text you copy or cut on web pages**, with the time it was copied.
-- **Your current clipboard text when you open the Clipstay popup**, if it is new. This lets text copied in other apps appear in your history. You can turn this off in Settings (“Add clipboard when the popup opens”), for example if you copy passwords from a password manager.
+- **Your current clipboard text when you open the Clipstay popup**, if it is new, capture is active and “Add clipboard when the popup opens” is enabled. This preserves import from other apps. The shared clipboard can also contain text from Incognito or a password manager; the normal popup cannot identify where that text came from. You can turn clipboard import off in Settings.
 - **Your settings:** whether capture is paused, your list of excluded sites, whether Clipstay adds your clipboard when the popup opens and, starting with version 1.1, your plan (free or Pro).
 - **The last clip you deleted, so that you can undo the delete within 5 minutes** (starting with version 1.1.1). Only one such clip is kept; deleting another clip replaces it. After 5 minutes it can no longer be restored, and it is removed the next time Clipstay saves a new clip, you open the popup or the browser starts, or right away when you undo or clear your history.
 - **Optional names for pinned clips** (starting with version 1.1.3). These names are stored only on your device.
 - **A few counters for a one-time rating reminder** (starting with version 1.1.2): when you installed or updated Clipstay, how many times you copied from the popup, and whether the reminder was shown. They stay on your device and are never sent anywhere.
 - **A short fingerprint (hash) of text copied on an excluded site.** The text itself is never saved. The fingerprint only lets Clipstay recognize and skip that text when you open the popup. A similar fingerprint of the last capture is kept to avoid saving the same copy twice.
+- **A separate temporary local fingerprint of the clipboard text read when capture resumes** (starting with version 1.1.4). It helps prevent that text from immediately being added by popup clipboard import. The marker is not a record of everything copied while paused.
 - **A count of clips rolled off by the free plan's limit, and when.** It contains no clip text.
 - **A local error log** for troubleshooting. An entry may include the website's domain name where an error happened. It never includes copied text.
 
 Clipstay does **not** save the address of the page you copied from, your browsing history, or anything you did not copy.
 
-## What Clipstay never captures
+## Page capture and the shared clipboard
 
-- Text copied from password fields.
-- Anything on sites you add to the excluded list, or while capture is paused.
-- Anything in Incognito windows. Clipstay does not request Incognito access.
+Web-page capture skips copy and cut events from password fields, sites you add to the excluded list and Incognito pages, and it is paused while capture is paused. Clipstay does not request Incognito access.
+
+Optional clipboard import is a separate path: when capture is active, opening the normal popup can save text left on your shared system clipboard. That text can come from Incognito, password managers or other apps. The popup cannot identify its origin. Turn off “Add clipboard when the popup opens” in Settings if you do not want that import.
+
+### Resuming capture (Clipstay 1.1.4 and later)
+
+Starting with Clipstay 1.1.4, resuming capture temporarily suppresses popup import of the clipboard text read at Resume. This applies to that current text; it does not identify everything copied while capture was paused. Pausing capture also pauses popup clipboard import while the pause is active.
 
 ## Why Clipstay needs its permissions
 
