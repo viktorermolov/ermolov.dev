@@ -6,7 +6,7 @@
     {
       "ref": "ermolov_static_security",
       "description": "Protect static site from framing, MIME sniffing and unsafe base/form targets",
-      "expression": "(http.host in {\"ermolov.dev\" \"www.ermolov.dev\"}) and not starts_with(http.request.uri.path, \"/api/\") and not starts_with(http.request.uri.path, \"/cdn-cgi/\")",
+      "expression": "(http.host in {\"ermolov.dev\" \"www.ermolov.dev\"}) and not starts_with(http.request.uri.path, \"/cdn-cgi/\")",
       "action": "rewrite",
       "action_parameters": {
         "headers": {

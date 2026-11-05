@@ -30,4 +30,5 @@ jobs:
           echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
       - run: hugo --environment production --destination "$RUNNER_TEMP/site"
       - run: python3 scripts/check_site.py "$RUNNER_TEMP/site"
+      - run: python3 scripts/check_security_headers.py
       - run: node --check assets/js/app.js
