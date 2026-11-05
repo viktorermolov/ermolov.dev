@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Privacy Policy"
 description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics."
-date: 2026-11-04
+date: 2026-11-05
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -70,7 +70,8 @@ The use of information received by Clipstay adheres to the [Chrome Web Store Use
 
 ## Your control
 
-- Delete any item or clear your history from the popup, and pause capture from the popup or the options page, at any time. A deleted clip can be undone for up to 5 minutes (see above).
+- Delete any item or clear your history from the popup at any time. A deleted clip can be undone for up to 5 minutes (see above).
+- Pause capture in Settings; resume it in Settings or from the popup.
 - Turn off adding your clipboard when the popup opens in Settings.
 - Export your full history as JSON or CSV at any time. Export is always free.
 - In Settings, import a JSON or CSV file you exported earlier. The file is read on your device and nothing is uploaded.
