@@ -1,6 +1,6 @@
 # Operations
 
-The site is static Hugo on DigitalOcean App Platform behind Cloudflare. Pushes to `master` deploy it (see `CLAUDE.md`). The contact form was removed in October 2026, together with its Worker, D1 database, Turnstile widget, Pi relay and Notification Bot source; nothing here depends on them. The `/api/` exclusions in the edge rules below date from that API and are harmless.
+The site is static Hugo on DigitalOcean App Platform behind Cloudflare. Pushes to `master` deploy it (see `CLAUDE.md`). The contact form was removed in October 2026, together with its Worker, D1 database, Turnstile widget, Pi relay and Notification Bot source; nothing here depends on them. The former `/api/` security-header exclusion was removed on 2026-11-05: missing API paths serve the site's HTML 404 and need the same headers. The separate www canonical-redirect exclusion remains unchanged.
 
 ## Resources
 
@@ -23,7 +23,7 @@ The desired definitions are [canonical-redirects.json](../infrastructure/cloudfl
 | --- | --- | --- |
 | `http_request_dynamic_redirect` / `925c1da6060a4fff90f20e7879f8424c` | `ermolov_index_canonical` | First: GET/HEAD `/index.html` on apex/www → `https://ermolov.dev/`, 301, preserve query. |
 | Same redirect ruleset | `ermolov_www_canonical` | Then: GET/HEAD on www → apex with the same path/query, 301; excludes `/api/` and `/cdn-cgi/` prefixes. |
-| `http_response_headers_transform` / `04393da9a4634d67a815b6af4ef0acec` | `ermolov_static_security` | Apex/www responses except `/api/` and `/cdn-cgi/` prefixes. |
+| `http_response_headers_transform` / `04393da9a4634d67a815b6af4ef0acec` | `ermolov_static_security` | Apex/www responses, including `/api/` 404s; excludes only the `/cdn-cgi/` prefix. |
 
 Exact hostname conditions exclude unrelated subdomains. Non-GET/HEAD requests are not affected by these redirect rules. Existing HTTPS behavior and Cloudflare protection remain separate from these rules.
 
@@ -40,9 +40,21 @@ Strict-Transport-Security: max-age=31536000
 
 It removes `x-do-app-origin` and `x-rgw-object-type`. This CSP restricts base URLs, embedded objects, framing and form destinations; it is not a strict script policy. There is no `script-src`/`default-src` restriction. Any later strict CSP needs separate browser tests for Hugo's inline theme setup and analytics. HSTS intentionally omits `includeSubDomains` and preload; a browser that learns it still applies HTTPS to that hostname's API paths.
 
-After an edge change, use an honest user agent such as `ermolov-release-check/1.0 (+https://ermolov.dev)` and inspect redirects without following them first. Check apex `/` is 200, www `/` and apex/www `/index.html` are 301 to the intended canonical, and query strings survive. Verify `/robots.txt`, `/sitemap.xml`, static CSS/JS and a missing path (404). Check that another existing subdomain retains its expected response. Do not submit an inquiry merely to inspect headers.
+After an edge change, use an honest user agent such as `ermolov-release-check/1.0 (+https://ermolov.dev)` and inspect redirects without following them first. Check apex `/` is 200, www `/` and apex/www `/index.html` are 301 to the intended canonical, and query strings survive. Verify `/robots.txt`, `/sitemap.xml`, static CSS/JS, a missing path (404), and `/api/missing` (404) on both apex and www. Confirm all six security headers have the values above on the HTML responses. Check that another existing subdomain retains its expected response. Do not submit an inquiry merely to inspect headers.
 
 If robots/sitemap still show an older build, inspect the public body and cache response first. `robots.txt` once was a stale Cloudflare HIT; purging only `https://ermolov.dev/robots.txt` and `https://ermolov.dev/sitemap.xml` fixed it. Prefer this targeted purge after confirming publication; do not purge the whole zone for a static metadata update.
+
+### Regression and live-drift checks
+
+The existing `site` CI job runs `python3 scripts/check_security_headers.py` without credentials or network access. It guards the repository's exact apex/www expression, enabled rewrite action, six header values and two header removals. It does not query Cloudflare or DigitalOcean, and a green CI result alone does not establish that live settings match.
+
+To compare a fresh live rule, use the authorized Cloudflare connection to read `GET /zones/3532291be695455e1ce46639f0a7dcb4/rulesets/04393da9a4634d67a815b6af4ef0acec`. Save only the returned JSON ruleset or successful response envelope to a temporary local file, then run:
+
+```sh
+python3 scripts/check_security_headers.py --live-ruleset /tmp/ermolov-live-ruleset.json
+```
+
+The comparison requires exactly one `ermolov_static_security` rule and compares all its fields except response-only `id`, `version` and `last_updated`. It ignores unrelated rules and does not change anything. Keep exports and credentials out of the repository. Repeat the public response checks above as well; a ruleset snapshot does not verify routing or delivery. Automatic live API polling is not configured.
 
 ### Cache rules and zone settings
 
@@ -56,6 +68,30 @@ Two dashboard-managed Cache Rules (`http_request_cache_settings`) apply to the a
 CSS and JS URLs carry a content fingerprint, so a year is safe; the font filename is fixed, so it stays shorter. HTML is intentionally not edge-cached: the Free plan's minimum Edge TTL is two hours and DigitalOcean deploys do not purge Cloudflare. A renamed font needs no purge; replacing the same font file needs a targeted purge of that URL.
 
 Email Address Obfuscation is off so `mailto:` links work without JavaScript. The DigitalOcean static-site component sets build variable `HUGO_VERSION=0.166.0`; keep it in step with `.hugo-version`.
+
+## DigitalOcean starter-domain redirect
+
+On 2026-11-05, the existing App Platform app gained a temporary HTTPS 302 redirect matching only its starter hostname, currently `ermolov-dev-wz3bi.ondigitalocean.app`. The app's existing component route and apex/www domain settings remain unchanged. This is the added ingress rule, not a complete App Spec:
+
+```yaml
+- match:
+    authority:
+      exact: ${STARTER_DOMAIN}
+    path:
+      prefix: /
+  redirect:
+    authority: ermolov.dev
+    redirect_code: 302
+    scheme: https
+```
+
+App Platform resolves `${STARTER_DOMAIN}`. No redirect path or query override is set: `/`, missing paths and `/api/missing` retain their path and query while moving to `https://ermolov.dev`. Keep the authority match starter-only; an all-host redirect would risk a loop on the canonical domain. Read the current full App Spec and preserve every unrelated setting before any authorized change. Changes and rollback still require the owner's explicit production approval.
+
+This is canonicalization, not origin authentication or network lockdown. The initial DigitalOcean 302 has none of the six security headers; the final canonical HTML response goes through Cloudflare and has them. The starter URL no longer directly serves the site's HTML for the verified routes. No origin response-header support, authenticated-origin protection, new service or paid infrastructure is claimed.
+
+Verification for [#50](https://github.com/viktorermolov/ermolov.dev/issues/50) completed on 2026-11-05 at 04:02 UTC: starter `/` returned 302 then apex 200; starter missing and `/api/missing` paths returned 302 then matching apex 404s. The encoded query `?probe=security50%26keep` survived exactly, all final responses carried the six intended values, and no redirect loops occurred. Apex home, www canonical redirect and the unauthenticated Audiobookshelf response on `ab.ermolov.dev` were unchanged. The live Cloudflare rule was also compared with the repository definition after removing only its `/api/` exclusion; all eight header operations were unchanged.
+
+For later verification, repeat both the first-hop and followed-request checks with a fresh query string. After this repository sync, remaining delivery steps are independent review, current CI, and explicit approval before the master merge (which triggers a site deploy). This change adds no automatic deployment of the JSON definitions or DigitalOcean settings.
 
 ## Edge rollback
 
