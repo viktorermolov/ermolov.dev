@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Privacy Policy"
 description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics."
-date: 2026-11-01
+date: 2026-11-04
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -14,27 +14,40 @@ Clipstay is a Chrome extension that keeps a history of the text you copy in the 
 All of the following is kept in your browser's local extension storage (`chrome.storage.local`) on your computer:
 
 - **Text you copy or cut on web pages**, with the time it was copied.
-- **Your current clipboard text when you open the Clipstay popup**, if it is new. This lets text copied in other apps appear in your history. You can turn this off in Settings (“Add clipboard when the popup opens”), for example if you copy passwords from a password manager.
+- **Your current clipboard text when you open the Clipstay popup**, if it is new and “Add clipboard when the popup opens” is enabled. Starting with Clipstay 1.1.4, this import requires capture to be active. This preserves import from other apps. The shared clipboard can also contain text from Incognito or a password manager; the normal popup cannot identify where that text came from. You can turn clipboard import off in Settings.
 - **Your settings:** whether capture is paused, your list of excluded sites, whether Clipstay adds your clipboard when the popup opens and, starting with version 1.1, your plan (free or Pro).
 - **The last clip you deleted, so that you can undo the delete within 5 minutes** (starting with version 1.1.1). Only one such clip is kept; deleting another clip replaces it. After 5 minutes it can no longer be restored, and it is removed the next time Clipstay saves a new clip, you open the popup or the browser starts, or right away when you undo or clear your history.
 - **Optional names for pinned clips** (starting with version 1.1.3). These names are stored only on your device.
 - **A few counters for a one-time rating reminder** (starting with version 1.1.2): when you installed or updated Clipstay, how many times you copied from the popup, and whether the reminder was shown. They stay on your device and are never sent anywhere.
 - **A short fingerprint (hash) of text copied on an excluded site.** The text itself is never saved. The fingerprint only lets Clipstay recognize and skip that text when you open the popup. A similar fingerprint of the last capture is kept to avoid saving the same copy twice.
-- **A count of clips rolled off by the free plan's limit, and when.** It contains no clip text.
+- **Capture-state metadata** (starting with version 1.1.4): two revision counters, a fingerprint of the clipboard text read at Resume, and boolean markers for a new permitted page copy or saved-clip copy-back. The fingerprint contains the text length and a non-cryptographic hash after Clipstay's text-size limit is applied, not the raw clipboard text. These metadata stay on your device and are not included in clip exports or diagnostics. Their lifecycle is described below.
+- **A local count of history-limit replacements and when they were planned.** It contains no clip text.
+- **Local clip-history bookkeeping** (starting with version 1.1.4): separate per-clip recopy timestamps, so updating recency does not rewrite a clip's name or pinned state, and deletion markers containing a clip identifier and deletion time, so a delayed capture retry can recognize a deleted clip. These records contain no clip text. Recopy timestamps are removed with the clip where possible, and orphan entries are removed during later cleanup. Deletion markers become eligible for cleanup after 24 hours and are removed during a subsequent cleanup; this is separate from the five-minute Undo copy described above.
+- **Free-history retention bookkeeping** (starting with version 1.1.4): a generation counter, a retained-history size boundary, a transition flag, and pending replacement records with clip identifiers and flags. These local records let new captures replace at most one oldest unpinned clip each without bulk-trimming existing or imported history. Pending records are removed when processed or no longer applicable; the retention state remains until updated or the extension is uninstalled. They contain no clip text. These separate bookkeeping records are not included in clip exports or diagnostics; exported clips still include their normal copy timestamps, including updated recopy times.
 - **A local error log** for troubleshooting. An entry may include the website's domain name where an error happened. It never includes copied text.
 
 Clipstay does **not** save the address of the page you copied from, your browsing history, or anything you did not copy.
 
-## What Clipstay never captures
+## Page capture and the shared clipboard
 
-- Text copied from password fields.
-- Anything on sites you add to the excluded list, or while capture is paused.
-- Anything in Incognito windows. Clipstay does not request Incognito access.
+Web-page capture skips copy and cut events from password fields, sites you add to the excluded list and Incognito pages. Clipstay does not request Incognito access.
+
+Optional clipboard import is a separate path: opening the normal popup can save text left on your shared system clipboard. That text can come from Incognito, password managers or other apps. The popup cannot identify its origin. Turn off “Add clipboard when the popup opens” in Settings if you do not want that import.
+
+### Resuming capture (Clipstay 1.1.4 and later)
+
+Starting with Clipstay 1.1.4, pausing capture pauses web-page capture and popup clipboard import. Resume reads the current clipboard and saves its separate local fingerprint before enabling capture; read or storage problems are reported.
+
+Popup import skips that unchanged text across popup closure and browser restart. Suppression ends when enabled popup import observes different or empty clipboard content, or Clipstay processes a new permitted page copy or saved-clip copy-back. An identical external-app recopy is indistinguishable from leaving the clipboard unchanged: first let a normal popup observe different or empty content. There is no timer that later imports unchanged text.
+
+The fingerprint has no time-based expiry. The popup import check clears it after observing changed or empty content or a processed-copy marker; a later Resume replaces it. A permitted copy can therefore end suppression before the stored fingerprint is cleared by the next enabled popup import check. Revision counters remain. Obsolete boolean markers are removed on a best-effort basis; inert older markers may remain without time-based expiry. Uninstalling Clipstay removes this local extension data.
+
+Clipboard reads and capture changes are not atomic. This safeguard concerns the text observed at Resume, not everything ever copied while paused, and it does not identify where clipboard text came from.
 
 ## Why Clipstay needs its permissions
 
 - **Read and change data on all websites:** to notice when you copy or cut text on a page. Clipstay reads only the text you copy, at the moment you copy it. It also uses this access to start working in tabs that were already open when it was installed or updated.
-- **Read data you copy and paste:** to add your current clipboard text when you open the popup, unless you turn that off in Settings.
+- **Read data you copy and paste:** to add your current clipboard text when you open the popup, unless you turn that off in Settings. Starting with Clipstay 1.1.4, Resume also reads the current clipboard to establish its suppression fingerprint, even when automatic popup clipboard import is turned off.
 - **Modify data you copy and paste:** to put a saved item back on your clipboard when you click it.
 - **Storage and unlimited storage:** to keep your history on your device without a size cap.
 - **Scripting:** to start capture in already-open tabs after installation or an update.
@@ -68,9 +81,11 @@ The use of information received by Clipstay adheres to the [Chrome Web Store Use
 
 Starting with version 1.1, Clipstay has a free plan and an optional Pro plan, a one-time purchase of $4.99. Earlier versions have no Pro plan and none of what follows.
 
-- **Payment is handled by [Stripe](https://stripe.com/privacy)**, on a Stripe-hosted page that opens in a new browser tab, outside the extension. Stripe collects your payment details and email address under its own privacy policy. The developer receives your email address and the fact that the payment was made; card details are handled by Stripe and are not seen or stored by the developer. Clipstay itself never sees any payment information.
+Current purchase options also include the Clipstay + Pagestay Pro bundle for $6.99. Pagestay Pro owners can add Clipstay Pro for $2 through a link inside Pagestay. Clipstay Pro owners can add Pagestay Pro for $2 through a link inside Clipstay starting with version 1.1.3.
+
+- **Payment is handled by [Stripe](https://stripe.com/privacy)**, on a Stripe-hosted page that opens in a new browser tab, outside the extension. Stripe collects your payment details and email address under its own privacy policy. The developer receives your email address and the payment details Stripe shows a merchant (such as name, amount, country or postcode, and card brand and last four digits); full card numbers are never seen or stored by the developer. Clipstay itself never sees any payment information.
 - **Activation sends one request** (version 1.1 and later). In Settings you enter the email address you paid with and press Activate. Clipstay then sends **only that email address** to a small license service run by the developer (a Cloudflare Worker), which answers yes or no. If the answer is yes, Pro is switched on locally in your browser. The email address is not saved in the extension.
-- **What the license service stores.** The developer's license service (a Cloudflare Worker) stores a one-way SHA-256 hash of your normalized purchase email and the Stripe payment ID, so that activation and refunds can work. The email address itself is not stored by the service; it stays with Stripe. The service keeps one such record for each payment that covers your license. After a full refund, that payment can no longer be used to activate Pro, and the payment ID of the refunded payment (and, where one was recorded, the hash) is kept, with no expiry, only so that a late or repeated notification of the refunded payment cannot switch Pro on again for that email; you can have them removed on request (see “Your control”). The same license service also answers for the developer's other extensions and keeps the same kind of records for them (a hash and payment IDs, never your email address). A separate replay-prevention marker containing only an opaque HMAC ID and the attempt start time is kept without expiry. No device identifiers or license keys are used.
+- **What the license service stores.** The developer's license service (a Cloudflare Worker, shared with Pagestay) stores an unsalted SHA-256 hash of your normalized purchase email (a one-way function, but one that could be matched against a list of known email addresses), per product, together with Stripe payment IDs, so that activation and refunds can work. The email address itself is not stored by the service; it stays with Stripe. Each payment has its own record of the licenses it covers. After a full refund, that payment can no longer be used to activate Pro. If no other unrefunded payment covers the license, its license entry is deleted. The payment record and a refund marker remain without expiry, so a late or repeated notification of the refunded payment cannot switch Pro on again. They contain the Stripe payment ID and, where one was recorded, the email hash; a refund marker for a payment with no known license record can contain only the payment ID. You can have these records removed on request (see “Your control”). A separate replay-prevention marker containing only an opaque HMAC ID and the attempt start time is kept without expiry. No device identifiers or license keys are used.
 - **Network checks happen only when you activate Pro or start the $2 upgrade, never in the background.** Your clips, settings and history are never sent for activation or upgrade eligibility. The service sees your IP address like any web server and uses it only for brief rate limiting.
 - To use Pro on another computer, enter the same email there.
 - Refund terms are on the [Pro refund policy](/clipstay/refunds/) page.

@@ -2,7 +2,8 @@ baseURL = "https://ermolov.dev/"
 buildDrafts = false
 buildFuture = false
 buildExpired = false
-relativeURLs = true
+# The shared 404 document is served at arbitrary depths; its links must stay at the site root.
+relativeURLs = false
 enableRobotsTXT = true
 locale = "en-US"
 language = "en"
