@@ -1,28 +1,23 @@
-# Owner-directed refund-copy correction
+# Refund-copy constraint and regression guard
 
-Prepared 2026-11-04 UTC from site release `071bd55c880268ee93d4e503dcb15bc838713307`, tree `06c129c7063143bc10f0903626993e32e23c2195`. This is a separate draft PR targeting `release/site-bugfix-preparation-2026-11`, not master or production.
+The correction was integrated through [PR #58](https://github.com/viktorermolov/ermolov.dev/pull/58) and included in the merged [site release #59](https://github.com/viktorermolov/ermolov.dev/pull/59).
 
-## Binding decision and scope
+## Required public copy
 
-The owner explicitly requires the site to omit assurances that a refund leaves already activated Pro running. Remove the reintroduced sentence without a replacement, equivalent hint or technical qualification about retaining Pro. Do not assert immediate deactivation instead. PR31 already implemented this decision; product source or later retention decisions do not authorize reversing it. No runtime behavior, refund terms or policy decision is changed here.
+Omit assurances that a refund leaves already activated Pro running. Do not add an equivalent hint, technical qualification or immediate-deactivation claim. This copy decision does not change product behavior or refund terms.
 
-Only the two-line sentence/blank-line deletion changes public copy. Keep the accepted 1.1.4 retention paragraph verbatim, every privacy correction, all approved images, prices, the 30-day request window, original-payment-method refunds, bundle/upgrade rules and legitimate activation through another valid payment. The source/rendered audit found no other equivalent assurance. The existing statements about another valid payment and the original base purchase being unaffected by refunding only an upgrade were preserved in PR31 and remain unchanged.
+Preserve the accepted 1.1.4 retention paragraph, privacy inventory, approved images, prices, 30-day request window, original-payment-method refunds, bundle/upgrade rules and legitimate activation through another valid payment. The original base purchase being unaffected by refunding only an upgrade remains distinct from the prohibited assurance.
 
-## Exact introduction trace
+## Why the guard exists
 
-- PR31 head `5cea6b23507894ed2ab72c7b995d850087ff9f6f`, integrated as `13542a6e03903919eb30bd94bb6e4861f380f859`, removed the specified assurance from both refund pages and removed separate retroactive-target-purchase assurances. Its PR body explicitly requires no instant-deactivation claim and no Worker behavior change.
-- The regression was introduced in PR46 preparation commit `db476714c089ba44d21857a2adec872fd90bb839` (`docs: reconcile accepted retention and local metadata with current legal pages`). `git blame` attributes release `content/clipstay-refunds.md:20` to that commit. Its combined diff adds the forbidden sentence; **both parents**, `be0726f129f95d0cada48f07ed32d3418c6f5bc5` and `efdbdf76aa3d1aafa8ebdfb9248de3dac765cd31`, lack it. It was new text during reconciliation, not a conflict inherited from either parent.
-- Legal PR46 integration `2a14e40816abcfa2f409e257b3f20fd00650b733` carried that text into the preparation release. Current master `fba7e7b3b8f1468a52b972ce09211715ea6fd926` does not contain it. No production deployment introduced this regression.
-- The error was treating an implementation/retention fact as permission to restore public copy despite the owner's prior explicit removal. The earlier roadmap instructions about publishing that fact are corrected here to preserve the binding copy decision.
+[PR #31](https://github.com/viktorermolov/ermolov.dev/pull/31) removed the assurance from both refund pages and also removed separate retroactive-target-purchase assurances. Commit [db476714](https://github.com/viktorermolov/ermolov.dev/commit/db476714c089ba44d21857a2adec872fd90bb839) reintroduced it during PR #46's retention reconciliation; neither parent contained it. It was corrected before that preparation release reached production.
 
-## Validation and regression guard
+Implementation facts and retention decisions do not authorize restoring copy the owner removed. The full trace and exact source diff remain in PR #58 rather than being repeated here.
 
-- Before adding any guard, the unchanged release passed pinned Hugo 0.166.0 production build, the existing full site checker (8 pages/2 products/nested 404), JS syntax and whitespace. The baseline still contained the prohibited sentence, exposing the missing check.
-- Strengthen the existing checker with an assertion over every generated HTML file, including 404, page text, structured-data text and metadata/alt/title/ARIA text. Normalize HTML entities, case, whitespace and typographic apostrophes; reject the original negative-deactivation assurance and common continued-activation forms in sentences referring to Pro and a refund. This is a focused wording guard, not complete natural-language equivalence detection; the whole public-source/rendered audit remains necessary. No check or workflow is weakened, skipped or renamed.
-- Run the strengthened full checker against the **original untouched baseline artifact**: it fails specifically at `clipstay/refunds/index.html` with the prohibited-assurance diagnostic. Run it against the corrected build: all existing checks plus the new guard pass.
-- Additional temporary mutation checks reject six examples covering the exact sentence, capitalization/entities/inline markup, metadata, continued-activation phrasing and alt text; four existing activation/free-plan statements pass. These fixtures are not published or committed as site copy.
-- Before the correction commit, generated artifacts differ from baseline only at `clipstay/refunds/index.html`; all other rendered pages, privacy, structured data and images are byte-identical. Final commit rebuild and exact-head Actions remain required. No native OS, Store or production acceptance is claimed.
+## Regression protection and limits
 
-## Remaining steps and gates
+The existing `scripts/check_site.py` guard scans every generated HTML file, including 404, page text, structured data and metadata/alt/title/ARIA text. It normalizes entities, case, whitespace and typographic apostrophes, rejecting the original negative-deactivation assurance and common continued-activation forms in sentences about Pro and a refund. It is a focused wording guard, not complete semantic equivalence detection; audit the public source and rendered output as well.
 
-Record exact head and current Actions in the draft PR, obtain independent review of the public deletion, unchanged accepted facts, trace and strengthened guard, then integrate only after current checks under standing release authority. Do not merge before that review. No master merge, deployment or publication is authorized; the owner intends an additional audit before finishing. Leave Issues open until actual delivery. No runtime, payment/security/settings or macOS Actions change is included.
+The original baseline passed the older site checker despite the prohibited sentence. The strengthened full checker rejected that unchanged artifact specifically at `clipstay/refunds/index.html`; the corrected build passed. Temporary mutation checks rejected six exact/paraphrased/HTML/metadata/alt variants and accepted four existing activation/free-plan statements. Those temporary fixtures are not public copy.
+
+No existing check was weakened, skipped or renamed. The correction changed only the sentence and blank line in public copy; other pre-commit rendered pages were byte-identical. Keep the full pinned-Hugo build, site checker and JavaScript syntax checks for subsequent work. These checks do not establish native OS, payment, Store or fresh production acceptance.
