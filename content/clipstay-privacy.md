@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Privacy Policy"
 description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics."
-date: 2026-11-05
+date: 2026-11-11
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -19,7 +19,7 @@ All of the following is kept in your browser's local extension storage (`chrome.
 - **The last clip you deleted, so that you can undo the delete within 5 minutes** (starting with version 1.1.1). Only one such clip is kept; deleting another clip replaces it. After 5 minutes it can no longer be restored, and it is removed the next time Clipstay saves a new clip, you open the popup or the browser starts, or right away when you undo or clear your history.
 - **Optional names for pinned clips** (starting with version 1.1.3). These names are stored only on your device.
 - **A few counters for a one-time rating reminder** (starting with version 1.1.2): when you installed or updated Clipstay, how many times you copied from the popup, and whether the reminder was shown. They stay on your device and are never sent anywhere.
-- **A short fingerprint (hash) of text copied on an excluded site.** The text itself is never saved. The fingerprint only lets Clipstay recognize and skip that text when you open the popup. A similar fingerprint of the last capture is kept to avoid saving the same copy twice.
+- **Short fingerprints (hashes) of text copied on excluded sites, each with the time it was copied.** The text itself is never saved. The fingerprints only let Clipstay recognize and skip that text when you open the popup, and remove it if the popup picked it up at the same moment. Starting with Clipstay 1.1.5, up to 20 are kept; each is removed once something newer is captured or copied back from Clipstay. A similar fingerprint of the last capture, with its time, is kept to avoid saving the same copy twice.
 - **Capture-state metadata** (starting with version 1.1.4): two revision counters, a fingerprint of the clipboard text read at Resume, and boolean markers for a new permitted page copy or saved-clip copy-back. The fingerprint contains the text length and a non-cryptographic hash after Clipstay's text-size limit is applied, not the raw clipboard text. These metadata stay on your device and are not included in clip exports or diagnostics. Their lifecycle is described below.
 - **A local count of history-limit replacements and when they were planned.** It contains no clip text.
 - **Local clip-history bookkeeping** (starting with version 1.1.4): separate per-clip recopy timestamps, so updating recency does not rewrite a clip's name or pinned state, and deletion markers containing a clip identifier and deletion time, so a delayed capture retry can recognize a deleted clip. These records contain no clip text. Recopy timestamps are removed with the clip where possible, and orphan entries are removed during later cleanup. Deletion markers become eligible for cleanup after 24 hours and are removed during a subsequent cleanup; this is separate from the five-minute Undo copy described above.
