@@ -1,7 +1,7 @@
 ---
 title: "Pagestay Privacy Policy"
 description: "Pagestay keeps your notes and the addresses of the pages they are attached to on your device. It has no account, no sync, no AI and no analytics."
-date: 2026-11-04
+date: 2026-11-11
 url: "/pagestay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -16,7 +16,7 @@ All of the following is kept in your browser's local extension storage (`chrome.
 - **Your notes:** the text you write, with titles, folders and tags, and when each note was created and changed.
 - **Where a note is attached.** A site note stores the site's host name (for example `example.com`). Starting with Pagestay 1.0.2, a site note can also store its creation origin: the HTTP or HTTPS protocol and optional port, such as `http://localhost:3000`, for opening its site link. Matching still uses the host name, so different protocols and ports on that host share site notes. Older notes without an origin keep the `https://hostname` link fallback; no origin is automatically filled in for them. A saved origin is preserved in Pagestay JSON exports and imports. A page note stores the page address without its query string or fragment, unless you turn on “keep query” for that site. A rule note (Pro) stores the URL pattern you typed, such as `example.com/docs/*`. Pagestay stores an address or pattern for a note you attach to it. The one exception is the “keep query” switch, which remembers the host name of a site where you turned it on, even if no note is attached there.
 - **Earlier versions and the trash:** up to 20 earlier versions of each note, and deleted notes for 30 days (you can turn the automatic emptying off in Options). When you import a file, Pagestay also keeps copies of the notes it replaced until you undo the import or start another one.
-- **Unsaved text:** when you close the panel in the middle of typing, the unsaved text is kept until the panel next opens, so it can be recovered.
+- **Unsaved text** (starting with Pagestay 1.0.3): while you type, Pagestay writes a copy of the note you are editing (its title, text and where it is attached) on every keystroke, so the text survives if the panel closes before it is saved. The copy is removed once the note is saved or you discard the changes. If the text could not be saved, the copy is kept until Pagestay saves it the next time the panel opens or an export or backup runs. Text that still cannot be saved then stays stored until you recover it in the panel.
 - **Your settings:** including your plan (free or Pro), the sites where you keep the query string and your backup schedule.
 - **A local error log** for troubleshooting: error messages with the time they happened. You can copy it from the options page. Pagestay never sends it anywhere.
 
