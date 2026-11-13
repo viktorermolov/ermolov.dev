@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Privacy Policy"
 description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics."
-date: 2026-11-11
+date: 2026-11-13
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
