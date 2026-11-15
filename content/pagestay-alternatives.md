@@ -17,11 +17,11 @@ If you want notes beside the page you are reading, start with where those notes 
 
 Open the side panel and write while the page stays in view. A note can be global, attached to a whole site, or attached to a single page. Pagestay saves the text as you type.
 
-The title filter is free. Search inside the text of your notes, folders and tags are part of Pro. Pro is $4.99, paid once, with no subscription. Pro also adds rule notes, for pages that match a pattern you type, and scheduled backups saved on your computer. The [Pagestay page](/pagestay/) lists the free plan and Pro.
+The title filter is free. Pro adds search inside the text of your notes and by tag, plus folders and tags. Pro is $4.99, paid once, with no subscription. Pro also adds rule notes, for pages that match a pattern you type, and scheduled backups saved on your computer. The [Pagestay page](/pagestay/) lists the free plan and Pro.
 
 ## Your notes stay on this computer
 
-Pagestay has no account and no sync. Notes stay in Chrome's local storage on that device. Export to JSON or Markdown is free, so you can keep a copy or move your notes yourself. The [privacy policy](/pagestay/privacy/) describes what is stored and the checks that run when you activate Pro or start an upgrade.
+Pagestay has no account and no sync. Notes stay in Chrome's local extension storage on that device. Export to JSON or Markdown is free, so you can keep a copy or move your notes yourself. The [privacy policy](/pagestay/privacy/) describes what is stored and the checks that run when you activate Pro or start an upgrade.
 
 ## Other side-panel notes
 
@@ -29,7 +29,7 @@ Pagestay has no account and no sync. Notes stay in Chrome's local storage on tha
 
 [SiteNotes](https://chromewebstore.google.com/detail/ejadohapkjcpjhlemdjmpnlhjponfomd) saves notes for a website or a page in a side panel. Its listing says the notes are stored locally on your device, that you can tag them, and that you can search by keywords or tags. It also describes export and import, and a switch between notes for the current page and all notes.
 
-[ClipNote](https://chromewebstore.google.com/detail/lmddicckijfiflodhliefpfjblhdelhj), listed as ClipNote – Smart Clipboard & Web Notes, keeps per-site notes in the side panel and notebooks that are available on every page. The same listing describes clipboard history, a task list and saved snippets in that panel. It says data stays in Chrome's local storage unless you turn on cloud sync, and that no account is required.
+[ClipNote](https://chromewebstore.google.com/detail/lmddicckijfiflodhliefpfjblhdelhj), listed as ClipNote – Smart Clipboard & Web Notes, keeps per-site notes in the side panel and notebooks that are available on every page. The same listing describes clipboard history, a task list and saved snippets in that panel. It says data stays in Chrome's extension storage unless you turn on cloud sync, and that no account is required.
 
 Pagestay is an independent product.
 
@@ -37,4 +37,4 @@ Pagestay is an independent product.
 
 - Pagestay keeps notes in the side panel and can attach one to a page or a whole site.
 - Your notes stay on your device. There is no account and no sync.
-- Search inside notes, folders and tags are part of Pro, which is $4.99 paid once.
+- Search inside notes and by tag, plus folders and tags, are part of Pro, which is $4.99 paid once.
