@@ -62,6 +62,8 @@ goodToKnow:
   - "Scheduled backups ask for permission to save files only when you turn them on. Turn off “Ask where to save each file” in Chrome's download settings, or backups cannot run unattended."
   - "If Pro is no longer active on a computer (for example, after reinstalling without activating), search inside notes and scheduled backups pause. Existing rules still match pages, and you can open their notes yourself; automatic opening and text previews when the panel opens need Pro. Your notes, folders, tags and rules stay visible and editable. Creating new rules or folders, moving a note into a different folder, or adding tags to a note needs Pro, even when the folder or tag already exists. You can keep or remove existing folder and tag assignments on the free plan."
 supportNote: "Include your Chrome version and operating system if you can, and leave out any private text from your notes."
+alternativesURL: "/pagestay/alternatives/"
+alternativesLabel: "See how it compares"
 faq:
   - q: "Where are my notes stored?"
     a: "On your device, in Chrome's local extension storage. Pagestay has no account and no sync. Uninstalling it removes the data, so export your notes first if you want a copy."

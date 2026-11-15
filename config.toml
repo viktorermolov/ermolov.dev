@@ -26,10 +26,10 @@ enableGitInfo = true  # lastmod (sitemap, dateModified) = last commit touching t
   themeColorLight = "#f6f8fe"
   themeColorDark = "#081230"
   analyticsToken = "99147b109be9494d85d44b60d9b075a4"
-  twitterHandle = "@viktor__ermolov"
+  twitterHandle = "@vikermolov"
 
   [params.contact]
     email = "viktor@ermolov.dev"
     github = "https://github.com/viktorermolov"
     linkedin = "https://www.linkedin.com/in/vermolov/"
-    x = "https://x.com/viktor__ermolov"
+    x = "https://x.com/vikermolov"
