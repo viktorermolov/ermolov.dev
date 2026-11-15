@@ -164,6 +164,7 @@ p { margin: 0 0 1em; }
 .product-hero__brand img { width: 44px; height: 44px; border-radius: 11px; }
 .product-hero .hero__title { font-size: clamp(2.4rem, 5.6vw, 4.4rem); }
 .product-hero__shot { border-radius: 18px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.product-hero__review { margin: 14px 0 0; font-size: .95rem; }
 .highlights { display: grid; gap: clamp(40px, 6vw, 72px); }
 .highlight { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px clamp(24px, 5vw, 64px); align-items: center; }
 .highlight--text { grid-template-columns: minmax(0, 7fr); }
@@ -193,7 +194,7 @@ kbd { font-family: var(--font-mono); font-size: .85em; background: var(--surface
 .disclosure[open] .disclosure__icon::after { transform: none; }
 .disclosure__body { padding: 0 0 18px; color: var(--muted); }
 .disclosure__body p { margin: 0; }
-.faq-more { margin-top: 24px; }
+.faq-more { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px 24px; }
 
 /* Articles, notes and legal */
 .page { padding-block: clamp(40px, 7vw, 96px) clamp(56px, 8vw, 112px); }

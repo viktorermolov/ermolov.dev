@@ -14,6 +14,9 @@
           {{- end }}
           <a class="btn btn--quiet" href="{{ .Params.privacyURL }}">Privacy policy</a>
         </div>
+        {{- if $live }}
+        <p class="product-hero__review"><a class="text-link" href="{{ .Params.storeURL }}/reviews">Leave a review</a></p>
+        {{- end }}
       </div>
       {{- with .Params.cardImage }}
       <img class="product-hero__shot" src="{{ . }}" alt="{{ $.Params.cardImageAlt }}" width="1280" height="800">
@@ -80,7 +83,10 @@
           <details class="disclosure"><summary>{{ .q }}<span class="disclosure__icon" aria-hidden="true"></span></summary><div class="disclosure__body"><p>{{ .a }}{{ with .link }} <a class="text-link" href="{{ .href }}">{{ .text }}</a>{{ end }}</p></div></details>
           {{- end }}
         </div>
-        <p class="faq-more"><a class="text-link" href="{{ .Params.privacyURL }}">Read the privacy policy</a></p>
+        <p class="faq-more">
+          {{- with .Params.alternativesURL }}<a class="text-link" href="{{ . }}">{{ $.Params.alternativesLabel | default "See how it compares" }}</a>{{ end }}
+          <a class="text-link" href="{{ .Params.privacyURL }}">Read the privacy policy</a>
+        </p>
       </div>
     </div>
   </section>
