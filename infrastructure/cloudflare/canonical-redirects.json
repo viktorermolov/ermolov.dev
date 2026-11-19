@@ -20,6 +20,38 @@
       "enabled": true
     },
     {
+      "ref": "ermolov_notes_removed",
+      "description": "Removed /notes/ section to homepage",
+      "expression": "(http.host in {\"ermolov.dev\" \"www.ermolov.dev\"}) and (http.request.method in {\"GET\" \"HEAD\"}) and (http.request.uri.path eq \"/notes\" or starts_with(http.request.uri.path, \"/notes/\"))",
+      "action": "redirect",
+      "action_parameters": {
+        "from_value": {
+          "status_code": 301,
+          "target_url": {
+            "value": "https://ermolov.dev/"
+          },
+          "preserve_query_string": false
+        }
+      },
+      "enabled": true
+    },
+    {
+      "ref": "ermolov_trailing_slash",
+      "description": "Directory pages without trailing slash to slash version",
+      "expression": "(http.host in {\"ermolov.dev\" \"www.ermolov.dev\"}) and (http.request.method in {\"GET\" \"HEAD\"}) and (http.request.uri.path in {\"/clipstay\" \"/pagestay\" \"/clipstay/alternatives\" \"/pagestay/alternatives\" \"/clipstay/privacy\" \"/pagestay/privacy\" \"/clipstay/refunds\" \"/pagestay/refunds\"})",
+      "action": "redirect",
+      "action_parameters": {
+        "from_value": {
+          "status_code": 301,
+          "target_url": {
+            "expression": "concat(\"https://ermolov.dev\", http.request.uri.path, \"/\")"
+          },
+          "preserve_query_string": true
+        }
+      },
+      "enabled": true
+    },
+    {
       "ref": "ermolov_www_canonical",
       "description": "Canonical apex for public pages and assets",
       "expression": "http.host eq \"www.ermolov.dev\" and (http.request.method in {\"GET\" \"HEAD\"}) and not starts_with(http.request.uri.path, \"/api/\") and not starts_with(http.request.uri.path, \"/cdn-cgi/\")",
