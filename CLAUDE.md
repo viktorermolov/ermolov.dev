@@ -54,7 +54,7 @@ A merge to `master` (only through a pull request, with the required check `site`
 
 ## What the site is
 
-ermolov.dev is the home of Viktor Ermolov's own software products (currently Chrome extensions). The site shows the products and hosts each product's pages: description, support and privacy policy. Site copy is English. Keep the tone positive and plain; describe what the products do. Do not add blocks about the developer's approach, principles or availability, and do not mention client work or services, even to rule them out.
+ermolov.dev is the home of Viktor Ermolov's own software products (currently Chrome extensions) and a Notes section. The site shows the products and hosts each product's pages: description, support and privacy policy. Notes are short English articles that answer user tasks the products solve (for example, clipboard history in Chrome, or notes on a website without an account), plus occasional notes about how a product is built. Keep the tone positive and plain. Do not add blocks about the developer's availability, and do not mention client work or services, even to rule them out.
 
 ## Architecture
 
@@ -84,7 +84,7 @@ Each product is **one markdown file** in `content/` with `type: project` (see `c
 - Do not add placeholder projects. Only show products Viktor has approved.
 - Publish a price only for a paid plan that exists and has been confirmed by Viktor (Clipstay Pro: $4.99 one-time).
 
-Engineering notes and any first-person text are published under Viktor's name: get his approval on new or rewritten text before merging to `master`. The exception is a direct fact swap that keeps the product consistent (see Modes above). Notes should be about his own products and how they are built, not advice for clients.
+Notes may be practical articles on tasks the products solve, or notes about how a product is built. They are not advice for client work or services. Engineering notes and any first-person text are published under Viktor's name: get his approval on new or rewritten text before merging to `master`. The exception is a direct fact swap that keeps the product consistent (see Modes above).
 
 **Name and location:** the visible brand is `brand` in `config.toml` ("Viktor E."). The full name stays in `author` for structured data, meta author and the copyright line. Do not add a location line (US-based and similar); `check_site.py` fails on it.
 

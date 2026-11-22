@@ -21,8 +21,8 @@
     },
     {
       "ref": "ermolov_notes_removed",
-      "description": "Removed /notes/ section to homepage",
-      "expression": "(http.host in {\"ermolov.dev\" \"www.ermolov.dev\"}) and (http.request.method in {\"GET\" \"HEAD\"}) and (http.request.uri.path eq \"/notes\" or starts_with(http.request.uri.path, \"/notes/\"))",
+      "description": "Removed notes slugs to homepage",
+      "expression": "(http.host in {\"ermolov.dev\" \"www.ermolov.dev\"}) and (http.request.method in {\"GET\" \"HEAD\"}) and (http.request.uri.path in {\"/notes/dependable-automation\" \"/notes/dependable-automation/\" \"/notes/does-this-need-ai\" \"/notes/does-this-need-ai/\" \"/notes/first-saas-release\" \"/notes/first-saas-release/\"})",
       "action": "redirect",
       "action_parameters": {
         "from_value": {
