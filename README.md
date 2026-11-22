@@ -10,15 +10,16 @@ Use Hugo **0.166.0** (`.hugo-version`), Node.js 22+ and Python 3.11+.
 hugo server
 hugo --environment production --destination /tmp/ermolov-site
 python3 scripts/check_site.py /tmp/ermolov-site
+python3 scripts/check_site.py --notes-fixture
 node --check assets/js/app.js
 ```
 
 ## Structure
 
-- `content/`: product pages (one markdown file per product, `type: project`) and the Clipstay privacy policy. Engineering notes go in `content/notes/` (none published right now); the homepage section appears when the first note exists.
+- `content/`: product pages (one markdown file per product, `type: project`) and the Clipstay privacy policy. Engineering notes go in `content/notes/` (none published right now); the homepage section appears when the first note exists. That section's RSS feed is `/notes/index.xml`.
 - `layouts/`, `assets/`, `static/`: Hugo templates, CSS, browser JS, fonts, images.
 - `config.toml`: public site information, Cloudflare analytics token and GA4 measurement ID (not credentials).
-- `scripts/check_site.py`: checks the generated site (links, SEO, structured data, project pages).
+- `scripts/check_site.py`: checks the generated site (links, SEO, structured data, project pages) and, with `--notes-fixture`, the notes RSS feed.
 - `docs/`: operations notes (Cloudflare edge rules).
 
 ## Add a product

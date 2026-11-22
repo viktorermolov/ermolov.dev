@@ -8,8 +8,14 @@ enableRobotsTXT = true
 locale = "en-US"
 language = "en"
 title = "Viktor E. — Independent software developer"
-disableKinds = ["taxonomy", "term", "RSS"]
+# RSS is the notes section only: /notes/index.xml. Taxonomy and term pages stay
+# disabled. The homepage has no feed, so product and legal pages are not syndicated.
+disableKinds = ["taxonomy", "term"]
 enableGitInfo = true  # lastmod (sitemap, dateModified) = last commit touching the page; needs full git history at build time
+
+[outputs]
+  home = ["html"]
+  section = ["html", "rss"]
 
 [params]
   # Visible brand. The full legal name stays in `author` (schema, copyright, meta author).

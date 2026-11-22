@@ -15,6 +15,9 @@
 <meta name="author" content="{{ .Site.Params.author }}">
 <meta name="robots" content="{{ if eq .Kind "404" }}noindex{{ else }}max-image-preview:large{{ end }}">
 <link rel="canonical" href="{{ .Permalink }}">
+{{- with .OutputFormats.Get "rss" }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
+{{- end }}
 <meta name="theme-color" content="{{ $themeLight }}" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="{{ $themeDark }}" media="(prefers-color-scheme: dark)">
 
