@@ -5,7 +5,7 @@ date: 2026-11-22
 weight: 1
 ---
 
-To see clipboard history while you are in Chrome, open the history the computer already keeps. Copy and paste in a Chrome window use that system clipboard.
+To see clipboard history while you are in Chrome, open the history the computer already keeps. Copying and pasting in a Chrome window uses that system clipboard.
 
 - **Windows:** press the Windows logo key + V. The first time, select **Turn on**.
 - **Mac:** press Command-Space to open Spotlight, then Command-4. The first time, choose **Allow**.
