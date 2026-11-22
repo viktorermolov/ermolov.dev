@@ -1,7 +1,7 @@
 ---
 title: "Pagestay Privacy Policy"
 description: "Pagestay keeps your notes and the addresses of the pages they are attached to on your device. It has no account, no sync, no AI and no analytics."
-date: 2026-11-11
+date: 2026-11-22
 url: "/pagestay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -73,7 +73,7 @@ Pagestay has a free plan and an optional Pro plan: $4.99, paid once. Pro is also
 
 ## This website
 
-This policy covers the Pagestay extension. The ermolov.dev website, including this page, uses Cloudflare Web Analytics to measure visits and page performance. The extension has no connection to the website and sends nothing to it.
+This policy covers the Pagestay extension. The ermolov.dev website, including this page, uses Cloudflare Web Analytics to measure visits and page performance, and Google Analytics 4 (measurement ID G-CV3FSD2MY4) to measure page views, including campaign parameters in the page address. The extension has no connection to the website and sends nothing to it.
 
 ## Changes and contact
 

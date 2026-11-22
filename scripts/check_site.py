@@ -42,6 +42,9 @@ class Page(HTMLParser):
 
 SITE = 'https://ermolov.dev/'
 BRAND = 'Viktor E.'
+GA_MEASUREMENT_ID = 'G-CV3FSD2MY4'
+GA_TAG_SRC = f'https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}'
+GA_CONFIG = re.compile(r"gtag\(\s*'config'\s*,\s*'([^']*)'\s*(,\s*\{.*?\})?\s*\)", re.DOTALL)
 
 
 def check_page(root, path):
@@ -174,10 +177,43 @@ def check_not_found(root):
                    for tag, attrs in page.elements), f'{url}: 404 theme script present'
 
 
+def check_google_analytics(root):
+    """Every public page loads the existing GA4 stream and leaves campaign parameters to gtag.js."""
+    pages = sorted(root.rglob('*.html'))
+    assert pages, 'generated HTML'
+    required = (
+        Path('index.html'),
+        Path('clipstay/index.html'),
+        Path('pagestay/index.html'),
+        Path('clipstay/alternatives/index.html'),
+        Path('pagestay/alternatives/index.html'),
+        Path('404.html'),
+    )
+    found = {path.relative_to(root) for path in pages}
+    for relative in required:
+        assert relative in found, f'{relative.as_posix()}: public page missing'
+    for path in pages:
+        label = path.relative_to(root).as_posix()
+        text = path.read_text()
+        page = Page()
+        page.feed(text)
+        assert any(tag == 'script' and attrs.get('src') == GA_TAG_SRC and 'async' in attrs
+                   for tag, attrs in page.elements), f'{label}: official gtag.js for {GA_MEASUREMENT_ID}'
+        assert "gtag('js', new Date())" in text, f'{label}: official gtag.js install'
+        configs = GA_CONFIG.findall(text)
+        assert len(configs) == 1, f'{label}: one gtag config call'
+        measurement_id, extra = configs[0]
+        assert measurement_id == GA_MEASUREMENT_ID and not extra, (
+            f'{label}: default GA4 config keeps page_view and campaign parameters')
+        assert 'send_page_view' not in text and 'page_location' not in text, (
+            f'{label}: do not replace the default page view')
+
+
 def main():
     root = Path(sys.argv[1] if len(sys.argv) > 1 else 'public').resolve()
     check_refund_assurances(root)
     check_not_found(root)
+    check_google_analytics(root)
     pages = sorted(path for path in root.rglob('index.html'))
     results = {url: (text, page, metadata, nodes) for url, text, page, metadata, nodes in (check_page(root, path) for path in pages)}
     canonical = SITE
@@ -226,6 +262,8 @@ def main():
         policy_text, _, _, policy_nodes = results[product_privacy]
         assert 'Last updated' in policy_text and 'WebPage' in policy_nodes, f'{product_privacy}: dated policy page'
         assert 'Cloudflare Web Analytics' in policy_text, f'{product_privacy}: distinguishes the website from the extension'
+        assert 'Google Analytics 4' in policy_text and GA_MEASUREMENT_ID in policy_text, (
+            f'{product_privacy}: discloses the website GA4 measurement ID')
 
     sitemap = ET.parse(root / 'sitemap.xml')
     sitemap_urls = [element.text for element in sitemap.iter() if element.tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}loc']
