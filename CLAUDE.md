@@ -60,7 +60,7 @@ ermolov.dev is the home of Viktor Ermolov's own software products (currently Chr
 Hugo site. Active templates in `layouts/`:
 - `_default/baseof.html`: document shell (head, sticky header, main block, footer, fingerprinted JS)
 - `_default/legal.html`: legal pages such as the Clipstay privacy policy (`schemaType: WebPage`)
-- `partials/head.html`: SEO/meta, favicons, font preload, JSON-LD for every page type, fingerprinted CSS, pre-paint theme init, Cloudflare Web Analytics beacon
+- `partials/head.html`: SEO/meta, favicons, font preload, JSON-LD for every page type, fingerprinted CSS, pre-paint theme init, GA4 gtag.js tag, Cloudflare Web Analytics beacon
 - `partials/header.html`, `footer.html`, `brand-mark.html`
 - `partials/project-row.html`, `project-status.html`: homepage project row and the visitor-facing status chip
 - `index.html`: homepage (hero → projects → engineering notes, only when notes exist → contact). It shows the products; no principles, services or about blocks. The hero is text only and product-neutral (no product visuals or links to one product): the Projects list is the showcase and should start on the first screen.
@@ -91,4 +91,4 @@ Engineering notes and any first-person text are published under Viktor's name: g
 
 Do not use personal photographs, portrait illustrations, avatars, or Memoji. Use typography, spacing, rules and restrained abstract graphics. Do not add floating bottom call-to-action bars that cover page content. Keep the blue palette.
 
-**Site metadata** (name, bio, social links, analytics token) lives in `config.toml` under `[params]` and `[params.contact]`. Public tokens are not secrets.
+**Site metadata** (name, bio, social links, analytics token, GA4 measurement ID) lives in `config.toml` under `[params]` and `[params.contact]`. Public tokens are not secrets.

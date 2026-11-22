@@ -26,6 +26,8 @@ enableGitInfo = true  # lastmod (sitemap, dateModified) = last commit touching t
   themeColorLight = "#f6f8fe"
   themeColorDark = "#081230"
   analyticsToken = "99147b109be9494d85d44b60d9b075a4"
+  # Existing GA4 web stream (property 565276342). Public measurement ID, not a secret.
+  gaMeasurementId = "G-CV3FSD2MY4"
   twitterHandle = "@vikermolov"
 
   [params.contact]

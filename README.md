@@ -17,7 +17,7 @@ node --check assets/js/app.js
 
 - `content/`: product pages (one markdown file per product, `type: project`) and the Clipstay privacy policy. Engineering notes go in `content/notes/` (none published right now); the homepage section appears when the first note exists.
 - `layouts/`, `assets/`, `static/`: Hugo templates, CSS, browser JS, fonts, images.
-- `config.toml`: public site information and analytics token (not credentials).
+- `config.toml`: public site information, Cloudflare analytics token and GA4 measurement ID (not credentials).
 - `scripts/check_site.py`: checks the generated site (links, SEO, structured data, project pages).
 - `docs/`: operations notes (Cloudflare edge rules).
 
