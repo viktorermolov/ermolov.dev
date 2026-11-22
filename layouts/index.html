@@ -39,7 +39,7 @@
     <div class="wrap contact__inner">
       <h2 id="contact-title">Questions, bugs, ideas?</h2>
       <p class="contact__lede">Write to me. Support for every product comes to the same address, and I read everything.</p>
-      <p class="contact__mail"><a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a><button class="copy-btn" type="button" data-copy="{{ .Site.Params.contact.email }}" hidden>Copy address</button><span class="sr-only" role="status" aria-live="polite" id="copy-status"></span></p>
+      {{ "<!--email_off-->" | safeHTML }}<p class="contact__mail"><a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a><button class="copy-btn" type="button" data-copy="{{ .Site.Params.contact.email }}" hidden>Copy address</button><span class="sr-only" role="status" aria-live="polite" id="copy-status"></span></p>{{ "<!--/email_off-->" | safeHTML }}
     </div>
   </section>
 {{ end }}
