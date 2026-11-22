@@ -8,6 +8,7 @@ Local technical and product context for agents working in this repository. Read 
 hugo server                                   # local dev server with live reload (http://localhost:1313)
 hugo --environment production --destination /tmp/ermolov-site
 python3 scripts/check_site.py /tmp/ermolov-site   # generated HTML, links, structured data, project pages, SEO
+python3 scripts/check_site.py --notes-fixture     # notes RSS at /notes/index.xml; the note exists only in a temp build
 node --check assets/js/app.js
 ```
 
@@ -66,7 +67,7 @@ Hugo site. Active templates in `layouts/`:
 - `index.html`: homepage (hero → projects → engineering notes, only when notes exist → contact). It shows the products; no principles, services or about blocks. The hero is text only and product-neutral (no product visuals or links to one product): the Projects list is the showcase and should start on the first screen.
 - `404.html`: not-found page (noindex)
 - `project/single.html`: product page (hero, what it does, privacy, free plan, good to know, support with FAQ)
-- `notes/single.html`, `notes/list.html`: engineering notes (BlogPosting / CollectionPage schema). There are no notes right now: the three service-era notes were removed in October 2026. The homepage section and the Notes links in the header and footer appear automatically once `content/notes/` has a published note; add `content/notes/_index.md` with a description at the same time.
+- `notes/single.html`, `notes/list.html`: engineering notes (BlogPosting / CollectionPage schema). There are no notes right now: the three service-era notes were removed in October 2026. The homepage section and the Notes links in the header and footer appear automatically once `content/notes/` has a published note; add `content/notes/_index.md` with a description at the same time. The notes section feed is `/notes/index.xml`, linked from the notes list `<head>`. The homepage does not publish a feed. Taxonomies stay disabled.
 - `robots.txt`
 
 Header and footer anchors use `/#section` off the homepage. `scripts/check_site.py` checks every generated page (self-canonical, one h1, schema, local links and cross-page anchors, sitemap equals the generated pages) plus the rules below.

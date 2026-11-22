@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
-"""Check generated public artifacts; no network or production submissions."""
+"""Check generated public artifacts; no network or production submissions.
+
+`--notes-fixture` builds a throwaway copy of the site with temporary notes and
+checks that `/notes/index.xml` is generated, linked and valid. Those notes are
+not part of the published site.
+"""
 import json
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
+from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit, unquote
@@ -42,6 +51,9 @@ class Page(HTMLParser):
 
 SITE = 'https://ermolov.dev/'
 BRAND = 'Viktor E.'
+NOTES_SECTION = SITE + 'notes/'
+NOTES_FEED = SITE + 'notes/index.xml'
+ATOM_LINK = '{http://www.w3.org/2005/Atom}link'
 GA_MEASUREMENT_ID = 'G-CV3FSD2MY4'
 GA_TAG_SRC = f'https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}'
 GA_CONFIG = re.compile(r"gtag\(\s*'config'\s*,\s*'([^']*)'\s*(,\s*\{.*?\})?\s*\)", re.DOTALL)
@@ -209,8 +221,76 @@ def check_google_analytics(root):
             f'{label}: do not replace the default page view')
 
 
-def main():
-    root = Path(sys.argv[1] if len(sys.argv) > 1 else 'public').resolve()
+def rss_links(page):
+    """RSS autodiscovery links. Hugo escapes '+' in the type attribute; the parser decodes it."""
+    return [attrs.get('href') for tag, attrs in page.elements
+            if tag == 'link' and 'alternate' in attrs.get('rel', '').split()
+            and attrs.get('type') == 'application/rss+xml']
+
+
+def feed_text(parent, tag):
+    element = parent.find(tag)
+    value = (element.text or '').strip() if element is not None else ''
+    assert value, f'Notes feed missing {tag}'
+    return value
+
+
+def check_notes_feed(root, results, notes):
+    """The only feed is the notes section feed, and only that page links to it."""
+    xml_files = sorted(path.relative_to(root).as_posix() for path in root.rglob('*.xml'))
+    section = NOTES_SECTION in results
+    expected_xml = ['notes/index.xml', 'sitemap.xml'] if section else ['sitemap.xml']
+    assert xml_files == expected_xml, f'Unexpected XML files {xml_files}; notes feed is /notes/index.xml'
+    pages = list(results.items())
+    not_found = Page()
+    not_found.feed((root / '404.html').read_text())
+    pages.append((SITE + '404.html', (None, not_found, None, None)))
+    if not section:
+        for url, (_, page, _, _) in pages:
+            assert not rss_links(page), f'{url}: no RSS link without a notes section'
+        return
+
+    assert (root / 'notes' / 'index.xml').is_file(), 'Notes section requires /notes/index.xml'
+    try:
+        document = ET.parse(root / 'notes' / 'index.xml')
+    except ET.ParseError as error:
+        raise AssertionError(f'Notes feed is not valid XML: {error}') from error
+    rss = document.getroot()
+    assert rss.tag == 'rss' and rss.attrib.get('version') == '2.0', 'Notes feed must be RSS 2.0'
+    channels = [element for element in rss if element.tag == 'channel']
+    assert len(channels) == 1, 'Notes feed must contain one channel'
+    channel = channels[0]
+    feed_text(channel, 'title')
+    assert feed_text(channel, 'link') == NOTES_SECTION, 'Notes feed channel link is the notes section'
+    feed_text(channel, 'description')
+    assert feed_text(channel, 'language') == 'en-US', 'Notes feed language'
+    self_links = [element.attrib.get('href') for element in channel.findall(ATOM_LINK)
+                  if element.attrib.get('rel') == 'self']
+    assert self_links == [NOTES_FEED], 'Notes feed self link'
+    item_links = []
+    for item in channel.findall('item'):
+        link = feed_text(item, 'link')
+        feed_text(item, 'title')
+        feed_text(item, 'description')
+        assert feed_text(item, 'guid') == link, f'{link}: notes feed guid must be the note permalink'
+        published = feed_text(item, 'pubDate')
+        try:
+            parsedate_to_datetime(published)
+        except (TypeError, ValueError) as error:
+            raise AssertionError(f'Notes feed item date is invalid: {published}') from error
+        item_links.append(link)
+    assert sorted(item_links) == sorted(notes), (
+        f'Notes feed lists exactly the published notes: {sorted(item_links)}')
+    for url, (_, page, _, _) in pages:
+        found = rss_links(page)
+        if url == NOTES_SECTION:
+            assert found == [NOTES_FEED], 'Notes list must link to the RSS feed /notes/index.xml'
+        else:
+            assert not found, f'{url}: RSS autodiscovery stays on the notes list page'
+
+
+def check(root):
+    root = Path(root).resolve()
     check_refund_assurances(root)
     check_not_found(root)
     check_google_analytics(root)
@@ -224,9 +304,10 @@ def main():
         assert 'pending review' not in text.lower(), f'{url}: never show the internal review status'
         assert '/api/' not in text, f'{url}: no references to the retired inquiry API'
         assert not any(phrase in text for phrase in ('US-based', 'Based in the US', 'in the US.')), f'{url}: no location line'
-    notes = [url for url in results if url.startswith(SITE + 'notes/') and url != SITE + 'notes/']
+    notes = [url for url in results if url.startswith(NOTES_SECTION) and url != NOTES_SECTION]
     home_ids = results[SITE][1].ids
     assert ('notes' in home_ids) == bool(notes), 'Homepage notes section appears exactly when notes exist'
+    check_notes_feed(root, results, notes)
 
     text, page, metadata, nodes = results[canonical]
     assert set(nodes) == {'Person', 'WebSite', 'WebPage'}, 'Expected structured data entities'
@@ -293,7 +374,7 @@ def main():
                 assert store_links and app.get('installUrl') in store_links, f'{url}: live product links to the store'
                 assert f'{STORE_HOST}/detail/' in app['installUrl'], f'{url}: store listing URL'
             continue
-        if url == canonical + 'notes/':
+        if url == NOTES_SECTION:
             assert set(page_nodes) == {'Person', 'WebSite', 'CollectionPage'}, f'{url}: collection structured data'
         elif 'WebPage' in page_nodes:
             assert set(page_nodes) == {'Person', 'WebSite', 'WebPage'}, f'{url}: standalone page structured data'
@@ -313,6 +394,113 @@ def main():
     for asset in ('og/og-default.png', 'og/og-clipstay.png', 'img/favicon.ico', 'img/favicon.svg', 'img/apple-touch-icon.png'):
         assert (root / asset).is_file(), f'Missing asset: {asset}'
     print(f'PASS: {len(results)} pages; {len(project_urls)} project page(s), anchors, local assets, SEO and structured data')
+
+
+FIXTURE_SECTION = """---
+title: Engineering notes
+description: Temporary section used to verify the engineering notes feed.
+---
+"""
+
+FIXTURE_NOTES = {
+    'check-site-feed-fixture.md': """---
+title: Feed fixture
+description: Temporary note used to verify the engineering notes feed.
+date: 2026-01-15
+---
+
+Temporary body for the feed check.
+""",
+    'check-site-feed-fixture-two.md': """---
+title: Second feed fixture
+description: Second temporary note used to verify every published note is in the feed.
+date: 2026-02-02
+---
+
+Second temporary body for the feed check.
+""",
+}
+
+FIXTURE_DRAFT = """---
+title: Draft feed fixture
+description: Unpublished fixture that must stay out of the feed.
+date: 2026-01-15
+draft: true
+---
+
+This draft must not be published or included in the feed.
+"""
+
+
+def expect_feed_failure(root, label):
+    try:
+        check(root)
+    except AssertionError as error:
+        message = str(error)
+        assert 'feed' in message.lower() or 'rss' in message.lower() or 'notes/index.xml' in message, (
+            f'{label}: unexpected failure: {message}')
+        return
+    raise AssertionError(f'{label}: checker accepted an invalid notes feed')
+
+
+def check_notes_fixture():
+    """Published notes come from a temporary content directory and are not committed."""
+    hugo = shutil.which('hugo')
+    if not hugo:
+        raise SystemExit('hugo is required for the notes feed fixture')
+    repo = Path(__file__).resolve().parents[1]
+    with tempfile.TemporaryDirectory() as tmp_name:
+        tmp = Path(tmp_name)
+        content = tmp / 'content'
+        shutil.copytree(repo / 'content', content)
+        notes = content / 'notes'
+        notes.mkdir(exist_ok=True)
+        section = notes / '_index.md'
+        if not section.exists():
+            section.write_text(FIXTURE_SECTION, encoding='utf-8')
+        for name, body in FIXTURE_NOTES.items():
+            (notes / name).write_text(body, encoding='utf-8')
+        (notes / 'check-site-draft-fixture.md').write_text(FIXTURE_DRAFT, encoding='utf-8')
+        dest = tmp / 'site'
+        built = subprocess.run(
+            [hugo, '--environment', 'production', '--destination', str(dest), '--contentDir', str(content)],
+            cwd=repo, capture_output=True, text=True)
+        if built.returncode != 0:
+            sys.stderr.write(built.stdout)
+            sys.stderr.write(built.stderr)
+            raise SystemExit(f'hugo fixture build failed ({built.returncode})')
+        assert not (dest / 'notes' / 'check-site-draft-fixture' / 'index.html').exists(), 'Draft notes stay unpublished'
+        check(dest)
+        feed = dest / 'notes' / 'index.xml'
+        notes_html = dest / 'notes' / 'index.html'
+        original_feed = feed.read_text(encoding='utf-8')
+        original_html = notes_html.read_text(encoding='utf-8')
+        assert 'Draft feed fixture' not in original_feed, 'Draft notes stay out of the feed'
+        for name in FIXTURE_NOTES:
+            slug = name.removesuffix('.md')
+            assert f'{NOTES_SECTION}{slug}/' in original_feed, f'{slug}: fixture note missing from the feed'
+        feed.write_text('<rss', encoding='utf-8')
+        expect_feed_failure(dest, 'invalid XML')
+        feed.write_text(original_feed.replace(
+            f'{NOTES_SECTION}check-site-feed-fixture/', f'{SITE}clipstay/'), encoding='utf-8')
+        expect_feed_failure(dest, 'feed item that is not a note')
+        feed.write_text(original_feed, encoding='utf-8')
+        notes_html.write_text(
+            ''.join(line for line in original_html.splitlines(keepends=True) if 'application/rss' not in line),
+            encoding='utf-8')
+        expect_feed_failure(dest, 'notes list without a feed link')
+        notes_html.write_text(original_html, encoding='utf-8')
+        feed.unlink()
+        expect_feed_failure(dest, 'missing feed file')
+    print('PASS: notes RSS fixture (/notes/index.xml)')
+
+
+def main():
+    if len(sys.argv) > 1 and sys.argv[1] == '--notes-fixture':
+        assert len(sys.argv) == 2, 'usage: check_site.py [--notes-fixture | DESTINATION]'
+        check_notes_fixture()
+        return
+    check(sys.argv[1] if len(sys.argv) > 1 else 'public')
 
 
 if __name__ == '__main__':
