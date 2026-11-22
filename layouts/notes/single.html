@@ -2,7 +2,7 @@
   <article class="page article" aria-labelledby="note-title">
     <div class="wrap article__layout">
       <header class="article__header">
-        <p class="article__crumb"><a href="/notes/">Engineering notes</a></p>
+        <p class="article__crumb"><a href="/notes/">{{ with site.GetPage "/notes" }}{{ .Title }}{{ end }}</a></p>
         <h1 id="note-title" class="page-title">{{ .Title }}</h1>
         <p class="article__lede">{{ .Description }}</p>
         <p class="article__meta">{{ .Site.Params.author }}, <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>. {{ .ReadingTime }} min read.</p>
@@ -15,7 +15,7 @@
       </aside>
       {{- $others := where (where .Site.RegularPages "Section" "notes") "Permalink" "ne" .Permalink }}
       {{- with $others }}
-      <nav class="article__more" aria-label="More engineering notes">
+      <nav class="article__more" aria-label="More notes">
         <h2 class="small-heading">More notes</h2>
         <ul>{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}</ul>
       </nav>
