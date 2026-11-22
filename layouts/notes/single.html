@@ -11,7 +11,7 @@
         {{ .Content }}
       </div>
       <aside class="article__aside" aria-label="Contact">
-        <p>Thoughts or questions? Email <a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a>.</p>
+        <p>Thoughts or questions? Email {{ "<!--email_off-->" | safeHTML }}<a href="mailto:{{ .Site.Params.contact.email }}">{{ .Site.Params.contact.email }}</a>{{ "<!--/email_off-->" | safeHTML }}.</p>
       </aside>
       {{- $others := where (where .Site.RegularPages "Section" "notes") "Permalink" "ne" .Permalink }}
       {{- with $others }}

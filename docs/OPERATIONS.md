@@ -52,7 +52,7 @@ If robots/sitemap still show an older build, inspect the public body and cache r
 
 ### Regression and live-drift checks
 
-The existing `site` CI job runs `python3 scripts/check_security_headers.py` without credentials or network access. It guards the repository's exact apex/www expression, enabled rewrite action, six header values and two header removals. The same job runs `python3 scripts/check_canonical_redirects.py`, which guards the redirect ruleset name, phase, rule order, the exact writable fields of the three non-notes rules, and the narrowed `ermolov_notes_removed` path list. Neither script queries Cloudflare or DigitalOcean, and a green CI result alone does not establish that live settings match.
+The existing `site` CI job runs `python3 scripts/check_security_headers.py` without credentials or network access. It guards the repository's exact apex/www expression, enabled rewrite action, six header values and two header removals. The same job runs `python3 scripts/check_canonical_redirects.py`, which guards the redirect ruleset name, phase, rule order, the exact writable fields of the three non-notes rules, and the narrowed `ermolov_notes_removed` path list. It also runs `python3 scripts/check_email_obfuscation.py` on the Hugo build, which guards the recorded `email_obfuscation=off` value and the built `mailto:` exceptions. None of these scripts queries Cloudflare or DigitalOcean, and a green CI result alone does not establish that live settings match. `scripts/check_live_email.py` reads public HTML after a deploy and is not part of this job.
 
 To compare a fresh live rule, use the authorized Cloudflare connection to read `GET /zones/3532291be695455e1ce46639f0a7dcb4/rulesets/04393da9a4634d67a815b6af4ef0acec`. Save only the returned JSON ruleset or successful response envelope to a temporary local file, then run:
 
@@ -73,7 +73,21 @@ Two dashboard-managed Cache Rules (`http_request_cache_settings`) apply to the a
 
 CSS and JS URLs carry a content fingerprint, so a year is safe; the font filename is fixed, so it stays shorter. HTML is intentionally not edge-cached: the Free plan's minimum Edge TTL is two hours and DigitalOcean deploys do not purge Cloudflare. A renamed font needs no purge; replacing the same font file needs a targeted purge of that URL.
 
-Email Address Obfuscation is off so `mailto:` links work without JavaScript. The DigitalOcean static-site component sets build variable `HUGO_VERSION=0.166.0`; keep it in step with `.hugo-version`.
+Email Address Obfuscation for this zone is recorded in [email-obfuscation.json](../infrastructure/cloudflare/email-obfuscation.json): zone `3532291be695455e1ce46639f0a7dcb4`, setting `email_obfuscation`, value `off`. That file records only this setting. It does not list or manage cache rules, redirect rules, security-header rules, Page Rules, Workers, or any other zone setting. CI checks the file and does not deploy it. A green `site` job does not change Cloudflare.
+
+The zone setting was already `off` on 2026-11-22 (last modified 2026-09-29). Live HTML on the apex still contained `/cdn-cgi/l/email-protection` after a cache purge, and after a temporary Configuration Rule that set `email_obfuscation` to false for the apex and www. That ruleset was deleted. Do not recreate it, and do not change the live zone from this repository. Leave the www always-use-HTTPS Page Rule, the Audiobookshelf late-transform rule, the canonical redirects, the security-header rule, and the CSS/JS/font cache rules as they are. The origin is DigitalOcean App Platform (`ermolov-dev-wz3bi.ondigitalocean.app`), which is also behind Cloudflare, so HTML can still be rewritten on the origin path while this zone's setting stays off.
+
+The footer, the homepage contact address, the product-page support address, the engineering-note contact line, and every Markdown `mailto:` link are wrapped in Cloudflare's exception `<!--email_off-->` … `<!--/email_off-->`. Hugo drops HTML comments written literally in a template, so the markers are emitted with `safeHTML`. The Markdown renderer matches Hugo 0.166.0 for every link that is not `mailto:`; when `.hugo-version` changes, compare that renderer with Hugo's embedded `render-link.html` before keeping it. The visible words stay the same. `scripts/check_email_obfuscation.py` runs in the `site` job against the Hugo build: the JSON value stays `off`, and every built HTML page keeps `mailto:viktor@ermolov.dev` inside those comments, with no address left outside them. That job does not fetch production. Production keeps the rewrite until this template change is deployed, so a live fetch in the required `site` check would fail the pull request.
+
+After the deploy is live, run:
+
+```sh
+python3 scripts/check_live_email.py
+```
+
+It requests the homepage, `/clipstay/`, `/pagestay/`, both privacy pages, both refund pages, both alternatives pages, and `/404.html`, each with a fresh query string, and fails if a response contains `/cdn-cgi/l/email-protection`, `__cf_email__` or `email-decode.min.js`, or does not contain `mailto:viktor@ermolov.dev`. It only reads public HTML.
+
+The DigitalOcean static-site component sets build variable `HUGO_VERSION=0.166.0`; keep it in step with `.hugo-version`.
 
 ## DigitalOcean starter-domain redirect
 
