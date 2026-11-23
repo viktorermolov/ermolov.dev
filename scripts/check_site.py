@@ -14,7 +14,7 @@ import tempfile
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urljoin, urlsplit, unquote
+from urllib.parse import parse_qsl, urljoin, urlsplit, unquote
 from urllib.robotparser import RobotFileParser
 import xml.etree.ElementTree as ET
 
@@ -126,6 +126,69 @@ PRIVACY_PATH = '/clipstay/privacy/'  # Listed in the Chrome Web Store: this addr
 
 def hrefs(page):
     return [attrs.get('href') for tag, attrs in page.elements if tag == 'a' and attrs.get('href')]
+
+
+X_PROFILE = 'https://x.com/vikermolov'
+FOOTER_NAV = re.compile(r'<nav class="footer-links"[^>]*>(.*?)</nav>', re.DOTALL)
+FOOTER_X = re.compile(r'<a href="' + re.escape(X_PROFILE) + r'" rel="me">X</a>')
+
+
+def check_footer_x_and_homepage_alternatives(root, results):
+    """Every footer links the X profile, and every alternatives page stays on its homepage row."""
+    html_pages = sorted(root.rglob('*.html'))
+    assert html_pages, 'generated HTML'
+    for path in html_pages:
+        label = path.relative_to(root).as_posix()
+        navs = FOOTER_NAV.findall(path.read_text())
+        assert len(navs) == 1, f'{label}: one footer link list'
+        nav = navs[0]
+        assert FOOTER_X.search(nav), f'{label}: footer links to {X_PROFILE} as X'
+        assert 'https://ermolov.dev' not in nav and 'http://ermolov.dev' not in nav, (
+            f'{label}: footer does not repeat the site URL')
+
+    home_text = results[SITE][0]
+    rows = re.findall(r'<article class="project">(.*?)</article>', home_text, re.DOTALL)
+    assert rows, 'homepage project rows'
+    row_paths = set()
+    for row in rows:
+        row_paths.update(
+            urlsplit(urljoin(SITE, href)).path for href in re.findall(r'href="([^"]*)"', row))
+    alternatives = sorted(
+        urlsplit(url).path for url in results
+        if urlsplit(url).path.rstrip('/').endswith('/alternatives'))
+    assert {'/clipstay/alternatives/', '/pagestay/alternatives/'} <= set(alternatives), (
+        'Clipstay and Pagestay alternatives pages')
+    for path in alternatives:
+        assert path in row_paths, f'{SITE}: homepage project row links to {path}'
+
+
+def store_listing(link):
+    """Listing address without a query or fragment. Campaign parameters do not change it."""
+    parts = urlsplit(link)
+    return parts._replace(query='', fragment='').geturl()
+
+
+def query_map(link):
+    return dict(parse_qsl(urlsplit(link).query, keep_blank_values=True))
+
+
+def check_alternatives_store_utm(results):
+    """Alternatives CTAs keep their own campaign, separate from product pages."""
+    expected = {
+        'utm_source': 'ermolov.dev',
+        'utm_medium': 'referral',
+        'utm_campaign': 'alt-alternatives',
+    }
+    for slug in ('clipstay', 'pagestay'):
+        url = f'{SITE}{slug}/alternatives/'
+        _, page, _, _ = results[url]
+        buttons = [attrs.get('href', '') for tag, attrs in page.elements
+                   if tag == 'a' and 'btn--primary' in attrs.get('class', '').split()
+                   and STORE_HOST in (attrs.get('href') or '')]
+        assert len(buttons) == 1, f'{url}: alternatives store button'
+        params = query_map(buttons[0])
+        for key, value in expected.items():
+            assert params.get(key) == value, f'{url}: alternatives UTM {key}'
 
 
 def check_refund_assurances(root):
@@ -329,6 +392,7 @@ def check(root):
     home_links = {urlsplit(urljoin(canonical, href)).path for href in hrefs(page)}
     for url in project_urls:
         assert urlsplit(url).path in home_links, f'{url}: linked from the homepage'
+    check_footer_x_and_homepage_alternatives(root, results)
 
     privacy_url = canonical + PRIVACY_PATH.lstrip('/')
     assert privacy_url in results, f'Privacy policy must stay at {PRIVACY_PATH}'
@@ -371,8 +435,28 @@ def check(root):
             if 'Coming soon to the' in page_text:
                 assert not store_links and 'installUrl' not in app and STORE_HOST not in page_text, f'{url}: no store link until the product is live'
             else:
-                assert store_links and app.get('installUrl') in store_links, f'{url}: live product links to the store'
-                assert f'{STORE_HOST}/detail/' in app['installUrl'], f'{url}: store listing URL'
+                install = app.get('installUrl') or ''
+                listing = store_listing(install)
+                assert store_links and listing and any(
+                    store_listing(link) == listing or store_listing(link).startswith(listing.rstrip('/') + '/')
+                    for link in store_links), f'{url}: live product links to the store'
+                assert f'{STORE_HOST}/detail/' in install, f'{url}: store listing URL'
+                assert not urlsplit(install).query and not urlsplit(install).fragment, (
+                    f'{url}: installUrl stays the store listing without campaign parameters')
+                # Add to Chrome only. Alternatives pages keep utm_medium=referral and utm_campaign=alt-alternatives.
+                campaign = urlsplit(url).path.strip('/').split('/')[0]
+                buttons = [attrs.get('href', '') for tag, attrs in page_obj.elements
+                           if tag == 'a' and 'btn--primary' in attrs.get('class', '').split()
+                           and STORE_HOST in (attrs.get('href') or '')]
+                assert buttons, f'{url}: Add to Chrome button links to the store'
+                expected_utm = {
+                    'utm_source': 'ermolov.dev',
+                    'utm_medium': 'product-page',
+                    'utm_campaign': campaign,
+                }
+                for href in buttons:
+                    assert store_listing(href) == listing, f'{url}: Add to Chrome opens the store listing'
+                    assert query_map(href) == expected_utm, f'{url}: product-page store button UTM parameters'
             continue
         if url == NOTES_SECTION:
             assert set(page_nodes) == {'Person', 'WebSite', 'CollectionPage'}, f'{url}: collection structured data'
@@ -384,6 +468,7 @@ def check(root):
             article = page_nodes.get('BlogPosting')
             assert article and article.get('url') == url and article.get('headline') and article.get('datePublished'), f'{url}: article structured data'
             assert page_metadata.get('og:type') == 'article', f'{url}: Open Graph article type'
+    check_alternatives_store_utm(results)
     robots = RobotFileParser()
     robots.parse((root / 'robots.txt').read_text().splitlines())
     assert robots.site_maps() == [canonical + 'sitemap.xml'], 'Robots references the canonical sitemap'
