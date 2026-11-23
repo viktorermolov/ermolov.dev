@@ -3,7 +3,7 @@
   <div class="project__body">
     <h3 class="project__name"><a href="{{ .RelPermalink }}">{{ .Params.name | default .Title }}</a></h3>
     <p class="project__tagline">{{ .Params.tagline }}</p>
-    <p class="project__meta">{{ partial "project-status.html" . }}{{ with .Params.privacyURL }}<a class="project__link" href="{{ . }}">Privacy policy</a>{{ end }}</p>
+    <p class="project__meta">{{ partial "project-status.html" . }}{{ with .Params.privacyURL }}<a class="project__link" href="{{ . }}">Privacy policy</a>{{ end }}{{ with where site.RegularPages "RelPermalink" (printf "%salternatives/" .RelPermalink) }}<a class="project__link" href="{{ (index . 0).RelPermalink }}">{{ $.Params.alternativesLabel | default "See how it compares" }}</a>{{ end }}</p>
   </div>
   {{- with .Params.cardImage }}
   <img class="project__shot" src="{{ . }}" alt="{{ $.Params.cardImageAlt }}" width="1280" height="800" loading="lazy">
