@@ -128,6 +128,40 @@ def hrefs(page):
     return [attrs.get('href') for tag, attrs in page.elements if tag == 'a' and attrs.get('href')]
 
 
+X_PROFILE = 'https://x.com/vikermolov'
+FOOTER_NAV = re.compile(r'<nav class="footer-links"[^>]*>(.*?)</nav>', re.DOTALL)
+FOOTER_X = re.compile(r'<a href="' + re.escape(X_PROFILE) + r'" rel="me">X</a>')
+
+
+def check_footer_x_and_homepage_alternatives(root, results):
+    """Every footer links the X profile, and every alternatives page stays on its homepage row."""
+    html_pages = sorted(root.rglob('*.html'))
+    assert html_pages, 'generated HTML'
+    for path in html_pages:
+        label = path.relative_to(root).as_posix()
+        navs = FOOTER_NAV.findall(path.read_text())
+        assert len(navs) == 1, f'{label}: one footer link list'
+        nav = navs[0]
+        assert FOOTER_X.search(nav), f'{label}: footer links to {X_PROFILE} as X'
+        assert 'https://ermolov.dev' not in nav and 'http://ermolov.dev' not in nav, (
+            f'{label}: footer does not repeat the site URL')
+
+    home_text = results[SITE][0]
+    rows = re.findall(r'<article class="project">(.*?)</article>', home_text, re.DOTALL)
+    assert rows, 'homepage project rows'
+    row_paths = set()
+    for row in rows:
+        row_paths.update(
+            urlsplit(urljoin(SITE, href)).path for href in re.findall(r'href="([^"]*)"', row))
+    alternatives = sorted(
+        urlsplit(url).path for url in results
+        if urlsplit(url).path.rstrip('/').endswith('/alternatives'))
+    assert {'/clipstay/alternatives/', '/pagestay/alternatives/'} <= set(alternatives), (
+        'Clipstay and Pagestay alternatives pages')
+    for path in alternatives:
+        assert path in row_paths, f'{SITE}: homepage project row links to {path}'
+
+
 def store_listing(link):
     """Listing address without a query or fragment. Campaign parameters do not change it."""
     parts = urlsplit(link)
@@ -358,6 +392,7 @@ def check(root):
     home_links = {urlsplit(urljoin(canonical, href)).path for href in hrefs(page)}
     for url in project_urls:
         assert urlsplit(url).path in home_links, f'{url}: linked from the homepage'
+    check_footer_x_and_homepage_alternatives(root, results)
 
     privacy_url = canonical + PRIVACY_PATH.lstrip('/')
     assert privacy_url in results, f'Privacy policy must stay at {PRIVACY_PATH}'
