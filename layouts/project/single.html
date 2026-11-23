@@ -8,7 +8,12 @@
         <p class="hero__lede">{{ .Params.lede }}</p>
         <div class="button-row">
           {{- if $live }}
-          <a class="btn btn--primary" href="{{ .Params.storeURL }}">Add to Chrome</a>
+          {{- /* Campaign follows the product path: /clipstay/ → clipstay. storeURL stays the listing; /reviews is appended to it. */ -}}
+          {{- $campaign := index (split (strings.TrimPrefix "/" .RelPermalink) "/") 0 | urlquery -}}
+          {{- $utm := printf "utm_source=ermolov.dev&utm_medium=product-page&utm_campaign=%s" $campaign -}}
+          {{- $sep := "?" -}}
+          {{- if in .Params.storeURL "?" }}{{ $sep = "&" }}{{ end -}}
+          <a class="btn btn--primary" href="{{ printf "%s%s%s" .Params.storeURL $sep $utm }}">Add to Chrome</a>
           {{- else }}
           <span class="btn btn--static">{{ partial "project-status.html" . }}</span>
           {{- end }}
