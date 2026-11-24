@@ -1,0 +1,33 @@
+{{- /*
+  Chrome Web Store URL for our own listing.
+  .href is the listing (an existing query is kept and extended).
+  .suffix is an optional path suffix such as "reviews", inserted before the query.
+  .campaign is utm_campaign. .content is optional utm_content.
+  utm_source and utm_medium are fixed: ermolov.dev / referral.
+*/ -}}
+{{- $href := .href -}}
+{{- $campaign := .campaign -}}
+{{- if or (not $href) (not $campaign) -}}
+  {{- errorf "cws-url: href and campaign are required" -}}
+{{- end -}}
+{{- $u := urls.Parse $href -}}
+{{- if or (not $u.Scheme) (not $u.Host) -}}
+  {{- errorf "cws-url: href must be an absolute URL: %s" $href -}}
+{{- end -}}
+{{- $path := $u.Path -}}
+{{- with .suffix -}}
+  {{- $path = printf "%s/%s" (strings.TrimSuffix "/" $path) (strings.TrimPrefix "/" .) -}}
+{{- end -}}
+{{- $utm := printf "utm_source=ermolov.dev&utm_medium=referral&utm_campaign=%s" ($campaign | urlquery) -}}
+{{- with .content -}}
+  {{- $utm = printf "%s&utm_content=%s" $utm (. | urlquery) -}}
+{{- end -}}
+{{- $query := $utm -}}
+{{- with $u.RawQuery -}}
+  {{- $query = printf "%s&%s" . $utm -}}
+{{- end -}}
+{{- $out := printf "%s://%s%s?%s" $u.Scheme $u.Host $path $query -}}
+{{- with $u.Fragment -}}
+  {{- $out = printf "%s#%s" $out . -}}
+{{- end -}}
+{{- return $out -}}

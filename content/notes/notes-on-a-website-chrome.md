@@ -17,7 +17,7 @@ When the note should come back with the page, it has to be attached to the addre
 
 ## A note for a page, or a note for the site
 
-[Pagestay](/pagestay/) keeps notes in Chrome’s side panel, next to the page you are reading. There is no account and no sync. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj?utm_source=ermolov.dev&utm_medium=article&utm_campaign=notes-on-a-website-chrome&utm_content=cta-top).
+[Pagestay](/pagestay/) keeps notes in Chrome’s side panel, next to the page you are reading. There is no account and no sync. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=notes-on-a-website-chrome&utm_content=cta-top).
 
 Click the Pagestay button on the page. The suggested shortcut is Control+Shift+N on a Mac and Alt+Shift+N on other systems. **New note** attaches to the page you are on when Pagestay can see that tab’s address. Without an address, the new note is global. The panel also offers **Note for this site**, and **Global note** for a note that is not attached to any page or site.
 
@@ -43,4 +43,4 @@ The free plan has unlimited notes in the side panel: page notes, site notes, and
 
 Pro is $4.99, paid once. It adds search inside the text of your notes and by tag, folders and tags, rule notes for a URL pattern you type (such as `example.com/docs/*`), and scheduled backups saved on the computer. Page notes and site notes are on the free plan.
 
-The [Pagestay page](/pagestay/) lists the free plan and Pro. The [privacy policy](/pagestay/privacy/) is the full account of what is stored. [Add Pagestay from the Chrome Web Store](https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj?utm_source=ermolov.dev&utm_medium=article&utm_campaign=notes-on-a-website-chrome&utm_content=cta-bottom).
+The [Pagestay page](/pagestay/) lists the free plan and Pro. The [privacy policy](/pagestay/privacy/) is the full account of what is stored. [Add Pagestay from the Chrome Web Store](https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=notes-on-a-website-chrome&utm_content=cta-bottom).

@@ -17,7 +17,7 @@ A document or a sticky note can also hold a sentence you reuse. You leave the pa
 
 ## Pins inside Chrome
 
-[Clipstay](/clipstay/) keeps a text history of what you copy or cut on supported web pages, and lets you pin the clips you want again. There is no account. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=article&utm_campaign=pins-shortcuts-chrome&utm_content=cta-top).
+[Clipstay](/clipstay/) keeps a text history of what you copy or cut on supported web pages, and lets you pin the clips you want again. There is no account. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=pins-shortcuts-chrome&utm_content=cta-top).
 
 Copy or cut the text on a page. Open Clipstay. Pin the clip. Pinned clips stay when the free history is full: a new clip can replace the oldest unpinned one, and a pinned clip does not roll off for that reason. On the free plan you can add a pin while fewer than five clips are pinned. Clips and pins you already have, including ones you import, stay even when they are above those numbers. Free also includes 100 unpinned clips. Pro is $4.99, paid once, and removes the history and pin limits. Search, export and import stay free. Clipstay and Pagestay together are $6.99 as a bundle, which unlocks Pro in both.
 
@@ -49,4 +49,4 @@ Once the popup is open, Settings lists these keys:
 
 Export the history to JSON or CSV at any time, and import that file on another computer. JSON keeps pins, names and dates. CSV has the text and the date, and names when you have any. The file name starts with `clipstay-` and the UTC date. Export and import are free. The file stays on your machine. Uninstalling Clipstay removes the stored history.
 
-The [Clipstay page](/clipstay/) has the free plan, Pro and the shortcut. The [privacy policy](/clipstay/privacy/) lists what is stored, including optional names for pinned clips. [Add Clipstay from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=article&utm_campaign=pins-shortcuts-chrome&utm_content=cta-bottom).
+The [Clipstay page](/clipstay/) has the free plan, Pro and the shortcut. The [privacy policy](/clipstay/privacy/) lists what is stored, including optional names for pinned clips. [Add Clipstay from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=pins-shortcuts-chrome&utm_content=cta-bottom).

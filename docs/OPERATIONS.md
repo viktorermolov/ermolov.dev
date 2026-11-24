@@ -134,7 +134,7 @@ Redeploy the previous site commit through GitHub/DigitalOcean.
 
 ## Analytics and privacy
 
-Cloudflare Web Analytics measures visits and performance with a public token (`analyticsToken` in `config.toml`; not a secret). Google Analytics 4 measures the same public pages with the official gtag.js snippet and measurement ID `G-CV3FSD2MY4` (`gaMeasurementId` in `config.toml`). The tag uses GA4's default `page_view` and campaign parsing, so parameters such as `utm_source`, `utm_medium` and `utm_campaign` stay on the page address for GA4 to read. There is no consent banner. The visible email stays in the footer and the contact section. Product privacy pages describe this website measurement under "This website"; the extensions still have no analytics.
+Cloudflare Web Analytics measures visits and performance with a public token (`analyticsToken` in `config.toml`; not a secret). Google Analytics 4 measures the same public pages with the official gtag.js snippet and measurement ID `G-CV3FSD2MY4` (`gaMeasurementId` in `config.toml`). The tag uses GA4's default `page_view` and campaign parsing, so parameters such as `utm_source`, `utm_medium` and `utm_campaign` stay on the page address for GA4 to read. A click on a link to the Clipstay or Pagestay Chrome Web Store listing also sends one `cws_click` event on that same tag (`product`, `link_location`, `link_url`, `transport_type` `beacon`). Links to other extensions' listings are not tracked. There is no consent banner. The visible email stays in the footer and the contact section. Product privacy pages describe this website measurement under "This website"; the extensions still have no analytics.
 
 ## Search
 

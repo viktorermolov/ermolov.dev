@@ -39,7 +39,7 @@ A clipboard extension cannot rely on a background page that stays open and reads
 
 ## A Manifest V3 history for text you copy in Chrome
 
-[Clipstay](/clipstay/) is a Manifest V3 extension. It saves text you copy or cut on supported web pages, keeps it on the computer, and lets you search it, pin it and copy it back. There is no account and no analytics. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=article&utm_campaign=clipboard-managers-manifest-v2&utm_content=cta-top).
+[Clipstay](/clipstay/) is a Manifest V3 extension. It saves text you copy or cut on supported web pages, keeps it on the computer, and lets you search it, pin it and copy it back. There is no account and no analytics. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=clipboard-managers-manifest-v2&utm_content=cta-top).
 
 The save happens when you copy or cut on the page, including in tabs that were already open. Clipstay does not watch other apps in the background. If “Add clipboard when the popup opens” is on, and capture is active, opening the popup can save text that is already on the system clipboard, including text from another app. That read happens because you opened the popup. Turn the option off in Settings when you do not want it. Web-page capture skips password fields and Incognito pages. Chrome-restricted pages, such as the Chrome Web Store and `chrome://` pages, do not allow automatic capture.
 
@@ -49,4 +49,4 @@ Installing Clipstay does not restore another extension’s saved history. If the
 
 [What Clipstay covers, and what is different](/clipstay/alternatives/), is the page for that comparison. This note does not restate it.
 
-The [Clipstay page](/clipstay/) has capture, the free plan and Pro. The [privacy policy](/clipstay/privacy/) lists what is stored and which permissions are used. [Add Clipstay from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=article&utm_campaign=clipboard-managers-manifest-v2&utm_content=cta-bottom).
+The [Clipstay page](/clipstay/) has capture, the free plan and Pro. The [privacy policy](/clipstay/privacy/) lists what is stored and which permissions are used. [Add Clipstay from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=clipboard-managers-manifest-v2&utm_content=cta-bottom).

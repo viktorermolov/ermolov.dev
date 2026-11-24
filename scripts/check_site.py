@@ -121,6 +121,16 @@ def check_page(root, path):
 
 PROJECT_SECTIONS = {'features', 'privacy', 'plan', 'good-to-know', 'support'}
 STORE_HOST = 'chromewebstore.google.com'
+EXTENSION_ID = re.compile(r'^[a-p]{32}$')
+OUR_LISTINGS = {
+    'biellalamlbfmgljmpfppaebblmmhokn': 'clipstay',
+    'lehddjgolnpdbmmijbefdffhblbgiejj': 'pagestay',
+}
+OUR_UTM = {
+    'utm_source': 'ermolov.dev',
+    'utm_medium': 'referral',
+}
+STORE_UTM_KEYS = {'utm_source', 'utm_medium', 'utm_campaign', 'utm_content'}
 PRIVACY_PATH = '/clipstay/privacy/'  # Listed in the Chrome Web Store: this address must never change.
 
 
@@ -189,6 +199,88 @@ def check_alternatives_store_utm(results):
         params = query_map(buttons[0])
         for key, value in expected.items():
             assert params.get(key) == value, f'{url}: alternatives UTM {key}'
+
+
+def cws_link(href):
+    """Extension id and parsed URL when href points at a Chrome Web Store listing."""
+    parts = urlsplit(href)
+    host = parts.netloc.lower()
+    segments = [segment for segment in parts.path.split('/') if segment]
+    if host == 'chrome.google.com':
+        if not segments or segments[0] != 'webstore':
+            return None
+    elif host != STORE_HOST:
+        return None
+    ids = [segment for segment in segments if EXTENSION_ID.fullmatch(segment)]
+    return ids, parts
+
+
+def check_cws_links(root):
+    """Our listings carry referral UTM. Third-party listings carry none. The query stays a query."""
+    pages = sorted(root.rglob('*.html'))
+    assert pages, 'generated HTML'
+    seen_ours = []
+    for path in pages:
+        label = path.relative_to(root).as_posix()
+        page = Page()
+        page.feed(path.read_text())
+        for tag, attrs in page.elements:
+            if tag != 'a':
+                continue
+            href = attrs.get('href') or ''
+            parsed = cws_link(href)
+            if parsed is None:
+                continue
+            ids, parts = parsed
+            assert len(ids) == 1, f'{label}: store link needs one extension id: {href}'
+            ext = ids[0]
+            norm = parts.path.rstrip('/')
+            assert '?' not in parts.path and href.count('?') <= 1, f'{label}: broken store URL {href}'
+            if ext in OUR_LISTINGS:
+                product = OUR_LISTINGS[ext]
+                assert norm in {
+                    f'/detail/{ext}',
+                    f'/detail/{ext}/reviews',
+                    f'/webstore/detail/{ext}',
+                    f'/webstore/detail/{ext}/reviews',
+                }, f'{label}: unexpected store path {norm}'
+                params = query_map(href)
+                keys = [key for key, _ in parse_qsl(parts.query, keep_blank_values=True)]
+                assert keys.count('utm_source') == 1, f'{label}: duplicate UTM {href}'
+                assert set(params) <= STORE_UTM_KEYS, f'{label}: unexpected store query {href}'
+                for key, value in OUR_UTM.items():
+                    assert params.get(key) == value, f'{label}: {key} on {href}'
+                assert re.fullmatch(r'[A-Za-z0-9_-]+', params.get('utm_campaign') or ''), (
+                    f'{label}: utm_campaign on {href}')
+                if norm.endswith('/reviews'):
+                    assert params['utm_campaign'] == f'{product}-reviews', f'{label}: review campaign {href}'
+                if 'utm_content' in params:
+                    assert params['utm_content'], f'{label}: empty utm_content {href}'
+                seen_ours.append(href)
+            else:
+                assert not parts.query and not parts.fragment, (
+                    f'{label}: third-party store listing has no UTM: {href}')
+    assert seen_ours, 'expected our own Chrome Web Store links'
+    home = Page()
+    home.feed((root / 'index.html').read_text())
+    srcs = [attrs.get('src') for tag, attrs in home.elements
+            if tag == 'script' and '/js/app' in (attrs.get('src') or '')]
+    assert len(srcs) == 1, 'homepage app script'
+    script = (root / urlsplit(srcs[0]).path.lstrip('/')).read_text()
+    for needle in (
+        'cws_click',
+        'transport_type',
+        'beacon',
+        'link_location',
+        'link_url',
+        'biellalamlbfmgljmpfppaebblmmhokn',
+        'lehddjgolnpdbmmijbefdffhblbgiejj',
+        'chromewebstore.google.com',
+        'chrome.google.com',
+        'closest',
+    ):
+        assert needle in script, f'app script missing {needle}'
+    assert 'G-' not in script, 'click listener must not add a GA measurement ID'
 
 
 def check_refund_assurances(root):
@@ -443,7 +535,7 @@ def check(root):
                 assert f'{STORE_HOST}/detail/' in install, f'{url}: store listing URL'
                 assert not urlsplit(install).query and not urlsplit(install).fragment, (
                     f'{url}: installUrl stays the store listing without campaign parameters')
-                # Add to Chrome only. Alternatives pages keep utm_medium=referral and utm_campaign=alt-alternatives.
+                # Add to Chrome and Leave a review. Alternatives pages keep utm_campaign=alt-alternatives.
                 campaign = urlsplit(url).path.strip('/').split('/')[0]
                 buttons = [attrs.get('href', '') for tag, attrs in page_obj.elements
                            if tag == 'a' and 'btn--primary' in attrs.get('class', '').split()
@@ -451,12 +543,24 @@ def check(root):
                 assert buttons, f'{url}: Add to Chrome button links to the store'
                 expected_utm = {
                     'utm_source': 'ermolov.dev',
-                    'utm_medium': 'product-page',
+                    'utm_medium': 'referral',
                     'utm_campaign': campaign,
                 }
                 for href in buttons:
                     assert store_listing(href) == listing, f'{url}: Add to Chrome opens the store listing'
-                    assert query_map(href) == expected_utm, f'{url}: product-page store button UTM parameters'
+                    assert query_map(href) == expected_utm, f'{url}: product store button UTM parameters'
+                reviews = [attrs.get('href', '') for tag, attrs in page_obj.elements
+                           if tag == 'a' and urlsplit(attrs.get('href') or '').path.rstrip('/').endswith('/reviews')]
+                assert len(reviews) == 1, f'{url}: Leave a review link'
+                review_utm = {
+                    'utm_source': 'ermolov.dev',
+                    'utm_medium': 'referral',
+                    'utm_campaign': f'{campaign}-reviews',
+                }
+                for href in reviews:
+                    assert store_listing(href).rstrip('/') == listing.rstrip('/') + '/reviews', (
+                        f'{url}: Leave a review opens the listing reviews page')
+                    assert query_map(href) == review_utm, f'{url}: review link UTM parameters'
             continue
         if url == NOTES_SECTION:
             assert set(page_nodes) == {'Person', 'WebSite', 'CollectionPage'}, f'{url}: collection structured data'
@@ -469,6 +573,7 @@ def check(root):
             assert article and article.get('url') == url and article.get('headline') and article.get('datePublished'), f'{url}: article structured data'
             assert page_metadata.get('og:type') == 'article', f'{url}: Open Graph article type'
     check_alternatives_store_utm(results)
+    check_cws_links(root)
     robots = RobotFileParser()
     robots.parse((root / 'robots.txt').read_text().splitlines())
     assert robots.site_maps() == [canonical + 'sitemap.xml'], 'Robots references the canonical sitemap'
@@ -580,10 +685,54 @@ def check_notes_fixture():
     print('PASS: notes RSS fixture (/notes/index.xml)')
 
 
+def check_store_query_join():
+    """A listing query stays in the query string when UTM and /reviews are added."""
+    hugo = shutil.which('hugo')
+    if not hugo:
+        raise SystemExit('hugo is required to check store URL query joining')
+    repo = Path(__file__).resolve().parents[1]
+    with tempfile.TemporaryDirectory() as tmp_name:
+        tmp = Path(tmp_name)
+        content = tmp / 'content'
+        shutil.copytree(repo / 'content', content)
+        for ext, slug in OUR_LISTINGS.items():
+            path = content / f'{slug}.md'
+            text = path.read_text(encoding='utf-8')
+            bare = f'https://chromewebstore.google.com/detail/{ext}'
+            needle = f'storeURL: "{bare}"'
+            assert text.count(needle) == 1, f'{slug}: storeURL to patch'
+            path.write_text(text.replace(needle, f'storeURL: "{bare}?hl=en"', 1), encoding='utf-8')
+        dest = tmp / 'site'
+        built = subprocess.run(
+            [hugo, '--environment', 'production', '--destination', str(dest), '--contentDir', str(content)],
+            cwd=repo, capture_output=True, text=True)
+        if built.returncode != 0:
+            sys.stderr.write(built.stdout)
+            sys.stderr.write(built.stderr)
+            raise SystemExit(f'hugo store-query build failed ({built.returncode})')
+        for ext, slug in OUR_LISTINGS.items():
+            bare = f'https://chromewebstore.google.com/detail/{ext}'
+            page = Page()
+            page.feed((dest / slug / 'index.html').read_text(encoding='utf-8'))
+            hrefs = [attrs.get('href') for tag, attrs in page.elements if tag == 'a']
+            add = (f'{bare}?hl=en&utm_source=ermolov.dev&utm_medium=referral&utm_campaign={slug}')
+            review = (f'{bare}/reviews?hl=en&utm_source=ermolov.dev'
+                      f'&utm_medium=referral&utm_campaign={slug}-reviews')
+            assert add in hrefs, f'{slug}: Add to Chrome keeps the existing query'
+            assert review in hrefs, f'{slug}: Leave a review keeps the existing query before UTM'
+            assert '?hl=en/reviews' not in '\n'.join(hrefs), f'{slug}: reviews path must stay out of the query'
+            schema = json.loads(''.join(page.schema_text))
+            installs = [node.get('installUrl') for node in schema.get('@graph', [])
+                        if node.get('@type') == 'SoftwareApplication']
+            assert installs == [f'{bare}?hl=en'], f'{slug}: installUrl stays the listing, without UTM'
+    print('PASS: store URL query joining')
+
+
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == '--notes-fixture':
         assert len(sys.argv) == 2, 'usage: check_site.py [--notes-fixture | DESTINATION]'
         check_notes_fixture()
+        check_store_query_join()
         return
     check(sys.argv[1] if len(sys.argv) > 1 else 'public')
 

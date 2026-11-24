@@ -203,7 +203,7 @@
 <script>
 (function(){var t;try{t=localStorage.getItem("theme");}catch(e){}if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.setAttribute("data-theme",t);})();
 </script>
-{{- /* Official gtag.js install. No config object: GA4 sends page_view and reads campaign parameters from the page address. */ -}}
+{{- /* Official gtag.js install. No config object: GA4 sends page_view and reads campaign parameters from the page address. Store-listing clicks are cws_click in assets/js/app.js, and only when this tag is present. */ -}}
 {{- with .Site.Params.gaMeasurementId }}
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>

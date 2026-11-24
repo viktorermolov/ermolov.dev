@@ -17,7 +17,7 @@ Google Docs and Google Keep keep text in a Google account. A notes app on the co
 
 ## Where a Pagestay note lives
 
-[Pagestay](/pagestay/) stores notes in Chrome’s local extension storage, `chrome.storage.local`, on that computer. There is no account, no sync and no analytics. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj?utm_source=ermolov.dev&utm_medium=article&utm_campaign=browser-notes-backup&utm_content=cta-top).
+[Pagestay](/pagestay/) stores notes in Chrome’s local extension storage, `chrome.storage.local`, on that computer. There is no account, no sync and no analytics. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=browser-notes-backup&utm_content=cta-top).
 
 Chrome’s storage API describes that area as local to each machine. The data is cleared when the extension is removed. It is a different area from `chrome.storage.sync`, which is the area that syncs when Chrome sync is on. Clearing the cache and browsing history does not clear extension storage. The reference is [chrome.storage](https://developer.chrome.com/docs/extensions/reference/storage).
 
@@ -57,4 +57,4 @@ If Pro is no longer active, new scheduled backups pause. Files already in the fo
 
 Pro is $4.99, paid once. The bundle with Clipstay is $6.99 and unlocks Pro in both. Search inside notes, folders, tags and rule notes are the other Pro pieces. Export and import stay free without Pro.
 
-The [Pagestay page](/pagestay/) lists the free plan and Pro. The [privacy policy](/pagestay/privacy/) is the full account of what is stored, and of backup files you saved. [Add Pagestay from the Chrome Web Store](https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj?utm_source=ermolov.dev&utm_medium=article&utm_campaign=browser-notes-backup&utm_content=cta-bottom).
+The [Pagestay page](/pagestay/) lists the free plan and Pro. The [privacy policy](/pagestay/privacy/) is the full account of what is stored, and of backup files you saved. [Add Pagestay from the Chrome Web Store](https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=browser-notes-backup&utm_content=cta-bottom).
