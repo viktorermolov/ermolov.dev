@@ -501,6 +501,8 @@ def check(root):
         assert 'Cloudflare Web Analytics' in policy_text, f'{product_privacy}: distinguishes the website from the extension'
         assert 'Google Analytics 4' in policy_text and GA_MEASUREMENT_ID in policy_text, (
             f'{product_privacy}: discloses the website GA4 measurement ID')
+        assert 'clicks on links to the Clipstay and Pagestay Chrome Web Store listings' in policy_text, (
+            f'{product_privacy}: discloses Chrome Web Store click measurement')
 
     sitemap = ET.parse(root / 'sitemap.xml')
     sitemap_urls = [element.text for element in sitemap.iter() if element.tag == '{http://www.sitemaps.org/schemas/sitemap/0.9}loc']

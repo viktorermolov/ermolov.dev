@@ -1,7 +1,7 @@
 ---
 title: "Clipstay Privacy Policy"
 description: "Clipstay keeps your clipboard history on your device. It never sends your clips anywhere and has no account or analytics."
-date: 2026-11-22
+date: 2026-11-24
 url: "/clipstay/privacy/"
 layout: "legal"
 schemaType: "WebPage"
@@ -93,7 +93,7 @@ Current purchase options also include the Clipstay + Pagestay Pro bundle for $6.
 
 ## This website
 
-This policy covers the Clipstay extension. The ermolov.dev website, including this page, uses Cloudflare Web Analytics to measure visits and page performance, and Google Analytics 4 (measurement ID G-CV3FSD2MY4) to measure page views, including campaign parameters in the page address. The extension has no connection to the website and sends nothing to it.
+This policy covers the Clipstay extension. The ermolov.dev website, including this page, uses Cloudflare Web Analytics to measure visits and page performance, and Google Analytics 4 (measurement ID G-CV3FSD2MY4) to measure page views, including campaign parameters in the page address, and clicks on links to the Clipstay and Pagestay Chrome Web Store listings (which link and where on the page). The extension has no connection to the website and sends nothing to it.
 
 ## Changes and contact
 
