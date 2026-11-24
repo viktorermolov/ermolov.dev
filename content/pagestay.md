@@ -1,5 +1,5 @@
 ---
-# Product page for Pagestay 1.0.0. Fields are documented in content/clipstay.md.
+# Product page for Pagestay 1.0.5. Fields are documented in content/clipstay.md.
 # Live in the Chrome Web Store since 1.0.0: the page shows "Add to Chrome" with `storeURL`
 # (the ID-only store address, no slug) and `itemID`.
 title: "Pagestay — Page Notes for Websites in the Side Panel"
@@ -14,6 +14,9 @@ url: "/pagestay/"
 type: "project"
 schemaType: "SoftwareApplication"
 status: "live"
+version: "1.0.5"
+whatsNew:
+  - "The Import file picker now has a visible name, \"Choose a Pagestay JSON export\". Nothing is written until you confirm, as before."
 store: "Chrome Web Store"
 itemID: "lehddjgolnpdbmmijbefdffhblbgiejj"
 storeURL: "https://chromewebstore.google.com/detail/lehddjgolnpdbmmijbefdffhblbgiejj"
