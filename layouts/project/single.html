@@ -51,6 +51,18 @@
     </div>
   </section>
 
+  {{- if and .Params.version .Params.whatsNew }}
+  <section class="section" id="whats-new" aria-labelledby="whats-new-title">
+    <div class="wrap split">
+      <div><h2 id="whats-new-title">What’s new</h2></div>
+      <div class="split__body">
+        <p class="lead">{{ .Params.name }} {{ .Params.version }} is in the Chrome Web Store.{{ with .Params.whatsNewLead }} {{ . }}{{ end }}</p>
+        <ul class="plain-list">{{ range .Params.whatsNew }}<li>{{ . }}</li>{{ end }}</ul>
+      </div>
+    </div>
+  </section>
+  {{- end }}
+
   <section class="section" id="privacy" aria-labelledby="privacy-title">
     <div class="wrap split">
       <div><h2 id="privacy-title">Privacy</h2></div>

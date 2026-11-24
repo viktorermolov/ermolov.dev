@@ -6,6 +6,7 @@
 #   publishes the item, change `status` to `live`; `storeURL` is already filled in.
 # privacyURL must be <product url>privacy/ (the page must exist). privacyLead and privacyNote are the
 # product page's Privacy section text (both required, plain text only). footerPrivacy: false hides the product's privacy link in the footer.
+# version: current Chrome Web Store version. whatsNew / whatsNewLead: the What's new block; bullets must match that version's release notes. Leave historical "Starting with …" version scoping in freePlan, goodToKnow and faq unchanged.
 title: "Clipstay — Pin & Reuse Text: Clipboard Manager, Stored Locally"
 name: "Clipstay"
 description: "Clipstay is a Chrome extension that keeps your clipboard history on your device: search it, pin it and copy it back in one click. No account, no analytics."
@@ -18,6 +19,12 @@ url: "/clipstay/"
 type: "project"
 schemaType: "SoftwareApplication"
 status: "live"
+version: "1.1.6"
+whatsNewLead: "Bug fixes; no new permissions, settings or network requests."
+whatsNew:
+  - "If the license check stalls, Pro activation stops after 10 seconds and shows the existing connection error so Activate can be tried again. A reply that arrives after that does not turn the plan to Pro."
+  - "Arrow Up and Arrow Down on the Date filter now change All time, Today, Past week and Past month. The same keys still move through the list when search or the list has focus."
+  - "Pinning a clip again right after unpinning it keeps the pin. The saved-history update that follows an unpin no longer drops that re-pin."
 store: "Chrome Web Store"
 itemID: "biellalamlbfmgljmpfppaebblmmhokn"
 storeURL: "https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn"

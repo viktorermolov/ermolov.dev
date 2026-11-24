@@ -125,6 +125,9 @@
   {{- if and (eq .Params.status "live") .Params.storeURL -}}
     {{- $app = merge $app (dict "installUrl" .Params.storeURL) -}}
   {{- end -}}
+  {{- with .Params.version -}}
+    {{- $app = merge $app (dict "softwareVersion" .) -}}
+  {{- end -}}
   {{- $page := dict
     "@type" "WebPage"
     "@id" (printf "%s#page" .Permalink)
