@@ -64,7 +64,7 @@ Windows and ChromeOS also keep images in that history. A sentence you want again
 
 Use an extension when you want the text you copy on web pages in a list you can search and pin, kept on that computer, without turning on account sync. Keep using the system history for images and for the last few copies. The extension covers the text those short lists drop.
 
-[Clipstay](/clipstay/) is a Chrome extension for that text history. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=article&utm_campaign=clipboard-history-chrome&utm_content=cta-top).
+[Clipstay](/clipstay/) is a Chrome extension for that text history. [Add it from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=clipboard-history-chrome&utm_content=cta-top).
 
 ## What Clipstay keeps
 
@@ -80,4 +80,4 @@ A few limits matter before you rely on it:
 - With “Add clipboard when the popup opens” turned on, opening the popup can also save text already on the system clipboard, including text from other apps. Clipstay does not watch other apps in the background. Turn the option off in Settings when you do not want that import.
 - Export the history to JSON or CSV at any time, and import the file on another computer. The file stays on your machine.
 
-The [Clipstay page](/clipstay/) has the free plan, Pro, and the shortcut. The [privacy policy](/clipstay/privacy/) lists what is stored. [Add Clipstay from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=article&utm_campaign=clipboard-history-chrome&utm_content=cta-bottom).
+The [Clipstay page](/clipstay/) has the free plan, Pro, and the shortcut. The [privacy policy](/clipstay/privacy/) lists what is stored. [Add Clipstay from the Chrome Web Store](https://chromewebstore.google.com/detail/biellalamlbfmgljmpfppaebblmmhokn?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=clipboard-history-chrome&utm_content=cta-bottom).
