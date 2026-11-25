@@ -1,7 +1,7 @@
 ---
 title: "How to keep agent context when you switch AI platforms"
 description: "A self-hosted MCP server that stores working rules, roles, tasks and checkpoints, so a new AI platform can continue from the same workspace. What it does, what it does not do, and how to try the pre-release."
-date: 2026-11-26
+date: 2026-11-30
 weight: 8
 ---
 
