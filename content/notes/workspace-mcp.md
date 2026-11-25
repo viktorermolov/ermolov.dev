@@ -7,7 +7,7 @@ weight: 8
 
 Switching from one AI platform to another usually means rebuilding the same setup: working rules, role instructions, open tasks, and where work stopped. [Workspace MCP](https://github.com/viktorermolov/workspace-mcp?utm_source=ermolov.dev&utm_medium=referral&utm_campaign=workspace-mcp&utm_content=cta-top) is a self-hosted service that keeps that workspace in one place and serves it as a remote MCP server.
 
-The project brief puts it this way: connect the service and tell the agent, “This is my workspace, call `start` and continue from there.” What the platform then changes stays in the workspace for the next one.
+The [README](https://github.com/viktorermolov/workspace-mcp/blob/3de17feb1936cb048fbd1acab4706bc60e98ff7e/README.md#L5) puts it this way: connect the service and tell the agent, “This is my workspace, call `start` and continue from there.” What the platform then changes stays in the workspace for the next one.
 
 This is a pre-release (0.1.0, no release tag yet). Platform connections are documented from each platform’s own documentation and have not been confirmed against every platform in production.
 
