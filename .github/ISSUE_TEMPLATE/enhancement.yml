@@ -1,0 +1,44 @@
+name: Enhancement
+description: A new feature or request
+labels: ["enhancement", "priority: normal"]
+body:
+  - type: textarea
+    id: whats-wrong
+    attributes:
+      label: What's wrong
+      description: A short description of the request.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: What should be done and why.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+      description: The behaviour you want.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual
+      description: What happens today.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or branch
+      description: For example a Chrome Web Store version, `master`, `prerelease`, or a commit SHA.
+      placeholder: master
+    validations:
+      required: true

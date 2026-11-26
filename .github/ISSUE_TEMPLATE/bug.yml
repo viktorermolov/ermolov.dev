@@ -1,0 +1,44 @@
+name: Bug
+description: Something isn't working
+labels: ["bug", "priority: normal"]
+body:
+  - type: textarea
+    id: whats-wrong
+    attributes:
+      label: What's wrong
+      description: A short description of the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: A numbered list of the steps that show the problem.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+      description: What should happen.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual
+      description: What happens instead.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or branch
+      description: For example a Chrome Web Store version, `master`, `prerelease`, or a commit SHA.
+      placeholder: master
+    validations:
+      required: true
