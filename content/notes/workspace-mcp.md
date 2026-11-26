@@ -9,7 +9,7 @@ Switching from one AI platform to another usually means rebuilding the same setu
 
 The [README](https://github.com/viktorermolov/workspace-mcp/blob/3de17feb1936cb048fbd1acab4706bc60e98ff7e/README.md#L5) puts it this way: connect the service and tell the agent, “This is my workspace, call `start` and continue from there.” What the platform then changes stays in the workspace for the next one.
 
-This is a pre-release (0.1.0, no release tag yet). Platform connections are documented from each platform’s own documentation and have not been confirmed against every platform in production.
+This is a pre-release (0.1.0, no release tag yet). Platform connections are documented from each platform’s own documentation. I have checked Workspace MCP, and it works with Grok and Claude. The connection to ChatGPT has not been checked yet.
 
 ## The problem it is meant to solve
 
@@ -51,7 +51,7 @@ Platforms connect through the service’s own OAuth 2.1 server (metadata documen
 
 The public `https` address is required. Passkeys and OAuth are bound to it; changing it invalidates existing connections and passkeys.
 
-Guides for adding the MCP URL as a custom connector exist for [Claude](https://github.com/viktorermolov/workspace-mcp/blob/3de17feb1936cb048fbd1acab4706bc60e98ff7e/docs/platforms/claude.md), [ChatGPT](https://github.com/viktorermolov/workspace-mcp/blob/3de17feb1936cb048fbd1acab4706bc60e98ff7e/docs/platforms/chatgpt.md) and [Grok](https://github.com/viktorermolov/workspace-mcp/blob/3de17feb1936cb048fbd1acab4706bc60e98ff7e/docs/platforms/grok.md). They follow those products’ documentation (checked on 25 November 2026). This is a pre-release, and connections to Claude, ChatGPT and Grok have not yet been verified in production. Grok’s official documentation does not say how it registers its OAuth client; the guide records an expected method from third-party reports and a manual-client fallback.
+Guides for adding the MCP URL as a custom connector exist for [Claude](https://github.com/viktorermolov/workspace-mcp/blob/3de17feb1936cb048fbd1acab4706bc60e98ff7e/docs/platforms/claude.md), [ChatGPT](https://github.com/viktorermolov/workspace-mcp/blob/3de17feb1936cb048fbd1acab4706bc60e98ff7e/docs/platforms/chatgpt.md) and [Grok](https://github.com/viktorermolov/workspace-mcp/blob/3de17feb1936cb048fbd1acab4706bc60e98ff7e/docs/platforms/grok.md). They follow those products’ documentation (checked on 25 November 2026). This is a pre-release. I have checked Workspace MCP, and it works with Grok and Claude. The connection to ChatGPT has not been checked yet. Grok’s official documentation does not say how it registers its OAuth client; the guide records an expected method from third-party reports and a manual-client fallback.
 
 A role can also have a webhook. The request carries only identifiers, event types, the role and a time — not the content of a task. The agent is expected to read the content through MCP.
 
@@ -78,7 +78,7 @@ The same container serves a phone-first web interface, including version compari
 
 ## Limits to know before you rely on it
 
-- This is unreleased 0.1.0. Unit tests and CI on `master` (including end-to-end tests and `amd64`/`arm64` container smoke tests) pass on this revision. That is not a production connection from Claude, ChatGPT or Grok.
+- This is unreleased 0.1.0. Unit tests and CI on `master` (including end-to-end tests and `amd64`/`arm64` container smoke tests) pass on this revision. I have checked Workspace MCP, and it works with Grok and Claude. The connection to ChatGPT has not been checked yet.
 - `start` is an overview, not a full dump of the log or of every open task.
 - Every approved connection can read and edit the whole workspace. Do not treat a role name as access control.
 - Text in tasks, documents, comments and mirrored issues is treated as data. Whether an agent obeys that is up to the platform and the model. What the server does guarantee is that this text cannot reach anything outside the workspace through the server, and that edits to rules and instructions are logged and can be rolled back.
