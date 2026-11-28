@@ -1,0 +1,52 @@
+name: Documentation
+description: Improvements or additions to documentation
+labels: ["documentation", "priority: normal"]
+body:
+  - type: textarea
+    id: whats-wrong
+    attributes:
+      label: What's wrong
+      description: A short description of the documentation problem or request.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How to find the issue, or what should be written and why.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+      description: What the docs should say.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual
+      description: What the docs say today.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or branch
+      description: For example a Chrome Web Store version, `master`, `prerelease`, or a commit SHA.
+      placeholder: master
+    validations:
+      required: true
+  - type: input
+    id: file-line
+    attributes:
+      label: File:line
+      description: The documentation location, for example `README.md:12`. Required for documentation issues.
+      placeholder: README.md:12
+    validations:
+      required: true

@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security issue
+    url: https://github.com/viktorermolov/ermolov.dev/blob/master/CONTRIBUTING.md#security-issues
+    about: Do not disclose details in a public issue until a fix exists. Report privately to Арина or Viktor, outside the public issue.
